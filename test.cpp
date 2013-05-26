@@ -18,7 +18,8 @@
 using namespace std;
 
 int main() {
-	ifstream cin("test.in");
-	ofstream cout("test.out");
+	freopen("test.in", "r", stdin);
+	freopen("test.out", "w", stdout);
+
 	return 0;
 }
