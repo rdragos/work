@@ -21,6 +21,9 @@ using namespace std;
 int main() {
     ifstream cin("test.in");
     ofstream cout("test.out");
+    int A, B;
+    cin >> A >> B;
+    cout << A + B;
 
     return 0;
 }
