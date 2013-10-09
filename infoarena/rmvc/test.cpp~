@@ -1,0 +1,113 @@
+#include <cstdio>
+#include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <map>
+#include <cstring>
+#include <string>
+#include <set>
+#include <stack>
+
+#define pb push_back
+#define mp make_pair
+#define f first
+#define s second
+#define ll long long
+
+const int MAXN = 95;
+const int MAXM = 320;
+
+using namespace std;
+
+vector <int> solution[19];
+char marked_edges[MAXM];
+vector <int> current_nodes;
+vector <int> G[MAXN];
+int N, M;
+vector <int> S;
+char inQueue[MAXM];
+
+void back(int count_nodes, int current_edges) {
+    int maxcount = 0, start_with = 0;
+    
+    if (count_nodes > 18) {
+        return ;
+    }
+    if (current_edges == M) {
+        if (solution[count_nodes].size() == 0) {
+            solution[count_nodes] = S;
+        }
+        return ;
+    }
+    
+    
+    vector <int> check_list;
+
+    for (int i = 1; i <= N; ++i) {
+        if (inQueue[i]) {
+            continue;
+        }
+        int cnt = 0;
+        for (size_t j = 0; j < G[start_with].size(); ++j) {
+            if (marked_edges[G[start_with][j]] == 0) {
+                ++cnt;
+            }
+        }
+        if (cnt == maxcount) {
+            check_list.push_back(start_with);
+        }
+        if (cnt > maxcount) {
+            check_list.clear();
+            check_list.push_back(start_with);
+            maxcount = cnt;
+        }
+    }
+    cerr << check_list.size() << "\n";
+    for (size_t i = 0; i < check_list.size(); ++i)
+        inQueue[check_list[i]] = 1;
+
+    for (size_t i = 0; i < check_list.size(); ++i) {
+        int node = check_list[i];
+        S.push_back(node);
+        for (size_t j = 0; j < G[node].size(); ++j) {
+            marked_edges[G[node][j]] = 1;
+        }
+        back(count_nodes + 1, current_edges + maxcount);
+        S.pop_back();
+        for (size_t j = 0; j < G[node].size(); ++j) {
+            marked_edges[G[node][j]] = 0;
+        }
+    }
+
+}
+int main() {
+    ifstream fin("rmvc.in");
+    ofstream fout("rmvc.out");
+    
+    fin >> N >> M;
+    
+    for (int i = 1; i <= M; ++i) {
+        int a, b;
+
+        fin >> a >> b;
+        G[a].push_back(i);
+        G[b].push_back(i);
+    }
+    // take every node and see if you can obtain all the edges - like an xor on nodes
+    back(0, 0);
+
+    for (int i = 1; i < 19; ++i) {
+        if (solution[i].size() > 0) {
+            fout << solution[i].size() <<"\n";
+            for (size_t j = 0; j < solution[i].size(); ++j) {
+                fout << solution[i][j] << " ";
+            }
+            return 0;
+        }
+    }
+
+
+    return 0;
+}
