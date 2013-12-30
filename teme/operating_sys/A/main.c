@@ -80,6 +80,7 @@ void merge_sort(int *V, int left, int right) {
     waitpid(rightpid, &status, 0);
     //merge the result
     merge(V, left, mid, right);
+    exit(0);
 } 
 
 
@@ -99,7 +100,6 @@ int main(int argc, char *argv[]) {
     }
     if (child == 0) {
         merge_sort(V, 0, N - 1);
-        exit(0);
     } else {
         waitpid(child, &status, 0);
         printf("Sirul sortat\n");
