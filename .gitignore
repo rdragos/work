@@ -6,6 +6,8 @@
 !*.rb
 !*.java
 !*.cc
+!*.c
+!*.md
 Makefile
 driver.cc
 *.in
