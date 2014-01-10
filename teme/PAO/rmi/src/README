@@ -1,0 +1,5 @@
+javac *.java
+rmic MyServerClass
+
+To start server: java ServerStart
+To start a client: java Client
