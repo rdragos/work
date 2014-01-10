@@ -1,0 +1,3 @@
+./converter nume_fisier_text nume_fisier_binar
+./main sum/prod nume_fisier1 nume_fisier2 nume_fisier_rezultat
+./reading nume_fisier_rezultat
