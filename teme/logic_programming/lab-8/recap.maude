@@ -1,0 +1,43 @@
+fth SET is
+    sort Elt .
+    op _bin_ : Elt Elt -> Elt [assoc comm] .
+    op e : -> Elt .
+    var X : Elt .
+
+    eq e bin X = X [nonexec] .
+    eq X bin e = X [nonexec] .
+endfth
+
+fmod TREE{X :: SET} is
+
+    protecting INT .
+
+    sort Tree{X} .
+    op empty : -> Tree{X} .
+    op _ _ _ : Tree{X} X$Elt Tree{X} -> Tree{X} .
+
+    vars L R : Tree{X} .
+    var I : X$Elt .
+
+    op count_leafs : Tree{X} -> Int .
+    eq count_leafs(empty) = 0 .
+    eq count_leafs(empty I empty) = 1 .
+    eq count_leafs(L I R) = count_leafs(L) + count_leafs(R) .
+
+    op apply_bin : Tree{X} -> X$Elt .
+    eq apply_bin(empty) = e .
+    eq apply_bin(empty I empty) = e bin I .
+    eq apply_bin(L I R) = (e bin apply_bin(L)) bin apply_bin(R) .
+
+endfm
+
+view Int from SET to INT is
+    sort Elt to Int .
+    op _bin_ to _+_ .
+    op e to 0 .
+endv
+
+fmod TREE-INT is
+    protecting TREE{Int} .
+endfm
+
