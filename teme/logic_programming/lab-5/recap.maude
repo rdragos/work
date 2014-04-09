@@ -1,0 +1,88 @@
+fmod PAIR{X :: TRIV, Y :: TRIV} is
+    sort Pair{X, Y} .
+
+    op [_,_] : X$Elt Y$Elt -> Pair{X, Y} .
+    op first : Pair{X, Y} -> X$Elt .
+    op second : Pair{X, Y} -> Y$Elt .
+
+    var A : X$Elt .
+    var B : Y$Elt .
+
+    eq first([A, B]) = A .
+    eq second([A, B]) = B .
+
+endfm
+
+
+fmod PAIR-INT is
+    protecting PAIR{Int, Int} .
+endfm
+
+view PairInt from TRIV to PAIR-INT is
+    sort Elt to Pair{Int, Int} .
+endv
+
+red first([2, 3]) .
+red second([2, 3]) .
+
+fmod LIST{X :: TRIV} is
+    sort List{X} .
+    subsort X$Elt < List{X} .
+
+    op nil : -> List{X} .
+    op _ _ : List{X} List{X} -> List{X} [assoc id: nil] .
+
+endfm
+
+
+fmod LIST-PAIR-INT is
+    protecting LIST{Int} .
+    protecting LIST{PairInt} .
+
+    op @first : List{PairInt} -> List{Int} .
+    op @second : List{PairInt} -> List{Int} .
+
+    var I : Pair{Int, Int} .
+    var L : List{PairInt} .
+
+    eq @first(nil) = nil .
+    eq @first(I L) = first(I) @first(L) .
+
+    eq @second(nil) = nil .
+    eq @second(I L) = second(I) @second(L) .
+endfm
+
+red @first( [2, 3] [4, 5] ) .
+red @second( [2, 3] [4, 5] ) .
+
+
+fmod PAIR-STRING-INT is
+    protecting PAIR{Int, String} .
+endfm
+
+view PairIntString from TRIV to PAIR-STRING-INT is
+    sort Elt to Pair{Int, String} .
+endv
+
+fmod LIST-PAIR-STRING-INT is
+    protecting LIST{PairIntString} .
+    protecting LIST{Int} .
+    protecting LIST{String} .
+
+    op @first : List{PairIntString} -> List{Int} .
+    op @second : List{PairIntString} -> List{String} .
+
+    eq @first(nil) = nil .
+    eq @second(nil) = nil .
+
+    var I : Pair{Int, String} .
+    var L : List{PairIntString} .
+
+    eq @first(I L) = first(I) @first(L) .
+    eq @second(I L) = second(I) @second(L) .
+
+endfm
+
+red @first( [2, "OMG"] [3, "ZOMG"] ) .
+red @second( [2, "OMG"] [3, "ZOMG"] ) .
+

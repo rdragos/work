@@ -1,0 +1,67 @@
+
+fth TOSET is
+    protecting BOOL .
+    sort Elt .
+    op _<=_ : Elt Elt -> Bool .
+
+
+    vars A B C : Elt .
+
+    eq A <= A = true [nonexec] .
+    eq A <= C = (A <= B) and (B <= C) [nonexec] .
+    ceq A = B if (A <= B) and (B <= A) [nonexec] .
+    eq A <= B or B <= A = true [nonexec] .
+endfth
+
+fmod LIST{X :: TOSET} is
+    protecting INT .
+
+    sort List{X} .
+    sort NList{X} .
+    subsort X$Elt < NList{X} < List{X} .
+
+    op nil : -> List{X} .
+    op _ _ : X$Elt List{X} -> NList{X} [id: nil] .
+
+    op length : List{X} -> Int .
+
+    var L : List{X} .
+    var I : X$Elt .
+
+    eq length(nil) = 0 .
+    eq length(I L) = 1 + length(L) .
+
+    op min : NList{X} -> X$Elt .
+    eq min(I) = I .
+    ceq min(I L) = I if I <= min(L) .
+    eq min(I L) = min(L) .
+
+    *** isort fara sa folosim append?
+
+    op _<<<_ : List{X} List{X} -> Bool .
+
+    var K : List{X} .
+    var U : X$Elt .
+
+    eq nil <<< nil = true .
+    ceq L <<< K = true if length(L) < length(K) .
+    ceq L <<< K = false if length(L) > length(K) .
+
+    *** sterg linia asta merge
+    ceq (I L) <<< (U K) = if (I = U) then (U <<< K) else (I <= U) fi .
+
+endfm
+
+view Int from TOSET to INT is
+    sort Elt to Int .
+    op _<=_ to _<=_ .
+endv
+fmod LIST-INT is
+    protecting LIST{Int} .
+endfm
+
+
+
+
+
+

@@ -1,0 +1,23 @@
+
+fth TRIVconst is
+    including TRIV .
+    op @ : -> Elt .
+endfth
+
+fmod LIST{X :: TRIVconst} is
+
+    sorts List{X} NList{X} .
+    subsort X$Elt < NList{X} < List{X} .
+
+    op nil : -> List{X} .
+
+    op _ _ : X$Elt List{X} -> NList{X} [id: nil] .
+
+    op delete : X$Elt List{X} -> List{X} .
+
+    var I : X$Elt .
+    var L : List{X} .
+    var D : X$Elt .
+
+    ceq delete(D, I L) = if (D = I) then (X$@ delete(D, L)) else (I delete(D, L)) fi .
+endfm

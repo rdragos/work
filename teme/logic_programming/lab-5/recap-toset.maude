@@ -1,0 +1,46 @@
+fth TOSET is
+
+    protecting BOOL .
+    sort Elt .
+
+    vars A B C : Elt .
+    op _<=_ : Elt Elt -> Bool .
+
+    eq A <= A = true [nonexec] .
+    eq A <= C = (A <= B) and (B <= C) [nonexec] .
+    ceq A = B if (A <= B) and (B <= A) [nonexec] .
+    ceq A = B if not(A <= B) and not(B <= A) [nonexec] .
+    eq A <= B or B <= A = true [nonexec] .
+endfth
+
+
+fmod PAIR{X :: TOSET, Y :: TOSET} is
+    sort Pair{X, Y} .
+
+    op [_,_] : X$Elt Y$Elt -> Pair{X, Y} .
+    op _<=lex_ : Pair{X, Y} Pair{X, Y} -> Bool .
+    op first : Pair{X, Y} -> X$Elt .
+    op second : Pair{X, Y} -> Y$Elt .
+
+    vars A C : X$Elt .
+    vars B D : Y$Elt .
+
+    eq first([A, B]) = A .
+    eq second([A, B]) = B .
+
+    eq [A, B] <=lex [C, D] = ( ((A <= C) and not(A == C) )or ( (A == C) and (B <= D) )) .
+
+endfm
+
+
+view Int from TOSET to INT is
+    sort Elt to Int .
+    op _<=_ to _<=_ .
+endv
+
+fmod PAIR-ORDER-INT is
+    protecting PAIR{Int, Int} .
+endfm
+
+
+
