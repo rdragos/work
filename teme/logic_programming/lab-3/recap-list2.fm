@@ -1,0 +1,77 @@
+
+
+fmod LIST-INT is
+    protecting INT .
+    sorts NList List .
+
+    subsort Int < NList < List .
+    op nil : -> List .
+    op _ _ :  Int List -> NList [id: nil] .
+endfm
+
+red 2 3 4 nil .
+
+fmod LENGTH is
+    protecting LIST-INT .
+
+    op length : List -> Int .
+
+    var I : Int .
+    var L : List .
+
+    eq length(nil) = 0 .
+    eq length(I L) = length(L) + 1 .
+
+endfm
+
+red length(1 2 3 4 5) .
+red length(1 2 3 4 5 nil) .
+red length(nil) .
+
+fmod OPERATIONS is
+    protecting LIST-INT .
+    op _in_ : Int List -> Bool .
+    vars I J : Int .
+    var L : List .
+
+    eq I in nil = false .
+    eq I in (J L) = (I == J) or (I in L) .
+
+    op _append_ : List List -> List .
+    vars L1 L2 : List .
+
+    eq nil append L1 = L1 .
+    eq (I L1) append L2 = I  (L1 append L2) .
+
+    op rev_ : List -> List .
+    eq rev(nil) = nil .
+    eq rev(I L) = (rev L) append I .
+
+    op min : List -> Int .
+
+    eq min(nil) = 0 .
+    eq min(I) = I .
+    eq min(I L) = if I < min(L) then I else min(L) fi .
+
+    op sort : List -> List .
+    eq sort(nil) = nil .
+    eq sort(I) = I .
+    eq sort(I L) = if I <= min(L) then (I append sort(L)) else sort(L append I) fi .
+
+endfm
+
+*** testing in operation
+red 1 in 2 3 4 5 .
+red 2 in 1 3 4 5 2 .
+
+***testing append operation
+red (1 2 3) append (4 5) .
+red rev(1 2 3) .
+
+*** testing minimum
+
+red min(2 3 4 5 6 ) .
+
+*** testing sorting
+
+red sort(5 3 2 1 -2) .
