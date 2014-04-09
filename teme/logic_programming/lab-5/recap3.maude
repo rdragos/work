@@ -1,0 +1,32 @@
+fmod SET{X :: TRIV} is
+    sort Set{X} .
+endfm
+
+
+fth TOSET is
+    protecting BOOL .
+
+    sort Elt .
+
+    op _<=_ : Elt Elt -> Bool .
+
+    vars A B C : Elt .
+
+    eq A <= A = true [nonexec] .
+    eq A <= C = (A <= B and B <= C) [nonexec] .
+    ceq A = B if (A <= B) and (B <= A) [nonexec] .
+    eq A <= B or B <= A = true [nonexec] .
+
+endfth
+
+view Toset from TRIV to TOSET is
+    sort Elt to Elt .
+endv
+
+fmod SET-MAX{T :: TOSET} is
+    protecting SET{Toset}{T} .
+    op maxim : Set{Toset}{T} -> T$Elt .
+
+    var A : Set{Toset}{T} .
+    eq maxim(A) =
+endfm
