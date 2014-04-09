@@ -1,0 +1,24 @@
+fmod LIST-INT is
+
+    protecting INT .
+
+    sorts List NList .
+    subsort Int < NList < List .
+    op nil : -> List .
+    op _ _ : Int List -> NList [id: nil] .
+
+    op get : Int List -> Int .
+
+    vars K I : Int .
+    var L : List .
+
+    ceq get(K, I L) = get(K + -1, L) if (K > 0) .
+    eq get(1, I L) = I .
+    eq get(K, nil) = 0 .
+
+    op range : Int Int -> List .
+
+    ceq range(K, I) = nil if (K > I) .
+    eq range(K, I) = K range(K + 1, I) .
+
+endfm
