@@ -48,7 +48,7 @@ fmod LIST{X :: TOSET} is
     ceq L <<< K = false if length(L) > length(K) .
 
     *** sterg linia asta merge
-    ceq (I L) <<< (U K) = if (I = U) then (U <<< K) else (I <= U) fi .
+    eq (I L) <<< (U K) = if (I == U) then (L <<< K) else (I <= U) fi .
 
 endfm
 

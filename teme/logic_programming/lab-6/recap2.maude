@@ -1,10 +1,10 @@
 
-fth TRIVconst is
+fth TRIVCONST is
     including TRIV .
     op @ : -> Elt .
 endfth
 
-fmod LIST{X :: TRIVconst} is
+fmod LIST{X :: TRIVCONST} is
 
     sorts List{X} NList{X} .
     subsort X$Elt < NList{X} < List{X} .
@@ -15,9 +15,23 @@ fmod LIST{X :: TRIVconst} is
 
     op delete : X$Elt List{X} -> List{X} .
 
-    var I : X$Elt .
+    vars I D : X$Elt .
     var L : List{X} .
-    var D : X$Elt .
 
-    ceq delete(D, I L) = if (D = I) then (X$@ delete(D, L)) else (I delete(D, L)) fi .
+    eq delete(D, nil) = nil .
+    eq delete(D, I L) = if (D == I) then (@ delete(D, L)) else (I delete(D, L)) fi .
+
+    op add : X$Elt List{X} -> List{X} .
+    eq add(D, nil) = nil .
+    eq add(D, I L) = if (I == @) then (D add(D, L) ) else (I add(D, L) ) fi .
 endfm
+
+view String from TRIVCONST to STRING is
+    sort Elt to String .
+    op @ to term "[]" .
+endv
+
+fmod LIST-STRING is
+    including LIST{String} .
+endfm
+

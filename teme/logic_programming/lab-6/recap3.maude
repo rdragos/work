@@ -1,0 +1,42 @@
+
+fth GROUP is
+    including TRIV .
+    op _@_ : Elt Elt -> Elt [assoc] .
+    op !_ : Elt -> Elt .
+    op e : -> Elt .
+
+    var X : Elt .
+    eq X @ e = X [nonexec] .
+    eq e @ X = X [nonexec] .
+
+    eq X @ (! X) = e [nonexec] .
+    eq (! X) @ X = e [nonexec]  .
+
+endfth
+
+fmod HOM-GROUP{G :: GROUP, H :: GROUP} is
+    *** f(x + y) = f(x) + f(y)
+    *** f(e) = e'
+
+    vars X Y : G$Elt .
+
+    op m_function : G$Elt -> H$Elt .
+    eq m_function(X @ Y) = m_function(X) @ m_function(Y) .
+
+    eq m_function(e) = e .
+    eq m_function(!(X)) = !(m_function(X)) .
+endfm
+
+view Int from GROUP to INT is
+    sort Elt to Int .
+    op _@_ to _+_ .
+    op !_ to -_ .
+    op e to 0 .
+endv
+fmod IDENTITY is
+    protecting HOM-GROUP{Int, Int} .
+    var X : Int .
+    eq m_function(X) = X .
+endfm
+
+
