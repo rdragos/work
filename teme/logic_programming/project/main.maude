@@ -1,0 +1,238 @@
+fmod NAME-SYNTAX is protecting QID .
+
+	sort Name .
+	subsort Qid < Name .
+	ops a b c d e f g h i j k l m n
+	o p q r s t u v x y z w : -> Name .
+
+endfm
+
+fmod EXP-SYNTAX is protecting NAME-SYNTAX .
+
+	protecting INT .
+	sort Exp .
+	subsorts Int Name < Exp .
+	op _+_ : Exp Exp -> Exp [ditto] .
+	op _-_ : Exp Exp -> Exp [ditto] .
+	op _*_ : Exp Exp -> Exp [ditto] .
+	op _/_ : Exp Exp -> Exp [prec 31] .
+
+endfm
+
+fmod GENERIC-STMT-SYNTAX is
+
+	sort Stmt .
+	op skip : -> Stmt .
+
+endfm
+
+fmod ASSIGNMENT-SYNTAX is
+
+	extending GENERIC-STMT-SYNTAX .
+	protecting EXP-SYNTAX .
+	op _=_ : Name Exp -> Stmt [prec 40] .
+
+endfm
+
+fmod SEQ-COMP-SYNTAX is
+
+protecting GENERIC-STMT-SYNTAX .
+
+	sort StmtList .
+	subsort Stmt < StmtList .
+	op _ _ : StmtList StmtList -> StmtList [assoc] .
+	op _;_ : StmtList StmtList -> StmtList [assoc] .
+
+endfm
+
+fmod BLOCK-SYNTAX is
+
+	extending SEQ-COMP-SYNTAX .
+	op {_} : StmtList -> Stmt .
+
+endfm
+
+fmod BEXP-SYNTAX is protecting EXP-SYNTAX .
+
+sort BExp .
+
+	op _equals_ : Exp Exp -> BExp .
+	op zero? : Exp -> BExp .
+	op even? : Exp -> BExp .
+	op not_ : BExp -> BExp .
+	op _and_ : BExp BExp -> BExp .
+
+endfm
+
+fmod IF-SYNTAX is
+
+	protecting BEXP-SYNTAX .
+	extending GENERIC-STMT-SYNTAX .
+	op if_then_else_ : BExp Stmt Stmt -> Stmt .
+
+endfm
+
+fmod LOOPS-SYNTAX is
+
+	extending BEXP-SYNTAX .
+	extending GENERIC-STMT-SYNTAX .
+	op for(_;_;_)_ : Stmt BExp Stmt Stmt -> Stmt .
+	op while__ : BExp Stmt -> Stmt .
+
+endfm
+
+
+fmod PROG-LANG-SYNTAX is
+
+	extending ASSIGNMENT-SYNTAX .
+	extending BLOCK-SYNTAX .
+	extending IF-SYNTAX .
+	extending LOOPS-SYNTAX .
+	sort Pgm .
+	op __ : StmtList Exp -> Pgm .
+	op _;_ : StmtList Exp -> Pgm .
+
+endfm
+
+fmod STATE is protecting INT .
+
+	sorts Index State .
+	op empty : -> State .
+	op [_,_] : Index Int -> State .
+	op __ : State State -> State [assoc comm id: empty] .
+	op _[_] : State Index -> Int .
+	op _[_<-_] : State Index Int -> State .
+	var X : Index . var I : Int . var S : State .
+	eq ([X,I] S)[X] = I .
+	eq ([X,I] S)[X <- I] = [X,I] S .
+	eq S[X <- I] = S [X,I] [owise] .
+
+endfm
+
+fmod NAME-SEMANTICS is
+
+	protecting NAME-SYNTAX .
+	protecting STATE .
+	subsort Name < Index .
+	op eval : Name State -> Int .
+	var X : Name . var S : State .
+	eq eval(X, S) = S[X] .
+
+endfm
+
+fmod EXP-SEMANTICS is
+
+	protecting EXP-SYNTAX .
+	protecting NAME-SEMANTICS .
+	op eval : Exp State -> Int .
+	vars E E’ : Exp . var I : Int . var S : State .
+	eq eval(I, S) = I .
+	eq eval(E + E’, S) = eval(E, S) + eval(E’, S) .
+	eq eval(E - E’, S) = eval(E, S) - eval(E’, S) .
+	eq eval(E * E’, S) = eval(E, S) * eval(E’, S) .
+	eq eval(E / E’, S) = eval(E, S) quo eval(E’, S) .
+
+endfm
+
+fmod GENERIC-STMT-SEMANTICS is
+
+	protecting GENERIC-STMT-SYNTAX .
+	protecting STATE .
+	op state : Stmt State -> State .
+	eq state(skip, S:State) = S:State .
+
+endfm
+
+fmod ASSIGNMENT-SEMANTICS is
+
+	protecting ASSIGNMENT-SYNTAX .
+	extending GENERIC-STMT-SEMANTICS .
+	extending EXP-SEMANTICS .
+	var X : Name . var E : Exp . var S : State .
+	eq state(X = E, S) = S[X <- eval(E,S)] .
+
+endfm
+
+fmod SEQ-COMP-SEMANTICS is
+
+	protecting SEQ-COMP-SYNTAX .
+	extending GENERIC-STMT-SEMANTICS .
+	op state : StmtList State -> State .
+	var St : Stmt . var Stl : StmtList .
+	var S : State .
+	eq St Stl = St ; Stl .
+	eq state(St ; Stl, S) =
+	state(Stl, state(St, S)) .
+
+endfm
+
+fmod BLOCK-SEMANTICS is
+
+	protecting BLOCK-SYNTAX .
+	extending SEQ-COMP-SEMANTICS .
+	var Stl : StmtList . var S : State .
+	eq state({Stl}, S) = state(Stl, S) .
+
+endfm
+
+fmod BEXP-SEMANTICS is protecting BEXP-SYNTAX .
+
+	protecting EXP-SEMANTICS .
+	protecting STATE .
+	op eval : BExp State -> Bool .
+	vars E E’ : Exp . vars BE BE’ : BExp .
+	var S : State .
+	eq eval(E equals E’, S) =
+		eval(E, S) == eval(E’, S) .
+	eq eval(zero?(E), S) = eval(E, S) == 0 .
+	eq eval(even?(E), S) = eval(E, S) rem 2 == 0 .
+	eq eval(not BE, S) = not eval(BE, S) .
+	eq eval(BE and BE’, S) =
+		eval(BE, S) and eval(BE’, S) .
+
+endfm
+
+fmod IF-SEMANTICS is
+
+	protecting IF-SYNTAX .
+	protecting BEXP-SEMANTICS .
+	extending GENERIC-STMT-SEMANTICS .
+	var BE : BExp . vars St St2 : Stmt .
+	var S : State .
+	eq state(if BE then St else St2, S) =
+		if eval(BE, S) then state(St, S)
+		else state(St2, S) fi .
+
+endfm
+
+fmod LOOPS-SEMANTICS is
+
+	protecting LOOPS-SYNTAX .
+	protecting BEXP-SEMANTICS .
+	extending BLOCK-SEMANTICS .
+	op for(_;_;_)_ : Stmt BExp Stmt Stmt -> Stmt .
+	op while__ : BExp Stmt -> Stmt .
+	vars St St1 St2 St3 : Stmt .
+	var BE : BExp . var S : State .
+	eq for(St1 ; BE ; St2) St3 =
+		St1 ; while BE {St3 ; St2} .
+	eq state(while BE St, S) =
+		if eval(BE, S)
+		then state(while BE St, state(St, S))
+		else S fi .
+
+endfm
+
+fmod PROG-LANG-SEMANTICS is
+
+	protecting PROG-LANG-SYNTAX .
+	extending ASSIGNMENT-SEMANTICS .
+	extending BLOCK-SEMANTICS .
+	extending IF-SEMANTICS .
+	extending LOOPS-SEMANTICS .
+	op eval : Pgm -> Int .
+	var Stl : StmtList . var E : Exp .
+	eq Stl E = Stl ; E .
+	eq eval(Stl ; E) = eval(E, state(Stl, empty)) .
+
+endfm
