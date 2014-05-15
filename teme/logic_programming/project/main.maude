@@ -54,13 +54,13 @@ endfm
 
 fmod BEXP-SYNTAX is protecting EXP-SYNTAX .
 
-sort BExp .
+    sort BExp .
 
 	op _equals_ : Exp Exp -> BExp .
 	op zero? : Exp -> BExp .
 	op even? : Exp -> BExp .
-	op not_ : BExp -> BExp .
-	op _and_ : BExp BExp -> BExp .
+	op nu_ : BExp -> BExp .
+	op _si_ : BExp BExp -> BExp .
 
 endfm
 
@@ -81,6 +81,13 @@ fmod LOOPS-SYNTAX is
 
 endfm
 
+fmod AFISEAZA-SYNTAX is
+    extending GENERIC-STMT-SYNTAX .
+    extending EXP-SYNTAX .
+
+    op afiseaza : Exp -> Stmt .
+
+endfm
 
 fmod PROG-LANG-SYNTAX is
 
@@ -88,9 +95,12 @@ fmod PROG-LANG-SYNTAX is
 	extending BLOCK-SYNTAX .
 	extending IF-SYNTAX .
 	extending LOOPS-SYNTAX .
+
 	sort Pgm .
 	op __ : StmtList Exp -> Pgm .
 	op _;_ : StmtList Exp -> Pgm .
+
+    op start_stop : StmtList -> StmtList .
 
 endfm
 
@@ -162,7 +172,7 @@ fmod SEQ-COMP-SEMANTICS is
 	var S : State .
 	eq St Stl = St ; Stl .
 	eq state(St ; Stl, S) =
-	state(Stl, state(St, S)) .
+        state(Stl, state(St, S)) .
 
 endfm
 
@@ -186,8 +196,8 @@ fmod BEXP-SEMANTICS is protecting BEXP-SYNTAX .
 		eval(E, S) == eval(E’, S) .
 	eq eval(zero?(E), S) = eval(E, S) == 0 .
 	eq eval(even?(E), S) = eval(E, S) rem 2 == 0 .
-	eq eval(not BE, S) = not eval(BE, S) .
-	eq eval(BE and BE’, S) =
+	eq eval(nu BE, S) = not(eval(BE, S)) .
+	eq eval(BE si BE’, S) =
 		eval(BE, S) and eval(BE’, S) .
 
 endfm
@@ -230,9 +240,27 @@ fmod PROG-LANG-SEMANTICS is
 	extending BLOCK-SEMANTICS .
 	extending IF-SEMANTICS .
 	extending LOOPS-SEMANTICS .
+    extending AFISEAZA-SYNTAX .
 	op eval : Pgm -> Int .
 	var Stl : StmtList . var E : Exp .
 	eq Stl E = Stl ; E .
 	eq eval(Stl ; E) = eval(E, state(Stl, empty)) .
 
+    vars l1 l2 : StmtList .
+
+    op run_ : StmtList -> Int .
+    op run2_ : StmtList -> Int .
+
+    eq run(start l1 stop) = run2(l1) .
+
+    var lrun : Stmt .
+    eq run2(lrun afiseaza(E)) = 0 .
+    ***
+    *** eq run2(l1 afiseaza(E) l2) = eval(E, state(skip, empty)) .
+    *** eq run2(afiseaza(E) l2) = eval(E, state(skip, empty)) .
+    *** eq run2(l1 afiseaza(E)) = eval(E, state(skip, empty)) .
+    *** eq run2(afiseaza(E)) = eval(E, state(skip, empty)) .
+    ***
+
 endfm
+
