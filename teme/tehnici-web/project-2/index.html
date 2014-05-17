@@ -5,16 +5,39 @@
 	<meta charset="utf8">
 
 	<style type="text/css">
-		canvas {border-style: solid;}
+
+		table,td,th {
+			border:1px solid black;
+		}
+		table {
+			width:100%;
+		}
+		th {
+			height:50px;
+		}
 	</style>
 
 </head>
-<body style="background-color:#EAE5F5;">
+<body style="background-color:#EAE5F5;" onload="initialize_storage()">
+	<div>
+		<button type="button" class="btn btn-primary" onclick="game_main()" style="float:left; margin-top:20%;margin-left:2%">Start New Game</button>
 
-	<button type="button" class="btn btn-primary" onclick="game_main()" style="float:left; margin-top:20%;margin-left:2%">Start New Game</button>
+		<form style="width:100px; height:100px;margin-left:30px;">
+		<input type="radio" name="difficulty" value="hard" id="marked_hard">Hard</input>
+		<input type="radio" name="difficulty" value="easy">Easy</input>
+		</form>
+	</div>
 	<canvas id="myCanvas" width="600" height="600" style="margin-left:5%;margin-top:5%;"></canvas>
-</body>
-	<script type="text/javascript" src="scripting.js"></script>
+	<div id="topscores" style="float:right; margin-right:5%;">
+		<h1> Top Scores </h1>
+		<table id="scorestable" style="border:1px solid black;">
+		</table>
+	</div>
+	</body>
+
+	<script type="text/javascript" src="scripts/storage.js"></script>
+	<script type="text/javascript" src="scripts/scripting.js"></script>
+
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </html>
