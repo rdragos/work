@@ -34,7 +34,7 @@ function refresh_records() {
     //Don't know why the fuck is wrong
 
     var records = localStorage.getObject('records');
-    console.log(records);
+    //console.log(records);
     records.sort(function(a, b) {
         return parseInt(a.spent_time) < parseInt(b.spent_time);
     });
@@ -150,6 +150,7 @@ function play_easy() {
     return 0;
 }
 elem.addEventListener('click', function(event) {
+
     var x = event.pageX - elemLeft,
         y = event.pageY - elemTop;
 
@@ -209,6 +210,8 @@ function game_main() {
     var selected_radius = 40;
     var x = selected_radius;
     var y = selected_radius;
+    player_turn = 0;
+    elements = [];
 
     for (var stack = 5; stack >= 1; stack--) {
         elements.push(new Array());
