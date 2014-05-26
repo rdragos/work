@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title>Ticket Buyer</title>
+	<link rel="stylesheet" type="text/css" href="styles/main_style.css">
+
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="scripts/main_script.js" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="scripts/selections.js" type="text/javascript" charset="utf-8" async defer></script>
+</head>
+<body>
+	<h2> Select Movie </h2>
+	<select id="movie">
+		<option value="1">The Simpsons</option>
+		<option value="2">Ala bala</option>
+		<option value="3">Inception</option>}
+	</select>
+
+	<select id="day">
+		<option value="1">Vineri</option>
+		<option value="2">Sambata</option>
+		<option value="3">Duminica</option>
+	</select>
+
+    <div id="holder">
+        <ul  id="place">
+        </ul>
+    </div>
+    <div style="float:left;">
+    <ul id="seatDescription">
+        <li style="background:url('images/available_seat_img.gif') no-repeat scroll 0 0 transparent;">Available Seat</li>
+        <li style="background:url('images/booked_seat_img.gif') no-repeat scroll 0 0 transparent;">Booked Seat</li>
+        <li style="background:url('images/selected_seat_img.gif') no-repeat scroll 0 0 transparent;">Selected Seat</li>
+    </ul>
+
+    <div id="seat_price" style="float: left">
+    	<p>Price: 0$</p>
+    </div>
+    <div id="total_seat_price" style="clear:both">
+    	<p>Selected seat price: 0$</p>
+    </div>
+</body>
+</html>
