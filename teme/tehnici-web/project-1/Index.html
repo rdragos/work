@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Pagina Principala</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="menustyle.css">
+	<script type="text/javascript" src="scripting.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+	<body>
+		<section class="left">
+			<div class="maincontent">
+				<div style="color:yellow;">
+					<div class="navigation">
+						<ul class="nav">
+							<li><a href="Index.html">Home</a></li>
+							<li><a href="bucuresti.html">Unde donez?</a></li>
+							<li><a href="statistici.html">Cateva Statistici</a></li>
+							<li><a href="scuze.html"</a>Top cele mai intalnite scuze</li>
+							<li><a href="donare.html">Vreau sa donez!</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="right">
+			<div class="maincontent" style="padding-top:50px">
+				<span class="button help">Vreau sa ajut!</span>
+			</div>
+		</section>
+	<script>
+		$(".button.help").click(function(){
+			$(".left .menu").css("display", "block")
+		});
+	</script>
+	</body>
+</html>

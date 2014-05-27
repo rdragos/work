@@ -1,0 +1,109 @@
+h1.myclass {
+	color: red;
+	text-align: center;
+}
+
+body.bodycontainer {
+	background-image:url('donate.jpg');
+	background-repeat: repeat;
+	background-size: 100%
+
+}
+
+.button {
+	background: #efefef; 
+	background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);  
+	background: -moz-linear-gradient(top, #efefef 0%, #bbbbbb 100%); 
+	background: -webkit-linear-gradient(top, #efefef 0%,#bbbbbb 100%); 
+
+	box-shadow: 0px 0px 9px rgba(0,0,0,0.15);
+	padding: 20px 45px;
+	border-radius: 10px;  
+	position: relative;
+	display: inline-table;
+
+	margin-left: 20px;
+
+
+}
+.help{
+	position: absolute;
+	left: 40%;
+	top: 60%;
+}
+.googlemap {
+	width: 400px;
+	height: 400px;
+	position: relative;
+	float: right;
+}
+.left {
+	float: left;
+	width: 280px;
+	border-right: 1px solid lightgray;
+	height: 100%;
+	position: fixed;
+	background-size: cover;
+	background-repeat: repeat;
+}
+
+.maincontent {
+	font-size: 20px;
+	padding: 10px;
+}
+.left .maincontent {
+	position: fixed;
+	top: 40px;
+	width: inherit;
+}
+.left .navigation {
+	padding: 10px;
+	margin-top: 20px;
+}
+.nav{
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+}
+
+.right {
+	float: left;
+	width: 70%;
+	max-width: 1024px;
+	height: 100%;
+	margin-left: 280px;
+}
+.right .maincontent {
+	padding: 50px 50px 0px 50px;
+	max-width: 820px;
+}
+/* Let's deal with some animations */
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+@-moz-keyframes pulse {
+  0% {
+    -moz-transform: scale(1);
+  }
+  50% {
+    -moz-transform: scale(1.1);
+  }
+  100% {
+    -moz-transform: scale(1);
+  }
+}
+.pulse-css3:hover, .pulse-css3:focus {
+  -webkit-animation: pulse 1s linear infinite;
+  -moz-animation: pulse 1s linear infinite;
+  animation-name: pulse 1s linear infinite;
+}
+

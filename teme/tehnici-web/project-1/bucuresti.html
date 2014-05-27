@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Locatii de Donatii</title>
+
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="body-back2.css"> 
+	<link rel="stylesheet" type="text/css" href="menustyle.css">
+
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var mapCanvas = document.getElementById('map-canvas');
+			var xposition = 44.436355;
+			var yposition = 26.099959;
+		    var mapOptions = {
+		      center: new google.maps.LatLng(xposition+2, yposition-1),
+		      zoom: 6,
+		      mapTypeId: google.maps.MapTypeId.ROADMAP
+		    }
+		    var map = new google.maps.Map(mapCanvas, mapOptions);
+		    var marker = new google.maps.Marker({
+    			position: new google.maps.LatLng(xposition, yposition),
+  				map: map,
+ 				title: 'Centrul 1'
+				});
+		});
+	</script>
+	</head>
+
+<body class="bodycontainer">
+	<div id="map-canvas" class="googlemap" style="margin:20px;"> </div>
+	<ul class="menu" style="display:block;">
+			<li><a href="Index.html">Home</a></li>
+			<li><a href="bucuresti.html">Unde donez?</a></li>
+			<li><a href="statistici.html">Cateva Statistici</a></li>
+			<li><a href="#about">About</a></li>
+	</ul>
+</body>
+
+</html>
