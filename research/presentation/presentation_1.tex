@@ -77,8 +77,8 @@
 }
 
 \usepackage{graphicx} % Allows including images
+\usepackage[absolute, overlay]{textpos}
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
-\usepackage{absolute,overlay}{textpos}
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
@@ -105,30 +105,30 @@ University of Bucharest\\ % Your institution for the title page
 \begin{frame}
     \frametitle{Overview} % Table of contents slide, comment this block out to remove it
 
-    \begin{columns}
+    %\begin{columns}
 
-        \begin{textblock*}{5cm}
+        \begin{textblock*}{5cm}(0cm, 3cm)
             \begin{figure}
                 \includegraphics[width=5cm,height=3cm,keepaspectratio]{bob.jpg}
                 \caption{Bob}
             \end{figure}
         \end{textblock*}
 
-        \begin{textblock*}{2cm}
+        \begin{textblock*}{2cm}(5.5cm, 1cm)
             \begin{figure}
                 \includegraphics[width=2cm,height=2cm]{eve.png}
                 \caption{Eve}
             \end{figure}
         \end{textblock*}
 
-        \begin{textblock*}{5cm}
+        \begin{textblock*}{5cm}(8cm, 3cm)
             \begin{figure}
-                \includegraphics[width=5cm,height=5cm,keepaspectratio]{alice.jpeg}
+                \includegraphics[width=5cm,height=3cm,keepaspectratio]{alice.jpeg}
                 \caption{Alice}
             \end{figure}
         \end{textblock*}
 
-    \end{columns}
+    %\end{columns}
 
 \end{frame}
 
