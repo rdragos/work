@@ -79,6 +79,17 @@
 \usepackage{graphicx} % Allows including images
 \usepackage[absolute, overlay]{textpos}
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc,shapes.callouts,shapes.arrows}
+
+\tikzset{My Arrow Style/.style={single arrow, fill=red!30, anchor=base, align=center,text width=2.8cm}}
+\newcommand{\arrowthis}[2][]{\tikz[baseline] \node [My Arrow Style,#1] {#2};}
+
+
+\tikzset{My Speech Style/.style={ellipse callout, fill=red!50, anchor=base, align=center,text width=2.8cm}}
+\newcommand{\speechthis}[2][]{
+    \tikz[baseline]{\node[My Speech Style, #1]{#2};}
+}%
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
@@ -102,46 +113,6 @@ University of Bucharest\\ % Your institution for the title page
 \titlepage % Print the title page as the first slide
 \end{frame}
 
-\begin{frame}
-    \frametitle{Overview} % Table of contents slide, comment this block out to remove it
-
-    %\begin{columns}
-
-        \begin{textblock*}{5cm}(0cm, 3cm)
-            \begin{figure}
-                \includegraphics[width=5cm,height=3cm,keepaspectratio]{bob.jpg}
-                \caption{Bob}
-            \end{figure}
-        \end{textblock*}
-
-        \begin{textblock*}{2cm}(5.5cm, 1cm)
-            \begin{figure}
-                \includegraphics[width=2cm,height=2cm]{eve.png}
-                \caption{Eve}
-            \end{figure}
-        \end{textblock*}
-
-        \begin{textblock*}{5cm}(8cm, 3cm)
-            \begin{figure}
-                \includegraphics[width=5cm,height=3cm,keepaspectratio]{alice.jpeg}
-                \caption{Alice}
-            \end{figure}
-        \end{textblock*}
-
-    %\end{columns}
-
-\end{frame}
-
-\begin{frame}
-    \frametitle{Itemizing}
-    \begin{itemize}
-        \item<1->Apple
-        \item<2->Pair
-        \item<3->Lol
-    \end{itemize}
-\end{frame}
-
-
 
 %----------------------------------------------------------------------------------------
 %	PRESENTATION SLIDES
@@ -151,13 +122,58 @@ University of Bucharest\\ % Your institution for the title page
 \section{Overview} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
 %------------------------------------------------
 
-\subsection{About Public key crypto} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
-
 \begin{frame}
-\frametitle{Paragraphs of Text}
-Sed iaculis dapibus gravida. Morbi sed tortor erat, nec interdum arcu. Sed id lorem lectus. Quisque viverra augue id sem ornare non aliquam nibh tristique. Aenean in ligula nisl. Nulla sed tellus ipsum. Donec vestibulum ligula non lorem vulputate fermentum accumsan neque mollis.\\~\\
+    \frametitle{Asymmetric Crypto Overview} % Table of contents slide, comment this block out to remove it
 
-Sed diam enim, sagittis nec condimentum sit amet, ullamcorper sit amet libero. Aliquam vel dui orci, a porta odio. Nullam id suscipit ipsum. Aenean lobortis commodo sem, ut commodo leo gravida vitae. Pellentesque vehicula ante iaculis arcu pretium rutrum eget sit amet purus. Integer ornare nulla quis neque ultrices lobortis. Vestibulum ultrices tincidunt libero, quis commodo erat ullamcorper id.
+    \begin{textblock*}{5cm}(0cm, 3cm)
+        \begin{figure}
+            \includegraphics[width=5cm,height=3cm,keepaspectratio]{bob.jpg}
+            \caption{Bob $sk_1$}
+        \end{figure}
+    \end{textblock*}
+
+    \begin{textblock*}{2cm}(5.5cm, 1cm)
+        \begin{figure}
+            \includegraphics[width=1cm,height=1cm]{eve.png}
+            \caption{Eve}
+        \end{figure}
+    \end{textblock*}
+
+    \begin{textblock*}{5cm}(8cm, 3cm)
+        \begin{figure}
+            \includegraphics[width=5cm,height=3cm,keepaspectratio]{alice.jpeg}
+            \caption{Alice $sk_2$}
+        \end{figure}
+    \end{textblock*}
+
+    \begin{textblock*}{3cm}(5cm, 5cm)
+        \only<2-4>{\arrowthis[]{$c_1 \leftarrow E(pk1, m_1)$}}
+    \end{textblock*}
+
+    \begin{textblock*}{3cm}(8cm, 2cm)
+        \only<3-4>{\speechthis{I know the message!}}
+    \end{textblock*}
+
+    %decription for Alice
+    \begin{textblock*}{4cm}(9.5cm, 8cm)
+        \only<4->{$m_1 = D(sk_2, c_1)$}
+    \end{textblock*}
+
+    %decription for Bob
+    \begin{textblock*}{4cm}(1cm, 8cm)
+        \only<5->{$m_2 = D(sk_1, c_2)$}
+    \end{textblock*}
+
+    %message for Bob
+    \begin{textblock*}{3cm}(5cm, 5cm)
+        \only<5>{\arrowthis[shape border rotate=180]{$c_2 \leftarrow E(pk2, m_2)$}}
+    \end{textblock*}
+
+    %speech for Eve
+    \begin{textblock*}{0.5cm}(7cm, 1cm)
+        \only<6>{\scalebox{10}{\textbf{?}}}
+    \end{textblock*}
+
 \end{frame}
 
 %------------------------------------------------
