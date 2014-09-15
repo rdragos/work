@@ -80,7 +80,7 @@
 \usepackage[absolute, overlay]{textpos}
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 \usepackage{tikz}
-\usetikzlibrary{positioning,calc,shapes.callouts,shapes.arrows}
+\usetikzlibrary{positioning,calc,backgrounds,shapes}
 
 \tikzset{My Arrow Style/.style={single arrow, fill=red!30, anchor=base, align=center,text width=2.8cm}}
 \newcommand{\arrowthis}[2][]{\tikz[baseline] \node [My Arrow Style,#1] {#2};}
@@ -128,7 +128,7 @@ University of Bucharest\\ % Your institution for the title page
     \begin{textblock*}{5cm}(0cm, 3cm)
         \begin{figure}
             \includegraphics[width=5cm,height=3cm,keepaspectratio]{bob.jpg}
-            \caption{Bob $sk_1$}
+            \caption{Bob}
         \end{figure}
     \end{textblock*}
 
@@ -142,12 +142,12 @@ University of Bucharest\\ % Your institution for the title page
     \begin{textblock*}{5cm}(8cm, 3cm)
         \begin{figure}
             \includegraphics[width=5cm,height=3cm,keepaspectratio]{alice.jpeg}
-            \caption{Alice $sk_2$}
+            \caption{Alice}
         \end{figure}
     \end{textblock*}
 
     \begin{textblock*}{3cm}(5cm, 5cm)
-        \only<2-4>{\arrowthis[]{$c_1 \leftarrow E(pk1, m_1)$}}
+        \only<2-4>{\arrowthis[]{$c \leftarrow E(pk, m)$}}
     \end{textblock*}
 
     \begin{textblock*}{3cm}(8cm, 2cm)
@@ -156,95 +156,142 @@ University of Bucharest\\ % Your institution for the title page
 
     %decription for Alice
     \begin{textblock*}{4cm}(9.5cm, 8cm)
-        \only<4->{$m_1 = D(sk_2, c_1)$}
-    \end{textblock*}
-
-    %decription for Bob
-    \begin{textblock*}{4cm}(1cm, 8cm)
-        \only<5->{$m_2 = D(sk_1, c_2)$}
-    \end{textblock*}
-
-    %message for Bob
-    \begin{textblock*}{3cm}(5cm, 5cm)
-        \only<5>{\arrowthis[shape border rotate=180]{$c_2 \leftarrow E(pk2, m_2)$}}
+        \only<4->{$m = D(sk, c)$}
     \end{textblock*}
 
     %speech for Eve
     \begin{textblock*}{0.5cm}(7cm, 1cm)
-        \only<6>{\scalebox{10}{\textbf{?}}}
+        \only<5>{\scalebox{10}{\textbf{?}}}
     \end{textblock*}
 
 \end{frame}
 
 %------------------------------------------------
+\section{To ID-Based Crypto}
+
 
 \begin{frame}
-\frametitle{Bullet Points}
-\begin{itemize}
-\item Lorem ipsum dolor sit amet, consectetur adipiscing elit
-\item Aliquam blandit faucibus nisi, sit amet dapibus enim tempus eu
-\item Nulla commodo, erat quis gravida posuere, elit lacus lobortis est, quis porttitor odio mauris at libero
-\item Nam cursus est eget velit posuere pellentesque
-\item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
-\end{itemize}
+    \frametitle{ID-Based Crypto Framework}
 \end{frame}
-
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{Blocks of Highlighted Text}
-\begin{block}{Block 1}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-\end{block}
-
-\begin{block}{Block 2}
-Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum quis magna at risus dictum tempor eu vitae velit.
-\end{block}
-
-\begin{block}{Block 3}
-Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur orci, sed blandit justo nisi ac lacus.
-\end{block}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{Multiple Columns}
-\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-
-\column{.45\textwidth} % Left column and width
-\textbf{Heading}
-\begin{enumerate}
-\item Statement
-\item Explanation
-\item Example
-\end{enumerate}
-
-\column{.5\textwidth} % Right column and width
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-
-\end{columns}
-\end{frame}
-
-%------------------------------------------------
 \section{Constrained PRF framework}
 %------------------------------------------------
 
+\def\firstcircle{(0,0) circle (1.5cm)}
+\def\secondcircle{(0,-1) circle (0.5cm)}
+
 \begin{frame}
-\frametitle{References}
-\footnotesize{
-\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
-\bibitem[Smith, 2012]{p1} John Smith (2012)
-\newblock Title of the publication
-\newblock \emph{Journal Name} 12(3), 45 -- 678.
-\end{thebibliography}
-}
+\frametitle{Constrained PRF framework}
+
+    \begin{definition} {
+            A PRF is a function $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ such that there is
+            a polynomial algorithm to evaluate $F(k, \cdot)$, $k \in \mathcal{K}$
+        }
+    \end{definition}
+
+    \begin{itemize}
+        \item
+            A constrained PRF is similar to a PRF, with an additional set of constrained keys\
+        $\mathcal{K}_c$ such that a key $k_s \in \mathcal{K}_c$ enables the evaluation of\
+            $F$ only in a certain subset $S$ $\in$ $\mathcal{X}$.
+    \end{itemize}
+    \begin{figure}
+        \begin{tikzpicture}
+        \begin{scope}[shift={(3cm,-5cm)}, fill opacity=0.5, align=center]
+            \fill[blue]{(0, 0) circle(1.5cm)};
+            \draw \firstcircle node[left]{$F(K, \cdot)$};
+            \draw \secondcircle node[]{$S$};
+        \end{scope}
+        \end{tikzpicture}
+
+    \end{figure}
+
 \end{frame}
 
 
+
+%------------------------------------------------
+\subsection{Left / Right PRF}
+\begin{frame}
+    \frametitle{Left/Right PRF, Bit-Fixing PRF}
+
+    % TODO: start with the defintion at the top
+    \only<1-3>{
+        \begin{definition}
+        Let $F : \mathcal{K} \times \mathcal{X}^2 \rightarrow \mathcal{Y}$ be a PRF. Then, $\forall w \in \mathcal{X}$,\
+        a left/right cPRF supports two constrained keys $k_w^L$ and $k_w^R$\
+        that enable the evaluation of $F$ at all points\
+        $(w,x) \in \mathcal{X}^2$, respectively $(x,w) \in \mathcal{X}^2$.
+        \end{definition}
+    }
+    \only<2-3>{
+        \begin{definition}
+        Let $F : \mathcal{K} \times \{0,1\}^N \rightarrow \mathcal{Y}$ be a PRF.\
+        Then, $\forall v \in \{0,1,?\}^N$, a bit-fixing cPRF  supports a constrained\
+        key $k_v$ that enables the evaluation of $F$ at all points $x \in \{0,1\}^N$ that satisfy the pattern $v$.
+        \end{definition}
+    }
+    \only<3>{
+        \begin{exampleblock}{Example}
+            When $v:={0?1}$, $k_{0?1}$ enables the evalation of $F(k_{0?1}, 011)$ and $F(k_{0?1}, 001)$
+        \end{exampleblock}
+    }
+\end{frame}
+
+%------------------------------------------------
+
+%------------------------------------------------
+\subsection{Boneh Waters ID NIKE}
+
+\begin{frame}
+    %TODO: this would be awesome if can be itemized
+    \frametitle{Boneh-Waters ID-NIKE Construction}
+
+    \only<1>{
+        Inserting boneh waters figure..
+    }
+
+    \only<2->{
+        \begin{textblock*}{5cm}(0cm, 3cm)
+        \begin{figure}
+            \includegraphics[width=5cm,height=3cm,keepaspectratio]{bob.jpg}
+            \caption{Bob}
+        \end{figure}
+        \end{textblock*}
+
+        \begin{textblock*}{5cm}(8cm, 3cm)
+            \begin{figure}
+                \includegraphics[width=5cm,height=3cm,keepaspectratio]{alice.jpeg}
+                \caption{Alice}
+            \end{figure}
+        \end{textblock*}
+    }
+    \only<3->{
+        \begin{textblock*}{2cm}(3cm,4.5cm)
+            $F(k_{Bob}, (Bob, \cdot))$
+            $F(k_{Bob}, (\cdot, Bob))$
+        \end{textblock*}
+    }
+
+    \only<4->{
+        \begin{textblock*}{2cm}(6.5cm,4.5cm)
+            $F(k_{Alice}, (Alice, \cdot))$
+            $F(k_{Alice}, (\cdot, Alice))$
+        \end{textblock*}
+    }
+    \only<5->{
+        \begin{textblock*}{6cm}(4cm, 2cm)
+            Now we have a common secret key: $F(k_{Alice}, (Alice, Bob))$
+        \end{textblock*}
+    }
+
+
+\end{frame}
+
 %------------------------------------------------
 \section{Boneh-Waters ID NIKE construction & Our generalization}
-
+\begin{frame}
+    \frametitle{Multi-Party ID-NIKE from cPRF}
+\end{frame}
 %------------------------------------------------
 
 \begin{frame}
