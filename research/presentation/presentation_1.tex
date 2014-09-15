@@ -85,7 +85,7 @@
 \usepackage[labelformat=empty]{caption}
 \captionsetup{compatibility=false}
 
-\tikzset{My Arrow Style/.style={single arrow, fill=red!30, anchor=base, align=center,text width=2.8cm}}
+\tikzset{My Arrow Style/.style={single arrow, fill=red!30, anchor=base, align=center,text width=4cm}}
 \newcommand{\arrowthis}[2][]{\tikz[baseline] \node [My Arrow Style,#1] {#2};}
 
 
@@ -107,7 +107,7 @@
 \title[University of Bucharest]{An Immediate Multi-Party Generalization of ID-NIKE from Constrained PRF}
 % The short title appears at the bottom of every slide, the full title is only on the title page
 %An Immediate Multi-Party Generalization of ID-NIKE from Constrained PRF
-\author[R.F.Olimid, D.A.Rotaru]{Ruxandra F. Olimid and \textbf{Dragos Alin Rotaru}} % Your name
+\author[R.F.Olimid, D.A.Rotaru]{Ruxandra F. Olimid and \textbf{Drago\c{s} Alin Rotaru}} % Your name
 \institute[UniBuc] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
 University of Bucharest\\ % Your institution for the title page
@@ -155,8 +155,8 @@ University of Bucharest\\ % Your institution for the title page
         \end{figure}
     \end{textblock*}
 
-    \begin{textblock*}{3cm}(5cm, 5cm)
-        \only<2-4>{\arrowthis[]{$c \leftarrow E(pk, m)$}}
+    \begin{textblock*}{3cm}(4.5cm, 5cm)
+        \only<2-5>{\arrowthis[]{$c \leftarrow E(pk, m)$}}
     \end{textblock*}
 
     \begin{textblock*}{3cm}(8cm, 2cm)
@@ -165,7 +165,7 @@ University of Bucharest\\ % Your institution for the title page
 
     %decription for Alice
     \begin{textblock*}{4cm}(9.5cm, 8cm)
-        \only<4->{$m = D(sk, c)$}
+        \only<4>{$m \leftarrow D(sk, c)$}
     \end{textblock*}
 
     %speech for Eve
@@ -173,21 +173,13 @@ University of Bucharest\\ % Your institution for the title page
         \only<5>{\scalebox{10}{\textbf{?}}}
     \end{textblock*}
 
+    \begin{textblock*}{3cm}(4.5cm, 5cm)
+        \only<6>{\arrowthis[]{$c \leftarrow E(Bob@ex.com, m)$}}
+    \end{textblock*}
+
 \end{frame}
 
 %------------------------------------------------
-\section{To ID-Based Crypto}
-
-\begin{frame}
-    \frametitle{ID-Based Crypto}
-    \begin{figure}
-        \includegraphics[width=9cm,height=9cm,keepaspectratio]{wiki.png}
-        \source{Wiki}
-        \caption{ID-Based Crypto}
-    \end{figure}
-
-\end{frame}
-
 \section{Constrained PRF}
 %------------------------------------------------
 
@@ -408,15 +400,6 @@ where $id_{\pi(1)} < id_{\pi(2)} < \dots < id_{\pi(N)}$ (in lexicographic order)
 
 \end{frame}
 %------------------------------------------------
-
-\section{Joke}
-\begin{frame}
-    \begin{figure}
-        \includegraphics[width=8cm,height=7.5cm,keepaspectratio]{protocol.png}
-        \source{Xkcd.com}
-        \caption{Protocol}
-    \end{figure}
-\end{frame}
 
 \begin{frame}
 \Huge{\centerline{Thank you!}}
