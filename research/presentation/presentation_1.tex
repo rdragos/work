@@ -82,6 +82,8 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning,calc,backgrounds,shapes}
 
+\usepackage[labelformat=empty]{caption}
+
 \tikzset{My Arrow Style/.style={single arrow, fill=red!30, anchor=base, align=center,text width=2.8cm}}
 \newcommand{\arrowthis}[2][]{\tikz[baseline] \node [My Arrow Style,#1] {#2};}
 
@@ -98,14 +100,14 @@
 \title[University of Bucharest]{An Immediate Multi-Party Generalization of ID-NIKE from Constrained PRF}
 % The short title appears at the bottom of every slide, the full title is only on the title page
 %An Immediate Multi-Party Generalization of ID-NIKE from Constrained PRF
-\author{Ruxandra F. Olimid, Dragos Alin Rotaru} % Your name
-\institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+\author[R.F.Olimid, D.A.Rotaru]{Ruxandra F. Olimid and \textbf{Dragos Alin Rotaru}} % Your name
+\institute[UniBuc] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
 University of Bucharest\\ % Your institution for the title page
 % \medskip
 % \textit{ruxandra.olimid@fmi.unibuc.ro, r.dragos0@gmail.com} % Your email address
 }
-\date{\today} % Date, can be changed to a custom date
+\date{September 16, 2014} % Date, can be changed to a custom date
 
 \begin{document}
 
@@ -171,16 +173,17 @@ University of Bucharest\\ % Your institution for the title page
 
 
 \begin{frame}
-    \frametitle{ID-Based Crypto Framework}
+    \frametitle{ID-Based Crypto}
 \end{frame}
-\section{Constrained PRF framework}
+
+\section{Constrained PRF}
 %------------------------------------------------
 
 \def\firstcircle{(0,0) circle (1.5cm)}
 \def\secondcircle{(0,-1) circle (0.5cm)}
 
 \begin{frame}
-\frametitle{Constrained PRF framework}
+\frametitle{Constrained PRF}
 
     \begin{definition} {
             A PRF is a function $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ such that there is
@@ -190,7 +193,7 @@ University of Bucharest\\ % Your institution for the title page
 
     \begin{itemize}
         \item
-            A constrained PRF is similar to a PRF, with an additional set of constrained keys\
+            A constrained PRF (cPRF) is similar to a PRF, with an additional set of constrained keys\
         $\mathcal{K}_c$ such that a key $k_s \in \mathcal{K}_c$ enables the evaluation of\
             $F$ only in a certain subset $S$ $\in$ $\mathcal{X}$.
     \end{itemize}
@@ -208,43 +211,41 @@ University of Bucharest\\ % Your institution for the title page
 \end{frame}
 
 
-
 %------------------------------------------------
-\subsection{Left / Right PRF}
+\subsection{Left / Right cPRF}
 \begin{frame}
-    \frametitle{Left/Right PRF, Bit-Fixing PRF}
+    \frametitle{Left/Right cPRF, Bit-Fixing cPRF}
 
-    % TODO: start with the defintion at the top
-    \only<1-3>{
-        \begin{definition}
+       \begin{definition}
         Let $F : \mathcal{K} \times \mathcal{X}^2 \rightarrow \mathcal{Y}$ be a PRF. Then, $\forall w \in \mathcal{X}$,\
         a left/right cPRF supports two constrained keys $k_w^L$ and $k_w^R$\
         that enable the evaluation of $F$ at all points\
         $(w,x) \in \mathcal{X}^2$, respectively $(x,w) \in \mathcal{X}^2$.
         \end{definition}
-    }
-    \only<2-3>{
+
+	\pause
         \begin{definition}
         Let $F : \mathcal{K} \times \{0,1\}^N \rightarrow \mathcal{Y}$ be a PRF.\
         Then, $\forall v \in \{0,1,?\}^N$, a bit-fixing cPRF  supports a constrained\
         key $k_v$ that enables the evaluation of $F$ at all points $x \in \{0,1\}^N$ that satisfy the pattern $v$.
         \end{definition}
-    }
-    \only<3>{
+
+	\pause
         \begin{exampleblock}{Example}
             When $v:={0?1}$, $k_{0?1}$ enables the evalation of $F(k_{0?1}, 011)$ and $F(k_{0?1}, 001)$
         \end{exampleblock}
-    }
+
 \end{frame}
 
 %------------------------------------------------
 
+
 %------------------------------------------------
-\subsection{Boneh Waters ID NIKE}
+\subsection{Boneh Waters ID-NIKE [BW'13]}
 
 \begin{frame}
     %TODO: this would be awesome if can be itemized
-    \frametitle{Boneh-Waters ID-NIKE Construction}
+    \frametitle{Boneh-Waters ID-NIKE [BW'13]}
 
     \only<1>{
         Inserting boneh waters figure..
@@ -287,15 +288,74 @@ University of Bucharest\\ % Your institution for the title page
 
 \end{frame}
 
+
+%-----------------
+\begin{frame}
+  \frametitle{Boneh-Waters ID-NIKE [BW'13]}
+
+\begin{itemize}
+	\item $\mathrm{Setup}(\lambda)$:
+		\begin{itemize}
+			\item  let $F : \mathcal{K} \times \mathcal{X}^2 \rightarrow \mathcal{Y}$ be $PRF^{L/R}$, $msk \leftarrow^R \mathcal{K}$
+			\item outputs $msk$
+		\end{itemize}
+	\item $\mathrm{Extract}(msk,id_i)$:
+		\begin{itemize}
+			\item  computes $\mathrm{F.constrain}(msk, \{(id_i, \cdot)\})$ to obtain $k^{L}_{id_i}$ and  $\mathrm{F.constrain}(msk, \{(\cdot, id_i)\})$  to obtain $k^{R}_{id_i}$
+			\item outputs $sk_{id_i} = (k^{L}_{id_i},k^{R}_{id_i})$
+		\end{itemize}
+	\item $\mathrm{KeyGen}(sk_{id_i},id_j)$ outputs:
+
+\[ k_{id_i,id_j} = \left\{ \begin{array}{lll}
+F(msk, (id_i, id_j)) & \mbox{if} & id_i < id_j \\
+F(msk, (id_j, id_i)) & \mbox{if} & id_i > id_j
+\end{array}\right.
+\]
+
+\end{itemize}
+  
+\end{frame}
+
+
 %------------------------------------------------
 \section{Boneh-Waters ID NIKE construction & Our generalization}
+
+%------------------------------------------------
 \begin{frame}
     \frametitle{Multi-Party ID-NIKE from cPRF}
+
+TODO poze
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Multi-Party ID-NIKE from cPRF}
+
+\begin{itemize}
+	\item $\mathrm{Setup}(\lambda)$:
+		\begin{itemize}
+			\item  let $F : \mathcal{K} \times \mathcal{X}^N \rightarrow \mathcal{Y}$ be $PRF^{bf}$, $msk \leftarrow^R \mathcal{K}$
+			\item outputs $msk$
+		\end{itemize}
+	\item $\mathrm{Extract}(msk,id_i)$:
+		\begin{itemize}
+			\item  computes $\mathrm{F.constrain}(msk, \{(id_i, \cdot, \dots, \cdot)\})$ to obtain $k^{1}_{id_i}$, $\mathrm{F.constrain}(msk, \{(\cdot, id_i, \cdot, \dots, \cdot)\})$  to obtain $k^{2}_{id_i}$, $\cdots$,  $\mathrm{F.constrain}(msk, \{(\cdot, \dots, \cdot, id_i)\})$ to obtain $k^{N}_{id_i}$
+			\item outputs $sk_{id_i} = (k^{1}_{id_i}, \dots, k^{N}_{id_i})$
+		\end{itemize}
+	\item $\mathrm{KeyGen}(sk_{id_i},\{id_1, \dots, id_N\})$ outputs: 
+
+
+\[ k_{id_1, \dots, id_N} = F(msk, (id_{\pi(1)}, id_{\pi(2)}, \dots, id_{\pi(N)})) \]
+
+where $id_{\pi(1)} < id_{\pi(2)} < \dots < id_{\pi(N)}$ (in lexicographic order)
+
+\end{itemize}
+  
 \end{frame}
 %------------------------------------------------
 
 \begin{frame}
-\Huge{\centerline{The End}}
+\Huge{\centerline{Thank you!}}
 \end{frame}
 
 
