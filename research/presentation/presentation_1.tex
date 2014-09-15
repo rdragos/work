@@ -83,6 +83,7 @@
 \usetikzlibrary{positioning,calc,backgrounds,shapes}
 
 \usepackage[labelformat=empty]{caption}
+\captionsetup{compatibility=false}
 
 \tikzset{My Arrow Style/.style={single arrow, fill=red!30, anchor=base, align=center,text width=2.8cm}}
 \newcommand{\arrowthis}[2][]{\tikz[baseline] \node [My Arrow Style,#1] {#2};}
@@ -93,6 +94,12 @@
     \tikz[baseline]{\node[My Speech Style, #1]{#2};}
 }%
 
+\newcommand{\source}[1]{\begin{textblock*}{4cm}(8.7cm,8.2cm)
+        \begin{beamercolorbox}[ht=0.5cm,right]{framesource}
+        \usebeamerfont{framesource}\usebeamercolor[fg]{framesource} Source: {#1}
+        \end{beamercolorbox}
+    \end{textblock*}
+}
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
@@ -174,6 +181,12 @@ University of Bucharest\\ % Your institution for the title page
 
 \begin{frame}
     \frametitle{ID-Based Crypto}
+    \begin{figure}
+        \includegraphics[width=5cm,height=3cm,keepaspectratio]{wiki.png}
+        \source{http://en.wikipedia.org/wiki/ID-based_encryption}
+        \caption{ID-Based Crypto}
+    \end{figure}
+
 \end{frame}
 
 \section{Constrained PRF}
@@ -244,14 +257,9 @@ University of Bucharest\\ % Your institution for the title page
 \subsection{Boneh Waters ID-NIKE [BW'13]}
 
 \begin{frame}
-    %TODO: this would be awesome if can be itemized
     \frametitle{Boneh-Waters ID-NIKE [BW'13]}
 
-    \only<1>{
-        Inserting boneh waters figure..
-    }
-
-    \only<2->{
+    \only<1->{
         \begin{textblock*}{5cm}(0cm, 3cm)
         \begin{figure}
             \includegraphics[width=5cm,height=3cm,keepaspectratio]{bob.jpg}
@@ -266,22 +274,22 @@ University of Bucharest\\ % Your institution for the title page
             \end{figure}
         \end{textblock*}
     }
-    \only<3->{
+    \only<2->{
         \begin{textblock*}{2cm}(3cm,4.5cm)
             $F(k_{Bob}, (Bob, \cdot))$
             $F(k_{Bob}, (\cdot, Bob))$
         \end{textblock*}
     }
 
-    \only<4->{
+    \only<3->{
         \begin{textblock*}{2cm}(6.5cm,4.5cm)
             $F(k_{Alice}, (Alice, \cdot))$
             $F(k_{Alice}, (\cdot, Alice))$
         \end{textblock*}
     }
-    \only<5->{
+    \only<4->{
         \begin{textblock*}{6cm}(4cm, 2cm)
-            Now we have a common secret key: $F(k_{Alice}, (Alice, Bob))$
+            We have a common secret key: $F(k_{Alice}, (Alice, Bob))$
         \end{textblock*}
     }
 
@@ -313,7 +321,7 @@ F(msk, (id_j, id_i)) & \mbox{if} & id_i > id_j
 \]
 
 \end{itemize}
-  
+
 \end{frame}
 
 
@@ -323,8 +331,56 @@ F(msk, (id_j, id_i)) & \mbox{if} & id_i > id_j
 %------------------------------------------------
 \begin{frame}
     \frametitle{Multi-Party ID-NIKE from cPRF}
+    \only<1->{
 
-TODO poze
+        \begin{textblock*}{4cm}(0cm, 3cm)
+        \begin{figure}
+            \includegraphics[width=5cm,height=3cm,keepaspectratio]{bob.jpg}
+            \caption{Bob}
+        \end{figure}
+        \end{textblock*}
+
+        \begin{textblock*}{2cm}(1cm,2cm)
+            $F(k_{Bob}, (Bob, \cdot, \cdot))$
+            $F(k_{Bob}, (\cdot, Bob, \cdot))$
+            $F(k_{Bob}, (\cdot, \cdot, Bob))$
+        \end{textblock*}
+
+        \begin{textblock*}{2cm}(9cm,2cm)
+            $F(k_{Alice}, (Alice, \cdot, \cdot))$
+            $F(k_{Alice}, (\cdot, Alice, \cdot))$
+            $F(k_{Alice}, (\cdot, \cdot, Alice))$
+        \end{textblock*}
+
+        \begin{textblock*}{4cm}(8cm, 3cm)
+            \begin{figure}
+                \includegraphics[width=5cm,height=3cm,keepaspectratio]{alice.jpeg}
+                \caption{Alice}
+            \end{figure}
+        \end{textblock*}
+    }
+    \only<2->{
+        \begin{textblock*}{4cm}(4.5cm, 3cm)
+        \begin{figure}
+            \includegraphics[width=5cm,height=3cm,keepaspectratio]{stickman-in-love-hi.png}
+            \caption{John}
+        \end{figure}
+        \end{textblock*}
+    }
+    \only<3->{
+        \begin{textblock*}{2cm}(5cm, 2cm)
+            $F(k_{John}, (John, \cdot, \cdot))$
+            $F(k_{John}, (\cdot, John, \cdot))$
+            $F(k_{John}, (\cdot, \cdot, John))$
+        \end{textblock*}
+    }
+    \only<4->{
+        \begin{textblock*}{3cm}(5cm, 8cm)
+            Secret Shared Key:
+            $F(k_{Alice}, (Alice, Bob, John))$
+        \end{textblock*}
+    }
+
 
 \end{frame}
 
@@ -342,7 +398,7 @@ TODO poze
 			\item  computes $\mathrm{F.constrain}(msk, \{(id_i, \cdot, \dots, \cdot)\})$ to obtain $k^{1}_{id_i}$, $\mathrm{F.constrain}(msk, \{(\cdot, id_i, \cdot, \dots, \cdot)\})$  to obtain $k^{2}_{id_i}$, $\cdots$,  $\mathrm{F.constrain}(msk, \{(\cdot, \dots, \cdot, id_i)\})$ to obtain $k^{N}_{id_i}$
 			\item outputs $sk_{id_i} = (k^{1}_{id_i}, \dots, k^{N}_{id_i})$
 		\end{itemize}
-	\item $\mathrm{KeyGen}(sk_{id_i},\{id_1, \dots, id_N\})$ outputs: 
+	\item $\mathrm{KeyGen}(sk_{id_i},\{id_1, \dots, id_N\})$ outputs:
 
 
 \[ k_{id_1, \dots, id_N} = F(msk, (id_{\pi(1)}, id_{\pi(2)}, \dots, id_{\pi(N)})) \]
@@ -350,9 +406,18 @@ TODO poze
 where $id_{\pi(1)} < id_{\pi(2)} < \dots < id_{\pi(N)}$ (in lexicographic order)
 
 \end{itemize}
-  
+
 \end{frame}
 %------------------------------------------------
+
+\section{Joke}
+\begin{frame}
+    \begin{figure}
+        \includegraphics[width=8cm,height=7.5cm,keepaspectratio]{protocol.png}
+        \source{xkcd.com}
+        \caption{Protocol}
+    \end{figure}
+\end{frame}
 
 \begin{frame}
 \Huge{\centerline{Thank you!}}
