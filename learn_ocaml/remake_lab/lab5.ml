@@ -146,3 +146,4 @@ let type_and_run (p,s) = match infertype (gamma_of_s s) p with
 let exp = If(Op(Loc "x", Mic, Int 1), (Loc "x"), (Bool true));;
 let aux x y = Secv(Atrib("x", Atrib("y", Int y)), Op(Loc "x", Plus, Loc "y"));;
 
+
