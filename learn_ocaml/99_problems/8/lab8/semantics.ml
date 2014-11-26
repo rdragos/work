@@ -42,7 +42,7 @@ let rec reduce = function
   | (Op(e1,op,e2,loc),s) ->                                            (*OpS*)
     (match reduce (e1,s) with Some (e1',s') -> Some (Op(e1',op,e2,loc),s')
       | None -> None)
-  | (Loc (l,loc), s) -> Some (Int (lookup l s,loc), s)                    (*Loc*)
+  | (Loc (l,loc), s) -> Some ((lookup l s,loc), s)                    (*Loc*)
   | (Atrib(l, Int (n,_),loc),s) ->                                         (*Atrib*)
       Some (Skip loc, update (l,n) s)
   | (Atrib(l,e,loc),s) ->                                          (*AtribD*)
