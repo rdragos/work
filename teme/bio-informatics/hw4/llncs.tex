@@ -1,0 +1,61 @@
+% This is LLNCS.DEM the demonstration file of
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.4 for LaTeX2e as of 16. April 2010
+%
+\documentclass{llncs}
+%
+\usepackage{makeidx}  % allows for indexgeneration
+\usepackage{llncsdoc}
+\usepackage{algorithmic}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[parfill]{parskip} 
+\usepackage{float}
+\usepackage{caption}
+%\restylefloat{table}
+
+\setcounter{secnumdepth}{4}
+%\restylefloat{table}
+%
+\begin{document}
+\pagestyle{empty}
+\title{About Telomeres}
+
+\titlerunning{About Telomeres}
+\author{Drago\c{s} Alin Rotaru}
+\institute{University of Bucharest}
+\maketitle
+
+\section{Introduction}
+
+Most of genetic information for a cell is packed into chromosomes. The structure of a chromosome differs between eukaryotes and prokaryotes. In general, prokaryotes have a circular chromosome repeating multiple times.
+Unlike prokaryotes, the eukaryotes have different linear chromosomes, each can be divided into 2 chromatides meeting in a place named centromer.
+
+The telomeres can be found at the end of the chromatides containing a repetitive sequence of nucleotides (in vertebrates TTAGGG). At the end of a telomere there is a knot, assuring the stability of chromosomes, in this way chromosomes will be less likely interact one with another.
+Various telomere sequences can be found online at \cite{website:database}.
+
+Cell division is the process which transforms a parent cell into 2 identical daughter cells. Because the DNA polymerases cannot replicate the 3' end of linear chromosomes. This implies the fact that every time a cell divides, telomeres gets shorter. One way to count the number of cell divisions can be achived by looking at the length of the telomeres. Sometimes, an enzyme called telomerase reverse transcriptase goes right to the end of 3' DNA strand and adds the repetitive DNA telomere sequence.
+
+Telomerase can be found in adult germ cells, fetal tissues or cancer cells. The life of a telomere can be viewed as multiple events of additions and erosions.
+An interesting fact is that short telomeres can cause the cell to detect DNA damaging (mainly because all the redundant DNA have been lost due to cell division). After the cell detects this it goes into senescence or apoptosis. More often, cancer is caused by the cells who failed aptoptosis and perform cell division undefinitely.
+
+Some researchers think that telomerase can delay aging, lengthening the life of the cell. The problem with this is that high concentration of telomerase is associated with cancer. However, studies have been made on cancer-resistant mice and the results are somehow positive \cite{tomas:2008}. This hyptohesis can be wrong if telomere shortening is a consequence of cell aging not a cause.
+
+In 2009 a Nobel Prize was given to Elizabeth H. Blackburn, Carol W. Greider, Jack W. Szostak 'for the discovery of how chromosomes are protected by telomeres and the enzyme telomerase' \cite{website:nobel}.
+
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+
+\bibliographystyle{splncs}
+\bibliography{llncs}
+%\end{thebibliography}
+
+\end{document}
