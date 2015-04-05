@@ -1,0 +1,227 @@
+% This is LLNCS.DEM the demonstration file of
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.4 for LaTeX2e as of 16. April 2010
+%
+\documentclass{llncs}
+%
+\usepackage{makeidx}  % allows for indexgeneration
+\usepackage{llncsdoc}
+\usepackage{algorithmic}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[parfill]{parskip} 
+\usepackage{float}
+\usepackage{caption}
+%\restylefloat{table}
+
+\setcounter{secnumdepth}{4}
+%\restylefloat{table}
+%
+\begin{document}
+\pagestyle{empty}
+\title{Substitution Matrices}
+
+\author{Drago\c{s} Alin Rotaru}
+\institute{University of Bucharest}
+\maketitle
+
+\section{Introduction}
+
+The DNA of a cell is composed by 4 bases: adenine (A), cytosine(C), guanine(G), thymine(T). The information required for an organism to properly function is stored in combinations of A-G, C-T. Based on the DNA structure, ribosoms produces amino acids which are later used as building blocks for proteins.
+
+Proteins are macromolecules with specific functions and they can be viewed as small robots inside our body.
+Some examples of proteins include:
+\begin{itemize}
+	\item Keratin. A protein which generates nails, hair in humans or shells in some animals.
+	\item Lactase. Decomposes the sugar lactose from milk
+	\item Hemoglobine. It transports oxygen to the rest of the body from lungs or respiratory organs
+\end{itemize}
+
+An active area of research in computational biology is the study of similarity between proteins, in this way new proteins can be compared with the ones already discovered. The primary structure of proteins is represented by the amino acid sequences tied by peptide bonds.
+
+The problem becomes stated as: given 2 sequences of amino acids $S_1$, $S_2$ one must say with high probability if they have a common ancestor.
+Answering to this question can be difficult, especially that mutations happen over time, according to some rules. Fortunately, substitution matrices attempt to solve this problem in a more rigorous way, computing the similarity based on mutation steps between amino acids with some experimentally observed probabilities. Different types of substitution matrices have been developed such as PAM (Percent Accepted Mutation), BLOSUM (BLOck SUbstitution) or GONNET \cite{dayhoff:1978, henikoff:1992, bennet:1994}.
+
+
+\section{PAM Scoring}
+$PAM_1$ is a scoring matrix with entries $(A_i, A_j)$ representing the expected value that the aminoacid $A_i$ diverges to $A_j$ in $1$ evolutionary step.
+$PAM_2$ solves the same problem but for $2$ steps and so on.
+
+Let $m_i$ the probability that in an evolutionary time unit happens a mutation on the aminoacid $i$.
+Let $\lambda$ a constant representing the degree of freedom the mutation can have. Then the $PAM$ is derived from a mutation probability matrix $M_{ij} = \frac{\lambda m_j A_{ij}}{\sum{A_{kj}}}$ where $A_{ij}$ is the probability that if the amino acid $j$ is mutated and transformed into amino acid $i$. $m_j$ is the probability that in a time unit happens a mutation on the aminoacid $j$.
+The interesting fact is that $PAM_2$ can be created from squaring $PAM_1$. By induction it can be proved that $PAM_X$ = $PAM_{X-1}$ * $PAM_1$ (the proof can be viewed similar to counting the roads of length $X$ from a graph). There were some improvements on PAM in \cite{jones:1992, whelan:2001}.
+
+
+\section{BLOSUM Scoring}
+
+Unlike PAM which takes an evolutionary approach, BLOSUM scoring is based on clustering fix alignments of amino acids. The similiarity for the clustering is done through a BLOSUM Matrix. After several tests, it was selected the matrix BLOSUM62 which detects sequences of amino acids having at least $62 \%$ similarity and it's used widely in applications such as BLAST.
+
+
+\section{Image exercises}
+
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dictum purus ac molestie semper. Quisque tempor ante eget magna consequat, laoreet laoreet ipsum cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis pharetra faucibus ex eu tempor. Nam nec nisl vitae erat sagittis dignissim. Sed pharetra ante nec ultrices commodo. Aliquam posuere mollis sapien, ac ultrices tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed pretium consectetur convallis. In felis risus, placerat id ipsum quis, ultricies ornare tellus. Donec bibendum, massa ut imperdiet tincidunt, lacus lacus ultricies eros, a laoreet orci nisl a nisi. Nulla consectetur rhoncus dignissim.
+
+Maecenas porttitor quis nisi et imperdiet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus euismod consectetur dolor nec interdum. Sed suscipit turpis vel porta iaculis. Nam viverra sodales enim, vel scelerisque mi tincidunt non. Vivamus pellentesque ante sed neque porttitor vestibulum. Pellentesque mollis convallis odio eget tristique. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris ornare gravida erat, non ullamcorper mauris elementum sed.
+
+Ut arcu dui, tincidunt a elementum quis, scelerisque in neque. Vestibulum varius imperdiet nisi, eget consectetur libero varius et. Ut tincidunt augue vel dapibus dapibus. Mauris eget dictum orci. Vivamus ornare sapien eget urna lacinia elementum. Ut eleifend quam nec sapien efficitur, vitae consequat metus pulvinar. Proin ligula erat, gravida cursus risus sit amet, tincidunt cursus nisi. Cras cursus quis risus a scelerisque. Suspendisse et sapien augue. Phasellus at aliquam lorem.
+
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.3\textwidth]{img/english_muffin.jpg}
+	\caption{English Muffin \cite{Muffin:2015}}
+	\label{fig:english_muffin}
+	\end{center}
+\end{figure}
+
+Sed pulvinar velit ac maximus tempor. Morbi varius, nisi ac faucibus congue, odio dui hendrerit quam, tincidunt blandit odio nibh vulputate dolor. Suspendisse suscipit, nulla eget placerat posuere, leo purus finibus felis, ut vestibulum neque nibh eu tortor. Phasellus mattis tellus et velit congue semper. Sed fringilla auctor augue quis vehicula. Integer varius luctus feugiat. Nullam ac placerat sem, at scelerisque quam. Ut sed justo nulla. Maecenas tincidunt libero eget nibh sollicitudin rhoncus. Curabitur quis enim ex. Aliquam auctor arcu et quam aliquam vulputate. Quisque felis leo, bibendum ac consequat et, consequat quis tellus. Maecenas nulla odio, viverra in dignissim sit amet, auctor et ex. Donec laoreet, diam at ultrices suscipit, erat orci volutpat quam, non rutrum ligula est nec massa. Phasellus enim urna, venenatis quis tortor ut, rutrum pulvinar neque.
+
+Suspendisse eget tincidunt nisl. Duis a sapien at erat dignissim pulvinar. Mauris imperdiet sapien ac tortor hendrerit, ac vehicula urna congue. Nullam tempor leo consequat turpis tincidunt dictum et id ante. Etiam orci ipsum, ultricies ut dictum sed, fringilla et tortor. Etiam vestibulum elit nunc, a porttitor purus vestibulum eu. Fusce maximus scelerisque enim, vitae venenatis risus aliquam ut. Mauris viverra fringilla elit nec vestibulum. Nullam facilisis erat nunc, vel semper nisl accumsan ut. Nullam accumsan, nibh at gravida congue, nisl eros feugiat massa, quis tincidunt dolor nunc et est. Vestibulum suscipit sapien eget libero consectetur accumsan in sit amet odio. Vivamus vehicula ex ut ante cursus cursus. Sed interdum bibendum ornare. Proin pellentesque nec nisl eu volutpat.
+
+Aenean vel neque blandit, porta lorem quis, viverra neque. Vivamus lacus lacus, maximus ac laoreet eget, suscipit elementum nisl. In finibus felis quis elementum aliquam. In ultrices, felis sit amet malesuada blandit, lectus tellus accumsan ligula, et elementum neque nibh vel nisl. Maecenas eget metus ac diam tincidunt posuere. Integer semper venenatis erat, ac sollicitudin elit bibendum vel. Nam eros quam, imperdiet cursus metus in, lobortis dapibus purus. Nunc facilisis ac libero eu dictum. Sed est odio, semper in pharetra ut, tincidunt non diam. Etiam ullamcorper libero leo, vitae imperdiet ipsum sagittis eget.
+
+Duis bibendum, massa et luctus laoreet, magna justo sollicitudin tortor, a facilisis sem tortor ac diam. Maecenas eu sagittis metus. Curabitur egestas luctus ipsum eu convallis. Nullam ut viverra ex, eget convallis orci. Maecenas ut tincidunt massa, a aliquam sem. Aenean venenatis hendrerit convallis. Fusce euismod accumsan lectus in viverra.
+
+Donec tempus ac orci at porttitor. Donec vehicula consequat massa, in pellentesque lorem malesuada vel. Donec gravida ex quis hendrerit consectetur. Morbi tincidunt lacinia faucibus. Sed sit amet ultricies massa. Ut sollicitudin odio in neque ornare pharetra. Aenean rutrum auctor suscipit. Morbi ullamcorper aliquam commodo. Quisque vulputate lorem ante. Quisque suscipit lorem a mi lobortis, at pellentesque mauris condimentum. Sed lobortis rhoncus risus quis volutpat. Curabitur consectetur odio sed molestie ornare. Phasellus rutrum, orci a mattis interdum, neque tellus aliquam quam, quis feugiat ipsum ipsum vitae quam. Integer mattis, tellus ac auctor semper, sapien ligula lacinia erat, vitae dapibus diam enim a ligula. Aliquam erat volutpat.
+
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.3\textwidth]{img/english_muffin.jpg}
+	\caption{English Muffin \cite{Muffin:2015}}
+	\label{fig:english_muffin}
+	\end{center}
+\end{figure}
+
+Donec vitae feugiat diam. Sed suscipit venenatis libero eget efficitur. In consectetur, neque quis vehicula condimentum, metus neque dignissim magna, sed suscipit sem risus nec magna. Aenean eu urna convallis, efficitur massa molestie, viverra lectus. Nam luctus risus accumsan, efficitur velit sit amet, egestas augue. Mauris posuere eros maximus, posuere dui vitae, malesuada ipsum. Etiam vel eros metus. Nullam congue leo volutpat imperdiet malesuada. Quisque vel ante eget sapien accumsan commodo sed et ex. Curabitur leo est, tempus et aliquet vitae, posuere et metus. Vivamus non vulputate tortor. Ut quis efficitur mauris. Vestibulum gravida volutpat leo, non feugiat purus interdum ac.
+
+Duis rhoncus nulla in orci finibus, quis pellentesque lorem laoreet. Morbi hendrerit nunc odio, a semper sem aliquet et. Donec in condimentum ipsum. Duis et nibh ut risus venenatis efficitur. Phasellus ex mi, auctor ac nulla nec, tempor accumsan nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec orci leo, mattis nec tortor quis, mattis feugiat augue.
+
+Duis scelerisque dolor ante, eu accumsan arcu ultricies ut. Curabitur facilisis consequat tortor non lobortis. Suspendisse massa arcu, convallis eu laoreet in, feugiat sit amet neque. Maecenas finibus felis ut libero mattis volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce viverra interdum ipsum. Nulla consequat lacinia velit nec scelerisque. Maecenas faucibus odio ac urna scelerisque, ut fringilla felis dictum. Nulla vulputate porta ligula, in volutpat dolor. Maecenas placerat volutpat felis, vel pretium dui placerat a.
+
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.3\textwidth]{img/english_muffin.jpg}
+	\caption{English Muffin \cite{Muffin:2015}}
+	\label{fig:english_muffin}
+	\end{center}
+\end{figure}
+
+Mauris libero lectus, dapibus vitae pulvinar sed, euismod vestibulum elit. Praesent facilisis ullamcorper metus id varius. Aenean eget blandit magna. Etiam purus mauris, fringilla quis dolor non, suscipit dictum nisl. Nam imperdiet, tellus sit amet dignissim mollis, odio elit consectetur metus, id fringilla ante massa eu eros. Curabitur convallis erat eget sollicitudin malesuada. Donec dictum vel dui dignissim congue. Quisque dolor urna, ultrices eget ex in, sodales condimentum lectus. Quisque a magna ut tortor pulvinar elementum a non nulla. Quisque in rhoncus ipsum, vitae rhoncus erat. Sed vitae sodales metus. Pellentesque lobortis, velit non facilisis varius, lectus ex tempus metus, ac convallis odio metus sit amet mauris. Suspendisse eu pretium mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+
+Ut tempus lobortis tellus, ac congue velit tempus vel. Sed et ex quis purus efficitur ultrices. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed iaculis nisi purus, sit amet blandit sem pretium ac. Nulla laoreet, nisi nec pretium elementum, mauris neque lacinia dolor, molestie eleifend massa velit ut metus. Phasellus id tempus libero. Maecenas sed risus dolor. In ac dictum velit. Phasellus imperdiet ut nibh eget sodales. Maecenas at elit non nunc congue fringilla non eget urna. Curabitur et lorem sollicitudin, tristique arcu eu, malesuada est. Nulla facilisi. Nullam et cursus justo. Suspendisse potenti.
+
+Vivamus suscipit non arcu sed eleifend. Praesent vel laoreet quam. Ut velit quam, viverra quis justo sit amet, tempus sagittis ex. Mauris lobortis dolor aliquet, posuere ante at, egestas lectus. Fusce eget mollis lorem. Sed molestie massa et leo tincidunt aliquam. Nulla facilisi. Suspendisse sapien ex, iaculis elementum maximus eu, maximus id ligula. Cras facilisis, tortor sed eleifend dapibus, urna orci efficitur est, pharetra molestie odio ligula in tortor. Nunc cursus finibus mi tempor scelerisque.
+
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.3\textwidth]{img/english_muffin.jpg}
+	\caption{English Muffin \cite{Muffin:2015}}
+	\label{fig:english_muffin}
+	\end{center}
+\end{figure}
+
+Aenean vestibulum quis ex ullamcorper cursus. In vitae elementum tortor, quis interdum sem. Ut nunc sapien, luctus non eros ut, ornare commodo tortor. Donec laoreet massa sapien, nec bibendum tortor fermentum eget. Donec venenatis orci dui, nec accumsan turpis blandit in. Vestibulum dictum massa et nisi lobortis, vitae efficitur est ultrices. Mauris dignissim mi eget ipsum consequat posuere. Aenean non nisl eu dui porta pulvinar.
+
+Nulla dui sapien, tincidunt nec finibus a, fringilla tempor arcu. Aliquam eget urna at orci posuere dapibus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus tempor justo at condimentum mollis. Suspendisse sit amet consequat nisi, non aliquet lorem. Vivamus iaculis nisl a felis vestibulum, auctor molestie nisl pretium. Maecenas finibus est ante, et accumsan nibh feugiat sed. In pretium ligula nunc, vitae semper eros volutpat sed.
+
+Cras tincidunt lectus sed erat posuere elementum. Nam interdum tristique tincidunt. Aliquam facilisis dolor feugiat tempor blandit. Curabitur pulvinar suscipit aliquet. Aenean dictum vulputate ultrices. Cras mollis consectetur ipsum et pellentesque. Pellentesque malesuada sem iaculis, suscipit urna non, sagittis est. Integer non rutrum justo, scelerisque faucibus odio.
+
+Sed odio dui, vulputate id mattis eget, facilisis nec diam. In hac habitasse platea dictumst. Nunc eu vehicula velit, eu tristique orci. Suspendisse dui urna, finibus nec posuere luctus, euismod vitae velit. Praesent sit amet lectus luctus metus finibus accumsan. Nunc in porta libero. Mauris cursus accumsan metus quis eleifend. Phasellus mollis magna et neque euismod, id dictum massa facilisis. Mauris faucibus iaculis tellus quis malesuada. Fusce efficitur eros sit amet aliquet convallis. Pellentesque vel bibendum diam.
+
+
+\begin{figure}[ht]
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+\includegraphics[width=\textwidth]{img/english_muffin.jpg}
+\caption{English Muffin \cite{Muffin:2015}}
+\label{fig:figure1}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+\includegraphics[width=\textwidth]{img/english_muffin.jpg}
+\caption{English Muffin \cite{Muffin:2015}}
+\label{fig:figure2}
+\end{minipage}
+\end{figure}
+
+Phasellus dictum enim nec fermentum porta. Fusce blandit elit id pellentesque ullamcorper. Aliquam erat volutpat. Morbi vitae ante nisl. Phasellus felis dui, tincidunt sed ullamcorper in, eleifend eget eros. Pellentesque ac felis leo. Duis et pulvinar lacus.
+
+Curabitur mattis tempus iaculis. Suspendisse dictum, dolor varius laoreet rhoncus, erat odio porttitor mi, sed sollicitudin risus magna in turpis. Fusce sit amet congue libero. Quisque nec sagittis sapien. Sed ornare neque at sem rhoncus semper. Pellentesque neque augue, sollicitudin a purus sit amet, varius commodo lectus. Mauris sit amet aliquet felis, ac cursus odio. Nam laoreet id tellus nec ultrices. Vestibulum a lacus massa. Suspendisse sed laoreet odio. Nam at tellus id nunc suscipit cursus tincidunt non arcu. Suspendisse eu lectus lacus. In at ligula augue.
+
+Morbi dui ante, placerat imperdiet imperdiet nec, ultrices quis elit. Pellentesque id ex metus. Fusce dapibus, purus et aliquet suscipit, magna mi lacinia velit, id faucibus lacus leo vitae elit. Nam non hendrerit erat. Nulla ultricies eros eget urna faucibus, eu viverra sem posuere. Sed posuere suscipit auctor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum molestie, mauris sed ullamcorper congue, mi arcu sodales massa, sed bibendum ligula lorem eu eros. Proin eget auctor risus, vitae pharetra augue.
+
+Phasellus quis mi sit amet magna dapibus fringilla a non dui. Etiam quis tellus sollicitudin, porttitor metus vel, ornare ex. Donec et fringilla tellus. Aenean mollis, lorem id pellentesque ullamcorper, velit elit faucibus velit, ut ultricies magna felis id arcu. Donec quis tempor velit. Nunc scelerisque velit a faucibus dapibus. Sed vel ultricies nulla. Integer orci magna, pretium eget malesuada nec, porttitor in libero. Etiam at posuere lectus.
+
+Nullam nunc erat, feugiat quis molestie et, tristique id urna. Donec ut congue erat. Donec tincidunt dictum libero, ac bibendum velit luctus vitae. Donec leo erat, elementum non rhoncus vitae, tempus ac enim. Donec sit amet placerat magna. Pellentesque ornare justo lectus, sit amet tempor enim mollis non. Phasellus est velit, ullamcorper sed suscipit at, semper at sapien. Quisque vestibulum risus vel libero ornare auctor.
+
+Proin semper nulla in sapien elementum, non molestie urna lacinia. Sed mollis, quam sit amet pretium ullamcorper, odio enim egestas nisi, non lobortis nisl lacus ut justo. Nunc maximus sem vel ipsum tristique ultrices. Nam augue libero, lacinia vitae eleifend et, auctor sed turpis. Curabitur et volutpat leo. Pellentesque nisl elit, venenatis vitae luctus id, mollis eu massa. Morbi volutpat arcu quis augue pulvinar, non imperdiet nulla euismod. Phasellus ac turpis non lacus scelerisque convallis. Etiam imperdiet lorem vitae leo dignissim dignissim. Donec et commodo justo, eget convallis est. Cras luctus blandit euismod. Donec consectetur fermentum turpis pulvinar porttitor. Maecenas tempus sodales quam a fringilla. Aliquam vestibulum metus diam, nec volutpat mi tristique porta.
+
+Maecenas ipsum lectus, mollis non magna id, dapibus volutpat libero. Curabitur eget diam vulputate, luctus ligula sit amet, placerat leo. Vivamus pretium commodo accumsan. Phasellus facilisis elementum neque, ut egestas neque fringilla eget. Duis molestie quam non varius volutpat. Vestibulum tellus nunc, rhoncus vel sapien non, varius fermentum libero. Proin aliquam velit libero, ut posuere velit dictum ac.
+
+Ut tristique pellentesque magna vel convallis. Nam eu urna rhoncus, pellentesque ligula eu, consectetur arcu. Donec ut augue augue. Morbi libero augue, fermentum in pretium at, mattis quis quam. Donec tincidunt at enim quis dignissim. Vivamus eget vulputate odio, eget consectetur risus. Fusce tempus tincidunt felis.
+
+Nunc eget convallis mi. Nulla cursus, erat eget semper fermentum, augue neque congue purus, ut egestas neque quam vel purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas ultricies tristique ultrices. Integer vulputate elit in tortor cursus, et tempor lectus consectetur. Ut egestas vitae dolor et tincidunt. Curabitur purus augue, scelerisque vel tempus at, tempor sed libero. Fusce a arcu id arcu consectetur dapibus. Vestibulum faucibus nisi vel leo mattis, a malesuada elit viverra. Curabitur sit amet consectetur ipsum. Sed sed est nisi. Vivamus suscipit metus risus, ac facilisis orci hendrerit et. Mauris viverra massa ut convallis luctus.
+
+Nullam faucibus elit ex, ut condimentum orci interdum sit amet. Vestibulum ullamcorper vel magna sed congue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus pellentesque quam vel ligula ultrices, sit amet rhoncus ex rutrum. Fusce lacinia augue massa, id pharetra mi lacinia sed. Maecenas at pellentesque leo. Cras viverra pharetra turpis, in dignissim metus mattis vitae. Ut vehicula malesuada blandit. Proin tincidunt, sapien ut facilisis semper, nunc ex pretium augue, nec efficitur metus libero in lacus. Mauris id dictum metus, vitae efficitur tellus. Proin at bibendum nibh, vel pulvinar justo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi consectetur consequat dictum. Donec tempus est nisl, ac scelerisque urna pharetra ac. Aenean accumsan sapien sit amet enim dictum fermentum. In sed leo ex.
+
+Ut tincidunt neque in bibendum mollis. Etiam a rutrum risus. Phasellus facilisis quam id consequat sodales. Aliquam laoreet posuere erat, vitae congue mi porta nec. Morbi a pretium orci. Fusce scelerisque arcu vel ipsum porta porta. Cras scelerisque quam faucibus elit lacinia lobortis. Pellentesque egestas maximus porta. Cras laoreet neque metus, at mattis dui iaculis a. Donec cursus mi sed lorem iaculis aliquet. Curabitur ultrices est sed bibendum egestas. Suspendisse et risus condimentum, ornare diam consectetur, malesuada odio. Fusce vitae vehicula turpis.
+
+Vestibulum pretium est sit amet feugiat ultricies. Pellentesque dolor diam, viverra ut placerat nec, commodo non erat. Cras tristique suscipit sem at porta. Ut sodales dui a velit rutrum pulvinar. Phasellus sit amet tellus sed nunc blandit posuere sit amet mollis libero. Nam odio purus, cursus ac bibendum et, eleifend a justo. Nunc varius venenatis sapien id consectetur.
+
+Fusce enim lorem, ullamcorper nec cursus faucibus, aliquam in arcu. Donec neque sem, bibendum vel pretium et, pulvinar vel ligula. Sed a nibh eu leo convallis bibendum. Cras arcu risus, pellentesque eu felis eu, pulvinar convallis lacus. Donec bibendum sagittis orci, non porta leo cursus non. Curabitur malesuada blandit placerat. Nunc vitae pretium lorem. Donec lobortis odio ut dolor maximus, eu dignissim massa eleifend. Curabitur sollicitudin facilisis velit, sit amet egestas neque maximus non. Sed nec velit et quam pretium placerat pulvinar a tellus. Sed in quam at ligula varius porta at nec turpis. In hac habitasse platea dictumst.
+
+Curabitur gravida leo vitae dapibus tincidunt. Donec placerat rhoncus metus et malesuada. Nam ex orci, accumsan eget aliquam a, imperdiet a libero. Phasellus bibendum tempor erat vitae aliquam. Aliquam condimentum at nulla id tincidunt. Mauris a est risus. Praesent eleifend ante id ultrices gravida.
+
+Aliquam erat volutpat. In hac habitasse platea dictumst. Fusce vel est elementum, varius nulla eget, scelerisque urna. Vestibulum nisi leo, imperdiet ut pulvinar eu, vehicula sit amet diam. Cras scelerisque eu elit vel semper. Sed ac enim non erat rutrum posuere eget vel risus. Morbi mauris turpis, blandit et varius ac, fringilla tristique erat. Praesent tempor ut massa sed euismod. Morbi venenatis nisi tincidunt fermentum consectetur. In quis vestibulum elit, vitae congue lectus. Aliquam mauris arcu, pharetra eu quam ut, ultricies commodo purus. Morbi ultrices non risus vel vestibulum. Quisque urna lacus, vulputate ac egestas vitae, interdum ac elit. Donec vel hendrerit mauris, vel consectetur velit.
+
+Phasellus risus lorem, pharetra ut augue nec, vehicula sagittis mauris. Sed nunc turpis, scelerisque et purus quis, vehicula auctor felis. Nulla aliquam lacus eget arcu rhoncus, ac pellentesque sem convallis. Curabitur egestas velit in lacus tristique suscipit. Proin a dolor elit. Sed eu ante in lacus porttitor sodales porttitor nec risus. Vestibulum accumsan purus eu consequat dapibus. Nunc luctus, arcu id maximus dictum, eros orci pulvinar ex, vel fermentum justo lacus quis magna. Proin dignissim sem ornare, semper nulla eget, bibendum lorem. Quisque facilisis orci quis fermentum consectetur. Maecenas rutrum fermentum maximus. Morbi ut volutpat magna. Donec eget sapien ac purus euismod consectetur. Pellentesque a eleifend ex. Nulla porttitor, eros at tristique maximus, metus neque tristique velit, eu tincidunt ex magna vel arcu.
+
+Sed nec sem at nisl sagittis blandit vel vel diam. In porta mattis leo, sed efficitur tortor rutrum fermentum. Fusce tincidunt nec libero et faucibus. Nullam a tincidunt felis. Nunc ac nulla a sem venenatis ullamcorper auctor et purus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc sagittis ac libero eu suscipit. Morbi gravida dolor at eros feugiat, ac malesuada risus vehicula. Maecenas posuere eros in lectus fringilla iaculis nec eget magna. Ut non tincidunt arcu. Etiam eget augue sapien. Integer maximus est eu dolor molestie suscipit. In mollis, nunc id fringilla tincidunt, libero risus pellentesque erat, vitae vestibulum sapien ex sed dolor. Sed vitae lorem consequat, viverra lorem ut, auctor justo. Fusce lacinia molestie pulvinar. Cras sollicitudin dui nec pretium dictum.
+
+Maecenas feugiat tellus id augue pellentesque, non vulputate mi suscipit. Etiam hendrerit arcu dolor, aliquet convallis felis vehicula vulputate. Etiam nec finibus dolor, eu auctor turpis. Phasellus libero ipsum, malesuada sit amet elementum vitae, auctor ut metus. Donec sit amet luctus risus. Nulla facilisi. Aliquam vehicula mollis nisi et tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi convallis metus quis nisl blandit, vitae fermentum lectus sollicitudin. Etiam euismod gravida nisl sit amet aliquam. Nulla bibendum imperdiet dignissim. Donec at ex hendrerit, lobortis ante eu, imperdiet diam. Duis porttitor orci ac ultricies mattis.
+
+Nunc scelerisque euismod turpis eu aliquet. Quisque at porttitor sapien, sit amet venenatis sapien. Etiam id dictum mi, vel pretium justo. Vestibulum lacinia mauris lorem, in laoreet lectus maximus consectetur. Proin justo arcu, sodales sed fringilla in, egestas id diam. Phasellus volutpat tempor risus, accumsan accumsan est tristique id. Pellentesque suscipit velit vel tellus vulputate, vitae finibus velit fermentum. Donec ornare gravida risus vitae fermentum.
+
+Nulla id ligula in orci semper suscipit. Nulla venenatis ac elit sit amet pellentesque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis mi tellus. Integer tincidunt vestibulum urna at lacinia. Vestibulum a arcu quis augue rhoncus varius eget ut felis. Praesent quis malesuada metus. Donec dui sem, finibus suscipit molestie et, tincidunt at lacus. Pellentesque sed fermentum libero. Mauris tincidunt dui sed tellus efficitur, a ornare urna tempor. Nulla facilisi.
+
+Quisque tempor in nisi vitae faucibus. Nulla at tincidunt magna, quis euismod sem. Integer luctus eros lorem, sed iaculis massa porta sit amet. Quisque maximus egestas libero in ultrices. In faucibus lorem diam, vel iaculis metus varius nec. Donec augue elit, aliquam quis ipsum sit amet, faucibus tempus elit. Nam commodo ipsum vitae nibh mattis viverra. Sed odio mauris, dapibus at imperdiet sed, semper eget justo.
+
+Phasellus et ultricies nulla. Pellentesque risus tortor, tincidunt sit amet justo eget, cursus hendrerit sapien. Integer gravida pulvinar diam, sit amet hendrerit neque. Ut aliquet dictum ante, at bibendum odio cursus sit amet. Sed ac leo eget arcu tristique pellentesque. Aenean vehicula lobortis risus at convallis. Mauris sed odio egestas velit dignissim imperdiet eu sed lacus. Praesent quis dui condimentum, scelerisque augue vel, lacinia enim. Duis at ullamcorper est. Nullam posuere purus ac elit tempus dignissim rhoncus vel enim. Nullam vel lorem ac nisl dapibus suscipit. Nullam sit amet felis ac diam volutpat molestie a nec magna. In velit eros, rutrum rutrum urna ornare, gravida molestie odio. Nam mollis erat quis augue rhoncus, et finibus libero egestas. Vestibulum consectetur semper interdum.
+
+Duis finibus, diam in volutpat faucibus, erat lorem suscipit purus, non sagittis elit lectus vel eros. Nulla sollicitudin tincidunt tellus in sollicitudin. Sed consequat, felis eget ultricies blandit, arcu eros pulvinar tellus, non sodales nisi ante sit amet lectus. Nulla quis sapien gravida, vehicula lacus quis, gravida nisl. Nulla facilisi. Maecenas dignissim pulvinar sem. Etiam non placerat sapien. Mauris bibendum, lacus nec tristique laoreet, nibh tortor fermentum diam, nec facilisis nulla elit non nisl. Vestibulum varius, eros sed elementum luctus, lacus ex tincidunt enim, in congue mi tortor semper felis. Duis sem lectus, imperdiet a varius sed, auctor at nulla.
+
+Integer convallis leo ac dui imperdiet, imperdiet cursus metus sodales. Suspendisse sit amet maximus tortor. Mauris aliquet sollicitudin elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet accumsan libero. Aenean vulputate non odio sed vehicula. In vestibulum tortor egestas, semper enim nec, consequat nunc. Etiam quis lectus hendrerit, blandit ante sed, bibendum dui. Nam aliquam dui et neque suscipit, ut aliquam mauris suscipit. Sed interdum est nec finibus tincidunt. Vivamus nec nisl lorem. Nullam efficitur feugiat facilisis.
+
+Fusce gravida aliquet metus ut tristique. Integer semper tellus in aliquam ultricies. Donec pharetra diam non ex consequat, eget placerat sem accumsan. Aenean placerat dolor mauris. Integer sed sem tellus. Etiam nisl quam, sodales nec justo ac, commodo eleifend mi. Nullam porta molestie sapien. Maecenas ultricies magna nec elit malesuada, in sodales nunc euismod. Vivamus semper scelerisque malesuada.
+
+Vivamus vel felis vel massa feugiat euismod. Ut id euismod nisi, vitae bibendum velit. Nullam consectetur egestas risus, at venenatis felis. Ut nec arcu dolor. Duis pulvinar finibus magna non ullamcorper. Aliquam erat volutpat. Integer ornare elit eu libero ultricies, quis venenatis ipsum cursus. Vivamus quam mauris, pharetra vitae enim vitae, volutpat congue arcu. Praesent vitae lobortis nibh. Duis nec turpis odio. Cras ullamcorper finibus scelerisque. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+
+Donec nec eleifend odio. Donec pulvinar leo a tempus pellentesque. Vestibulum viverra cursus elit, in volutpat est egestas id. Sed at pellentesque erat. Mauris nunc purus, consequat id dictum maximus, ullamcorper maximus orci. Suspendisse sodales ut ligula fermentum venenatis. Maecenas tortor metus, pharetra hendrerit dapibus id, mollis quis neque. In turpis nibh, pharetra pellentesque enim sed, consectetur semper nulla. Nam molestie tincidunt augue non laoreet. Pellentesque vitae diam diam. Quisque varius lacus non lectus sollicitudin mattis. Integer mi justo, placerat id risus eget, tincidunt faucibus enim. Ut sollicitudin imperdiet sem, eu fermentum nibh. Duis semper, diam in placerat imperdiet, felis mi pharetra tellus, eu ultricies eros urna eu arcu. Proin eu viverra justo.
+
+Maecenas semper nulla ullamcorper justo pellentesque, eget pharetra libero faucibus. Cras iaculis nunc libero, sit amet pulvinar lacus egestas at. Sed a malesuada odio. Praesent cursus ante id ullamcorper vulputate. Phasellus sit amet semper orci, quis aliquet neque. Ut eget mauris nec ex pellentesque fringilla id a odio. Nullam eu erat gravida, ullamcorper lectus eu, ultrices mi. Donec porttitor nunc in turpis fermentum fringilla. Mauris eget aliquam purus. Aenean at ligula urna. Aenean semper neque ac condimentum pellentesque. In hac habitasse platea dictumst. Maecenas placerat, quam in convallis dictum, ipsum velit convallis quam, in ornare magna nisi id nibh. Nulla non nisl nec lorem rutrum fermentum.
+
+Integer interdum odio ac orci luctus, nec interdum enim tristique. Ut eget efficitur tellus, non laoreet leo. Integer ultrices turpis nunc, pellentesque pretium nisi tincidunt at. Morbi in tempus ante. Phasellus orci neque, tincidunt et urna nec, pharetra fringilla odio. Maecenas risus tellus, vulputate a viverra vel, egestas nec dolor. Vivamus ac tortor quis enim tincidunt interdum eget nec velit. Sed tristique leo sit amet justo interdum, in vulputate felis tempus.
+
+In posuere tempus eros, eu facilisis ante tempor at. Morbi non dictum enim. Aliquam ipsum nisl, facilisis et laoreet quis, viverra quis magna. Sed bibendum et est viverra mattis. Nam tincidunt imperdiet viverra. Vestibulum bibendum, libero quis pellentesque interdum, sapien leo rhoncus orci, sed rhoncus nisl purus nec lacus. Sed non dolor elementum, lobortis mauris vitae, volutpat libero. Proin egestas, lacus in viverra porta, risus libero varius dolor, eu fringilla ipsum orci eu mauris. Integer id mauris faucibus, hendrerit dolor in, auctor tortor. Mauris blandit sagittis dolor elementum interdum.
+
+Vestibulum mattis, urna ut fermentum consectetur, est turpis placerat ex, vel dignissim nunc neque quis magna. Morbi et porttitor mi. Sed in dolor congue, scelerisque lacus non, tempus odio. Sed eleifend hendrerit lobortis. Donec rutrum justo non diam iaculis interdum. Praesent laoreet sed tortor sit amet cursus. Duis cursus vitae felis ac cursus.
+
+Morbi rhoncus dolor eu ex aliquet aliquet. Quisque urna nulla, lobortis quis purus quis, rutrum ultrices tortor. Morbi dictum congue erat eget fermentum. In pharetra, nunc nec consequat hendrerit, ligula nisl finibus elit, in molestie ante metus quis massa. Sed in ligula ut ex euismod accumsan. Suspendisse potenti. Vestibulum vulputate, lacus id vestibulum gravida, leo nisl mollis felis, a hendrerit metus ligula quis orci. 
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+
+\bibliographystyle{splncs}
+\bibliography{llncs}
+%\end{thebibliography}
+
+\end{document}
