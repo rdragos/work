@@ -8,6 +8,7 @@
 !*.cc
 !*.c
 !*.md
+!*.tex
 Makefile
 driver.cc
 *.in

@@ -1,0 +1,209 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage[absolute, overlay]{textpos}
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{tikz}
+\usepackage{amsmath}
+\usetikzlibrary{positioning,calc,backgrounds,shapes}
+
+\usepackage[labelformat=empty]{caption}
+\captionsetup{compatibility=false}
+
+\tikzset{My Arrow Style/.style={single arrow, fill=red!30, anchor=base, align=center,text width=4cm}}
+\newcommand{\arrowthis}[2][]{\tikz[baseline] \node [My Arrow Style,#1] {#2};}
+
+
+\tikzset{My Speech Style/.style={ellipse callout, fill=red!50, anchor=base, align=center,text width=2.8cm}}
+\newcommand{\speechthis}[2][]{
+    \tikz[baseline]{\node[My Speech Style, #1]{#2};}
+}%Ea
+\newcommand{\source}[1]{\begin{textblock*}{4cm}(8.7cm,8.2cm)
+        \begin{beamercolorbox}[ht=0.5cm,right]{framesource}
+        \usebeamerfont{framesource}\usebeamercolor[fg]{framesource} Source: {#1}
+        \end{beamercolorbox}
+    \end{textblock*}
+}
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Bitdefender, University of Bucharest]{Introduction to Lattice Based Cryptography}
+% The short title appears at the bottom of every slide, the full title is only on the title page
+%An Immediate Multi-Party Generalization of ID-NIKE from Constrained PRF
+\author[D.A.Rotaru]{Drago\c{s} Alin Rotaru} % Your name
+\institute[Bitdefender, Unibuc] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+Bitdefender Romania,
+University of Bucharest\\ % Your institution for the title page
+% \medskip
+% \textit{ruxandra.olimid@fmi.unibuc.ro, r.dragos0@gmail.com} % Your email address
+}
+\date{October 21, 2015} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Outline} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%------------------------------------------------
+
+\begin{frame}
+    \frametitle{Outline} % Table of contents slide, comment this block out to remove it
+    \begin{itemize}
+        \item What is a lattice?
+        \item Lattices in practice.
+        \item Examples of hard problems on lattices.
+        \item (Known) Algorithms for solving hard problems on lattices.
+        \item Cyclic lattices and the NTRU cryptosystem.
+    \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+%TODO: Insert slides about signatures, post quantum, FHE, Obfuscation
+\section{Basic facts about lattices}
+\begin{frame}
+    \frametitle{What is a lattice? v.1}
+    \only<1-> {
+        Short Answer: A grid.
+        \begin{figure}
+            \includegraphics[width=7cm,height=7cm,keepaspectratio]{img/latticer2.png}
+            \caption{Lattice in $R^2$}
+        \end{figure}
+    }
+\end{frame}
+
+% TODO: Write about the tradeoff between security proofs and practical systems
+% 
+\begin{frame}
+    \frametitle{What is a lattice? v.2}
+    \begin{itemize}
+        \item The set of all integers combinations by some vectors in $R^m$.
+        \item Given $n$ linearly independent vectors $b_1, b_2, \dots, b_n \in \mathbb{R}^m$ the lattice generated by them is $\mathcal{L}(b_1, b_2, \dots, b_n) = \{ \sum\nolimits{}{x_ib_i} , x_i \in \mathbb{Z}\}$.
+        \item We call $b_1, b_2, \dots b_n$ the basis of $\mathcal{L}$.
+        \item Rewrite the definition as $\mathcal{L} = Bx$ where $B$ has $n$ columns: $b_1, b_2, \dots, b_n$.
+
+    \end{itemize}
+\end{frame}
+
+%TODO: Insert slide about how a lattice can have multiple bases
+\begin{frame}
+    \frametitle{Lattice Basis}
+    \begin{block}<1->{Fact}
+        $\mathcal{L}(B) = \mathcal{L}(B')$ if and only if there exists an unimodular integer matrix $U$ such that $B = B'U$.
+    \end{block} 
+    \begin{itemize}
+        \pause \item Because $U$ is unimodular, $det(U) = \pm 1$.
+        \pause \item So what?
+        \pause \item $det(B)$ it's invariant over the choice of basis. Denote as $det(\mathcal{L})$.
+        \pause \item $det(\mathcal{L})$ is also called the fundamental volume of $\mathcal{L}$.
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    \frametitle{testing}
+    \begin{center}
+    $Bx = 
+      \begin{bmatrix}
+            | & | & \cdots & |\\
+            b_1 & b_2 & \cdots & b_n \\
+            | & | & \cdots & |
+     \end{bmatrix}
+     \begin{bmatrix}
+        x_1\\
+        x_2\\
+        \vdots \\
+        x_n 
+    \end{bmatrix}$
+    \end{center}
+\end{frame}
+
+
+\begin{frame}
+\Huge{\centerline{Thank you!}}
+\end{frame}
+\end{document}
