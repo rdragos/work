@@ -97,7 +97,8 @@
 \tikzset{My Speech Style/.style={ellipse callout, fill=red!50, anchor=base, align=center,text width=2.8cm}}
 \newcommand{\speechthis}[2][]{
     \tikz[baseline]{\node[My Speech Style, #1]{#2};}
-}%Ea
+}
+
 \newcommand{\source}[1]{\begin{textblock*}{4cm}(8.7cm,8.2cm)
         \begin{beamercolorbox}[ht=0.5cm,right]{framesource}
         \usebeamerfont{framesource}\usebeamercolor[fg]{framesource} Source: {#1}
@@ -203,6 +204,7 @@ University of Bucharest\\ % Your institution for the title page
     \end{itemize}
 \end{frame}
 
+%insert a figure of succesive minima
 \begin{frame}
     \frametitle{Succesive minima}
     \begin{block}<1->{Shortest Vector}
@@ -248,8 +250,8 @@ University of Bucharest\\ % Your institution for the title page
         \pause \item Output: $\tilde{\mathbf{b}}_1, \tilde{\mathbf{b}}_2, \dots, \tilde{\mathbf{b}}_n$, such that $ \langle \tilde{\mathbf{b}}_i, \tilde{\mathbf{b}}_j \rangle = 0, i \neq j$ 
         \pause \item Define the projection operator: $proj_{u}(v) = \frac{\langle v, u \rangle}{\langle u, u \rangle}u$.
         \pause \item $\tilde{\mathbf{b}}_1 = \mathbf{b}_1, \tilde{\mathbf{b}}_2 = \mathbf{b}_2 - proj_{\tilde{\mathbf{b}}_1}({\mathbf{b}}_2)$ and so on.
-        \pause \item $\tilde{\mathbf{b}}_i = \mathbf{b}_i - \sum_{j=1}^{i-1}{\frac{\langle \tilde{\mathbf{b}}_j, \mathbf{b}_i \rangle}{\langle \tilde{\mathbf{b}}_j, \tilde{\mathbf{b}}_j \rangle} \tilde{\mathbf{b}}_j}$.
-        \pause \item Cool! Now plug-in a lattice and find an orthogonal basis! What is wrong with this approach?
+        \pause \item $\tilde{\mathbf{b}}_i = \mathbf{b}_i - \sum_{j=1}^{i-1}{\frac{\langle \tilde{\mathbf{b}}_i, \mathbf{b}_j \rangle}{\langle \tilde{\mathbf{b}}_j, \tilde{\mathbf{b}}_j \rangle} \tilde{\mathbf{b}}_j}$.
+        \pause \item Cool! Now plug-in a lattice and find an orthogonal basis! \pause What is wrong with this approach?
     \end{itemize}
 \end{frame}
 
@@ -261,55 +263,185 @@ University of Bucharest\\ % Your institution for the title page
             \caption{Ortogonalizations of $2$ lattice vectors in $\mathbf{R}^2$; source: Regev O. course}
         \end{figure}
 
-    \textbf{Solution: Round the projection to the nearest integer!}
+    \pause \textbf{Solution: Round the projection to the nearest integer!}
 \end{frame}
 
+
+\begin{frame}
+    \frametitle{Gram-Schmidt for Lattices - LLL Reduction}
+    \begin{block}<1->{$\delta-$LLL Reduced basis}
+        A basis $\{ \mathbf{b}_1, \mathbf{b}_2, \dots , \mathbf{b}_n \} $ is called LLL-reduced if and only if:
+        \begin{enumerate}
+            \pause \item $\forall i \neq j$, $|\mu_{i,j}| \leq \frac{1}{2}$, where $\mu_{i,j} = \frac{\langle \tilde{\mathbf{b}}_i, \mathbf{b}_j \rangle}{\langle \tilde{\mathbf{b}}_j, \tilde{\mathbf{b}}_j \rangle}$.
+            \pause \item $\forall 1 \leq i \leq n$, $\delta \norm{\tilde{b}_i}^2 \leq \norm{\mu_{i+1,i}\tilde{b}_i + \tilde{b}_{i+1} }^2 $
+        \end{enumerate}
+    \end{block}
+    \begin{block}<3->{Why these conditions?}
+        \begin{enumerate}
+            \pause \item Used to prove that the algorithm runs in polynomial time.
+            \pause \item The vector $b_{i+1}$ is not too shorter that $b_{i}$.
+        \end{enumerate}
+    \end{block}
+\end{frame}
 \begin{frame}
     \frametitle{Gram-Schmidt for Lattices - LLL Reduction}
     \begin{block}<1->{LLL Reduction}
         Input: Basis $\{ \mathbf{b}_1, \mathbf{b}_2, \dots , \mathbf{b}_n \} $
+
         Output: $\delta$-LLL reduced basis.
     \end{block}
     \begin{algorithm}[H]
     \begin{algorithmic}[1]
     %Compute $\tilde{\mathbf{b}}_1, \tilde{\mathbf{b}}_2, \dots, \tilde{\mathbf{b}}_n$ 
+    \STATE \emph{Reduction Step}:
     \FOR{$i=1$ to $N$}
     \FOR{$j=i-1$ to $1$}
-    \STATE $b_i =$ $b_i - \lfloor c_{i, j} \rceil b_j$, $c_{i, j} = \frac{\langle \tilde{\mathbf{b}}_j, \mathbf{b}_i \rangle}{\langle \tilde{\mathbf{b}}_j, \tilde{\mathbf{b}}_j \rangle}$
+    \STATE $b_i =$ $b_i - \lfloor c_{i, j} \rceil b_j$, $c_{i, j} = \frac{\langle \tilde{\mathbf{b}}_i, \mathbf{b}_j \rangle}{\langle \tilde{\mathbf{b}}_j, \tilde{\mathbf{b}}_j \rangle}$
     \ENDFOR
 
     \STATE \emph{Swap Step}:
-    \IF {$\exists i$ s.t. $\delta$} \RETURN false
+    \IF {$\exists i$ s.t. $\delta \norm{\tilde{b}_i}^2 > 
+        \norm{\mu_{i+1,i}\tilde{b}_i + \tilde{b}_{i+1} }^2 $} 
+        \STATE Swap $b_i, b_{i+1}$;  goto \emph{Reduction Step} 
     \ENDIF
 
     \ENDFOR
 
     \end{algorithmic}
-    \caption{pseudocode for the calculation of }
+    \caption{LLL Algorithm}
     \label{alg:seq}
     \end{algorithm}
-
 \end{frame}
-%TODO: Not all problems related to lattices are hard. Insert a slide about easy problems. Membership of a vector into a lattice. Check if 2 bases are equivalent.
+
 \begin{frame}
-    \frametitle{testing}
-    \begin{center}
-    $Bx = 
-      \begin{bmatrix}
-            | & | & \cdots & |\\
-            b_1 & b_2 & \cdots & b_n \\
-            | & | & \cdots & |
-     \end{bmatrix}
-     \begin{bmatrix}
-        x_1\\
-        x_2\\
-        \vdots \\
-        x_n 
-    \end{bmatrix}$
-    \end{center}
+    \frametitle{LLL Algorithm}
+    \begin{block}<1->{Sad fact about LLL - in theory}
+        It can approximate the shortest vector by an exponential factor, namely by $(\frac{2}{\sqrt{3}})^n$.
+    \end{block}
+    \begin{block}<2->{Interesting fact about LLL - in practice}
+    \end{block}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Example of Hard Problems based on Lattices}
+    \begin{block}<1->{Shortest Vector Problem $(SVP)$}
+        Given an arbitrary lattice basis $\mathbf{B}$ of a $n$ dimensional lattice $\mathcal{L}$ output a shortest non-zero lattice vector, $v \in \mathcal{L} - \{0 \}$ for which $\norm{v} = \lambda_1(\mathcal{L})$.
+    \end{block}
 
+    \begin{block}<2->{Approximate Shortest Vector Problem $(SVP_{\gamma}$)}
+        Given an arbitrary lattice basis $\mathbf{B}$ of a $n$ dimensional lattice $\mathcal{L}$ output a shortest non-zero lattice vector bounded by a polyonimal function in $n$, i.e. $\norm{v} \leq \gamma(n) \lambda_1(\mathcal{L})$.
+    \end{block}
+
+    \begin{block}<3->{Approximate Decisional SVP $(GapSVP_{\gamma}$)}
+        Given a lattice basis $\mathcal{B}$ of $n$ dimensional lattice $\mathcal{L}$ for which $\lambda_1(\mathcal{L}) \leq 1$ or $\lambda_1(\mathcal{L}) > \gamma(n)$ decide which is the case.
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Example of Hard Problems based on Lattices}
+
+    \begin{block}<1->{Approximate Bounded Distance Decoding ($BDD_{\gamma}$)}
+        Given a lattice basis $\mathcal{B}$ and a vector $t \in \mathbf{R}^n$ find the unique vector $v \in \mathcal{L}$ s.t. $dist(v, t) \ \leq \lambda_1(\mathcal{L}) / 2 \gamma(n)$.
+    \end{block}
+
+    \begin{block}<2->{Closest Vector Problem $CVP$}   
+
+    \pause Currently there isn't any cryptosystem based on $CVP$ - maybe because it's just too hard.
+    \end{block} 
+\end{frame}
+
+\begin{frame}
+    \frametitle{Not More Problems...}
+
+    \begin{block}<1->{Membership Problem}
+        Given a lattice basis $\mathbf{B} \in \mathbb{R}^{nxn}$ and a vector $v \in \mathbb{R}^n$ decide if $v \in \mathcal{L}$.
+    \end{block}
+
+    \begin{block}<2->{Equivalence Problem}
+        Given $2$ lattice bases $\mathbf{B}_1 \in \mathbb{R}^{nxn}$, $\mathbf{B}_2 \in \mathbb{R}^{nxn}$ decide if $\mathcal{L}(\mathbf{B}_1) = \mathcal{L}(\mathbf{B}_2)$.
+    \end{block}
+
+    \begin{block}<3->{Something Wrong?}
+        \pause \pause \pause Those are easy problems!
+    \end{block}
+\end{frame}
+%TODO: Not all problems related to lattices are hard. Insert a slide about easy problems. Membership of a vector into a lattice. Check if 2 bases are equivalent. DONE.
+
+\begin{frame}
+    \frametitle{Polynomials look alike lattices}
+    \begin{itemize}
+        \item Polynomial Ring in $Z_p[X] / (x ^ n + 1)$.
+        \item Elements are polynomial of degree $n - 1$ with coefficients in range $[-(p-1)/2, (p-1)/2]$.
+        \item Nice propeties if $n$ is power of $2$. Can also be considered a cyclic lattice. Will discus this a bit further.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Computational indistuinguishability}
+
+    \begin{block}<1->{Uniform distribution $D_1$}
+        Pick uniform $a \leftarrow^R \mathbb{Z}_p[X] /(X^n + 1)$. Output $a$.
+    \end{block}
+    \begin{block}<1->{Custom Distribution $D_2$}
+        Pick uniform $f, g \leftarrow^R \mathbb{Z}_p[X] / (X^n + 1)$ with $\norm{f} = \norm{g} = 1$. Output $f / g$.
+    \end{block}
+
+    \begin{block}<2->{Uniform distribution $D_1$}
+        Pick uniform $(a, u) \leftarrow^R \mathbb{Z}_p[X] /(X^n + 1)$. Output $(a, u)$
+    \end{block}
+    \begin{block}<2->{Custom Distribution $D_2$}
+        Pick uniform $a, r, e \leftarrow^R \mathbb{Z}_p[X] / (X^n + 1)$ with $\norm{r} = \norm{e} = 1$. Output $(a, ar + e)$.
+    \end{block}
+    \begin{block}<3->{Lemma}
+        $D_1$ and $D_2$ are computational indistinguishable for $p << 2^n$.
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{NTRU cryptosystem}
+    Next slides with the NTRU cryptosystem belong to Vadim Lyubashevki.
+\end{frame}
+\begin{frame}
+    \begin{figure}
+            \includegraphics[width=12cm,height=10cm,keepaspectratio]{img/vadim1.png}
+            \caption{NTRU, (c)V. Lyubashevski}
+        \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+            \includegraphics[width=12cm,height=10cm,keepaspectratio]{img/vadim2.png}
+            \caption{NTRU, (c)V. Lyubashevski}
+        \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+            \includegraphics[width=12cm,height=11cm,keepaspectratio]{img/vadim3.png}
+            \caption{NTRU, (c)V. Lyubashevski}
+        \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+            \includegraphics[width=12cm,height=11cm,keepaspectratio]{img/vadim4.png}
+            \caption{NTRU, (c)V. Lyubashevski}
+        \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+            \includegraphics[width=12cm,height=11cm,keepaspectratio]{img/vadim5.png}
+            \caption{NTRU, (c)V. Lyubashevski}
+        \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Facts about NTRU}
+    \begin{block}<1->{Security proofs}
+        Until $2011$ there was no proof of NTRU security. One was given assuming the hardness of Ring-LWE.
+    \end{block}
+\end{frame}
 \begin{frame}
 \Huge{\centerline{Thank you!}}
 \end{frame}
