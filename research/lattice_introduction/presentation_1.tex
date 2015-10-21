@@ -146,13 +146,32 @@ University of Bucharest\\ % Your institution for the title page
         \item Lattices in practice.
         \item Examples of hard problems on lattices.
         \item (Known) Algorithms for solving hard problems on lattices.
-        \item Cyclic lattices and the NTRU cryptosystem.
+        \item (Maybe) NTRU cryptosystem.
     \end{itemize}
 \end{frame}
 
 %------------------------------------------------
 
 %TODO: Insert slides about signatures, post quantum, FHE, Obfuscation
+
+\begin{frame}
+    \frametitle{Motivation - Post-Quantum Crypto}
+    \begin{figure}
+          \includegraphics[width=10cm,height=10cm,keepaspectratio]{img/quantum_attacks.png}
+          \caption{source: SafeCrypto Project}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Overview of lattice-based constructions}
+    \begin{itemize}
+        \item Fast and Efficient but lack of security proofs (NTRU).
+        \pause \item Strong security proofs but not so fast (Learning with Errors).
+        \pause \item Searching for a solution from both worlds (Ring learning with Errors).
+    \end{itemize}
+\end{frame}
+
+
 \section{Basic facts about lattices}
 \begin{frame}
     \frametitle{What is a lattice? v.1}
@@ -165,8 +184,10 @@ University of Bucharest\\ % Your institution for the title page
     }
 \end{frame}
 
-% TODO: Write about the tradeoff between security proofs and practical systems
-% 
+%TODO: Write about the tradeoff between security proofs and practical systems
+%DONE
+%
+
 \begin{frame}
     \frametitle{What is a lattice? v.2}
     \begin{itemize}
@@ -222,11 +243,18 @@ University of Bucharest\\ % Your institution for the title page
         \pause \item Also, a loose bound. Think about the lattice generated in $\mathbb{R}^2$ by 
         $\begin{bmatrix}
         0 & \epsilon \\
-        1/e & 0 \\
+        1/\epsilon & 0 \\
         \end{bmatrix}$
     \end{itemize}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Succesive minima}
+        \begin{figure}
+            \includegraphics[width=10cm,height=10cm,keepaspectratio]{img/svp.png}
+            \caption{$\lambda_1(\mathcal{L}), \lambda_2(\mathcal{L})$ - Source: Regev course}
+        \end{figure}
+\end{frame}
 \begin{frame}
     \frametitle{Dream world: Gram-Schmidt for Lattices}
     \begin{itemize}
@@ -250,7 +278,7 @@ University of Bucharest\\ % Your institution for the title page
         \pause \item Output: $\tilde{\mathbf{b}}_1, \tilde{\mathbf{b}}_2, \dots, \tilde{\mathbf{b}}_n$, such that $ \langle \tilde{\mathbf{b}}_i, \tilde{\mathbf{b}}_j \rangle = 0, i \neq j$ 
         \pause \item Define the projection operator: $proj_{u}(v) = \frac{\langle v, u \rangle}{\langle u, u \rangle}u$.
         \pause \item $\tilde{\mathbf{b}}_1 = \mathbf{b}_1, \tilde{\mathbf{b}}_2 = \mathbf{b}_2 - proj_{\tilde{\mathbf{b}}_1}({\mathbf{b}}_2)$ and so on.
-        \pause \item $\tilde{\mathbf{b}}_i = \mathbf{b}_i - \sum_{j=1}^{i-1}{\frac{\langle \tilde{\mathbf{b}}_i, \mathbf{b}_j \rangle}{\langle \tilde{\mathbf{b}}_j, \tilde{\mathbf{b}}_j \rangle} \tilde{\mathbf{b}}_j}$.
+        \pause \item $\tilde{\mathbf{b}}_i = \mathbf{b}_i - \sum_{j=1}^{i-1}{\frac{\langle \mathbf{b}_i, \tilde{\mathbf{b}}_j \rangle}{\langle \tilde{\mathbf{b}}_j, \tilde{\mathbf{b}}_j \rangle} \tilde{\mathbf{b}}_j}$.
         \pause \item Cool! Now plug-in a lattice and find an orthogonal basis! \pause What is wrong with this approach?
     \end{itemize}
 \end{frame}
@@ -269,11 +297,11 @@ University of Bucharest\\ % Your institution for the title page
 
 \begin{frame}
     \frametitle{Gram-Schmidt for Lattices - LLL Reduction}
-    \begin{block}<1->{$\delta-$LLL Reduced basis}
+    \begin{block}<1->{$\frac{3}{4}-$LLL Reduced basis}
         A basis $\{ \mathbf{b}_1, \mathbf{b}_2, \dots , \mathbf{b}_n \} $ is called LLL-reduced if and only if:
         \begin{enumerate}
-            \pause \item $\forall i \neq j$, $|\mu_{i,j}| \leq \frac{1}{2}$, where $\mu_{i,j} = \frac{\langle \tilde{\mathbf{b}}_i, \mathbf{b}_j \rangle}{\langle \tilde{\mathbf{b}}_j, \tilde{\mathbf{b}}_j \rangle}$.
-            \pause \item $\forall 1 \leq i \leq n$, $\delta \norm{\tilde{b}_i}^2 \leq \norm{\mu_{i+1,i}\tilde{b}_i + \tilde{b}_{i+1} }^2 $
+            \pause \item $\forall i \neq j$, $|\mu_{i,j}| \leq \frac{1}{2}$, where $\mu_{i,j} = \frac{\langle \mathbf{b}_i, \tilde{\mathbf{b}}_j \rangle}{\langle \tilde{\mathbf{b}}_j, \tilde{\mathbf{b}}_j \rangle}$.
+            \pause \item $\forall 1 \leq i \leq n$, $\frac{3}{4} \norm{\tilde{b}_i}^2 \leq \norm{\mu_{i+1,i}\tilde{b}_i + \tilde{b}_{i+1} }^2 $
         \end{enumerate}
     \end{block}
     \begin{block}<3->{Why these conditions?}
@@ -288,7 +316,7 @@ University of Bucharest\\ % Your institution for the title page
     \begin{block}<1->{LLL Reduction}
         Input: Basis $\{ \mathbf{b}_1, \mathbf{b}_2, \dots , \mathbf{b}_n \} $
 
-        Output: $\delta$-LLL reduced basis.
+        Output: $\frac{3}{4}$-LLL reduced basis.
     \end{block}
     \begin{algorithm}[H]
     \begin{algorithmic}[1]
@@ -296,11 +324,11 @@ University of Bucharest\\ % Your institution for the title page
     \STATE \emph{Reduction Step}:
     \FOR{$i=1$ to $N$}
     \FOR{$j=i-1$ to $1$}
-    \STATE $b_i =$ $b_i - \lfloor c_{i, j} \rceil b_j$, $c_{i, j} = \frac{\langle \tilde{\mathbf{b}}_i, \mathbf{b}_j \rangle}{\langle \tilde{\mathbf{b}}_j, \tilde{\mathbf{b}}_j \rangle}$
+    \STATE $b_i =$ $b_i - \lfloor c_{i, j} \rceil b_j$, $c_{i, j} = \frac{\langle \mathbf{b}_i, \tilde{\mathbf{b}}_j \rangle}{\langle \tilde{\mathbf{b}}_j, \tilde{\mathbf{b}}_j \rangle}$
     \ENDFOR
 
     \STATE \emph{Swap Step}:
-    \IF {$\exists i$ s.t. $\delta \norm{\tilde{b}_i}^2 > 
+    \IF {$\exists i$ s.t. $\frac{3}{4} \norm{\tilde{b}_i}^2 > 
         \norm{\mu_{i+1,i}\tilde{b}_i + \tilde{b}_{i+1} }^2 $} 
         \STATE Swap $b_i, b_{i+1}$;  goto \emph{Reduction Step} 
     \ENDIF
@@ -315,10 +343,27 @@ University of Bucharest\\ % Your institution for the title page
 
 \begin{frame}
     \frametitle{LLL Algorithm}
+    \begin{block}<1->{$1982$}
+        Many cryptosystems were broken. Every cryptosystem based on lattices must be insecure.
+    \end{block}
+    \begin{block}<2->{$1996$}
+    Lattice problems are $NP$-Hard. Reductions from worst case to average case give strong security proofs.
+
+    \end{block}
+    \begin{block}<3->{Hard problems in crypto}
+        Cryptography requires that underlying problems are hard to solve on average, i.e. from a specific distribution
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{LLL Algorithm}
     \begin{block}<1->{Sad fact about LLL - in theory}
-        It can approximate the shortest vector by an exponential factor, namely by $(\frac{2}{\sqrt{3}})^n$.
+        It can approximate the shortest vector by an exponential factor, namely by $1.075^n$.
     \end{block}
     \begin{block}<2->{Interesting fact about LLL - in practice}
+        It can approximate the shortest vector by a smaller factor $1.022^n$ - still exponential.
+
+        \pause \pause In 2011 Chen and Nguyen showed that in practice you can approximate the shortest vector by $1.005^n$ with a variant of LLL.
     \end{block}
 \end{frame}
 
@@ -368,34 +413,13 @@ University of Bucharest\\ % Your institution for the title page
 %TODO: Not all problems related to lattices are hard. Insert a slide about easy problems. Membership of a vector into a lattice. Check if 2 bases are equivalent. DONE.
 
 \begin{frame}
-    \frametitle{Polynomials look alike lattices}
+    \frametitle{Ideals in Rings look alike lattices}
     \begin{itemize}
         \item Polynomial Ring in $Z_p[X] / (x ^ n + 1)$.
-        \item Elements are polynomial of degree $n - 1$ with coefficients in range $[-(p-1)/2, (p-1)/2]$.
-        \item Nice propeties if $n$ is power of $2$. Can also be considered a cyclic lattice. Will discus this a bit further.
+        \pause \item Elements are polynomials of degree $n - 1$ with coefficients in range $[-(p-1)/2, (p-1)/2]$. Just think about $n$ dimensional vectors with values in $Z_p$.
     \end{itemize}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Computational indistuinguishability}
-
-    \begin{block}<1->{Uniform distribution $D_1$}
-        Pick uniform $a \leftarrow^R \mathbb{Z}_p[X] /(X^n + 1)$. Output $a$.
-    \end{block}
-    \begin{block}<1->{Custom Distribution $D_2$}
-        Pick uniform $f, g \leftarrow^R \mathbb{Z}_p[X] / (X^n + 1)$ with $\norm{f} = \norm{g} = 1$. Output $f / g$.
-    \end{block}
-
-    \begin{block}<2->{Uniform distribution $D_1$}
-        Pick uniform $(a, u) \leftarrow^R \mathbb{Z}_p[X] /(X^n + 1)$. Output $(a, u)$
-    \end{block}
-    \begin{block}<2->{Custom Distribution $D_2$}
-        Pick uniform $a, r, e \leftarrow^R \mathbb{Z}_p[X] / (X^n + 1)$ with $\norm{r} = \norm{e} = 1$. Output $(a, ar + e)$.
-    \end{block}
-    \begin{block}<3->{Lemma}
-        $D_1$ and $D_2$ are computational indistinguishable for $p << 2^n$.
-    \end{block}
-\end{frame}
 
 \begin{frame}
     \frametitle{NTRU cryptosystem}
@@ -439,7 +463,7 @@ University of Bucharest\\ % Your institution for the title page
 \begin{frame}
     \frametitle{Facts about NTRU}
     \begin{block}<1->{Security proofs}
-        Until $2011$ there was no proof of NTRU security. One was given assuming the hardness of Ring-LWE.
+        Until $2011$ there was no proof of NTRU security. The proof is based on the hardness of Ring-LWE distribution.
     \end{block}
 \end{frame}
 \begin{frame}
