@@ -1,3 +1,12 @@
+
+reverse(L1, Ret) :-
+  aux_reverse(L1, [], Ret).
+
+aux_reverse([], Acc, Acc) :- !.
+aux_reverse([Head | Tail], Acc, Ret) :-
+  aux_reverse(Tail, [Head | Acc], Ret).
+
+
 /*First Exercise */
 concat_list([], List, List).
 concat_list([Head | Tail], List, [Head | Acc]) :-
@@ -12,9 +21,9 @@ is_set([X|Y]) :-
 /* Transform a list into a set */
 
 list_to_set(L, R) :-
-  aux_set(L, R, []).
+  aux_set(L, R1, []), reverse(R1, R).
 
-aux_set([], Acc, Acc).
+aux_set([], Acc, Acc) :- !.
 aux_set([X | T], R, Acc) :-
   \+ member(X, Acc) -> aux_set(T, R, [X | Acc])
   ; aux_set(T, R, Acc).
@@ -49,7 +58,6 @@ set_difference_aux([H | T], L2, R, Acc) :-
 
 /*Insert element to the beggining of a list if there isn't in the List */
 
-insert_beg(L, [], L).
 insert_beg(X, L, L) :- member(X, L).
 insert_beg(X, L, Y) :- \+member(X, L), concat_list([X], L, Y).
 
@@ -65,15 +73,15 @@ erase_element(X, [H | T], [H | Ret]) :- X \= H, erase_element(X, T, Ret).
 factorial(N, Ret) :-
   aux_factorial(N, Ret, 1).
 
-aux_factorial(1, Acc, Acc).
+aux_factorial(1, Acc, Acc) :- !.
 aux_factorial(N, Ret, Acc) :-
-  N > 1, N2 is (N - 1), Acc2 is (Acc * N), aux_factorial(N2, Ret, Acc2).
+  N > 0, N2 is (N - 1), Acc2 is (Acc * N), aux_factorial(N2, Ret, Acc2).
 
 
 fib(N, Ret) :-
   aux_fib(N, Ret, 0, 1).
 
-aux_fib(0, Current, _, Current).
+aux_fib(0, Current, _, Current) :- !.
 aux_fib(N, Ret, Prev, Current) :-
   N > 0, N2 is (N - 1), Current2 is (Current + Prev), Prev2 is Current, aux_fib(N2, Ret, Prev2, Current2).
 
@@ -81,7 +89,7 @@ aux_fib(N, Ret, Prev, Current) :-
 gcd(A, B, Ret) :-
   aux_gcd(A, B, Ret).
 
-aux_gcd(A, 0, A).
+aux_gcd(A, 0, A) :- !.
 aux_gcd(A, B, Ret) :-
   A2 is mod(A, B), aux_gcd(B, A2, Ret).
 
@@ -104,4 +112,3 @@ aux_positive_sum([], Acc, Acc).
 aux_positive_sum([H | T], Acc, Ret) :-
   H > 0 -> (Acc2 is Acc + H, aux_positive_sum(T, Acc2, Ret));
   aux_positive_sum(T, Acc, Ret).
-

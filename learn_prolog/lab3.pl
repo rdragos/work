@@ -18,12 +18,29 @@ inner_replace([H | T], From, To, Acc, Ret) :-
   (H = From) -> inner_replace(T, From, To, [To | Acc], Ret);
   inner_replace(T, From, To, [H | Acc], Ret).
 
+
+replace1(L, From, To, Ret) :-
+  inner_replace1(L, From, To, [], Ret).
+
+
+inner_replace1([], _, _, Acc, Ret) :-
+  reverse(Acc, Ret).
+
+inner_replace1([H | T], From, To, Acc, Ret) :-
+  (H = From) -> inner_replace2(T, [To | Acc], Ret);
+  inner_replace1(T, From, To, [H | Acc], Ret).
+
+inner_replace2([], Acc, Ret) :-
+  reverse(Acc, Ret).
+
+inner_replace2([H | T], Acc, Ret) :-
+  inner_replace2(T, [H | Acc], Ret).
 /*Ex 2 - done as a subroutine for Ex1*/
 
 /*Ex 3 */
 
-min_list([], Ret) :-
-  Ret = 'NAN'.
+min_list([], _) :-
+  fail.
 min_list([Head | Tail], Ret) :-
   aux_min_list(Tail, Head, Ret).
 
@@ -43,7 +60,7 @@ aux_find_el([], _, _) :-
 
 aux_find_el([Head | Tail], Poz, Ret) :-
   Poz > 1 -> (Poz2 is Poz - 1, aux_find_el(Tail, Poz2, Ret));
-  Ret = Head.
+  Poz > 0, Ret = Head.
 
 /*Ex 5 */
 
@@ -77,11 +94,12 @@ aux_merge_lists([Head1 | Tail1], [Head2 | Tail2], Acc, Ret) :-
 
 /* Ex 7 */
 
-partition(L, Pivot, Ret) :-
-  aux_partition(L, Pivot, [], [], Ret).
+partition(L, Pivot, R1, R2) :-
+  aux_partition(L, Pivot, [], [], R1, R2).
 
-aux_partition([], _, L1, L2, Ret) :-
-  append(L1, L2, Ret).
-aux_partition([Head | Tail], Pivot, L1, L2, Ret) :-
-  (Head =< Pivot) -> aux_partition(Tail, Pivot, [Head | L1], L2, Ret);
-  aux_partition(Tail, Pivot, L1, [Head | L2], Ret).
+aux_partition([], _, L1, L2, R1, R2) :-
+  reverse(L1, R1), reverse(L2, R2).
+
+aux_partition([Head | Tail], Pivot, L1, L2, R1, R2) :-
+  (Head =< Pivot) -> aux_partition(Tail, Pivot, [Head | L1], L2, R1, R2);
+  aux_partition(Tail, Pivot, L1, [Head | L2], R1, R2).
