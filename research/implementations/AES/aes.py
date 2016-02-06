@@ -100,13 +100,13 @@ def rotate(word, n):
 # to the LEFT by the appropriate offset
 def shiftRows(state):
     for i in range(4):
-        state[i*4:i*4+4] = rotate(state[i*4:i*4+4],i)
+        state[i::4] = rotate(state[i::4],i)
 
 # iterate over each "virtual" row in the state table and shift the bytes
 # to the RIGHT by the appropriate offset
 def shiftRowsInv(state):
     for i in range(4):
-        state[i*4:i*4+4] = rotate(state[i*4:i*4+4],-i)
+        state[i::4] = rotate(state[i::4],-i)
 
 #Nr = 10 -> The number of rounds in AES Cipher.
 #Nb = 4 -> The number of columns of the AES state
@@ -148,7 +148,7 @@ def expandKey(cipherKey, Nr = 10, Nb = 4, Nk = 4):
             temp[2] = sbox[temp[2]]
             temp[3] = sbox[temp[3]]
 
-            temp[0] = temp[0] ^ rcon[i/Nk];
+            temp[0] = temp[0] ^ rcon[int(i/Nk)];
 
         round_key[i * 4 + 0] = round_key[(i - Nk) * 4 + 0] ^ temp[0]
         round_key[i * 4 + 1] = round_key[(i - Nk) * 4 + 1] ^ temp[1]
@@ -222,14 +222,14 @@ def mixColumns(state):
         column = []
         # create the column by taking the same item out of each "virtual" row
         for j in range(4):
-            column.append(state[j*4+i])
+            column.append(state[i*4+j])
 
         # apply mixColumn on our virtual column
         mixColumn(column)
 
         # transfer the new values back into the state table
         for j in range(4):
-            state[j*4+i] = column[j]
+            state[i*4+j] = column[j]
 
 # mixColumnsInv is a wrapper for mixColumnInv - generates a "virtual" column from
 # the state table and applies the weird galois math
@@ -238,26 +238,21 @@ def mixColumnsInv(state):
         column = []
         # create the column by taking the same item out of each "virtual" row
         for j in range(4):
-            column.append(state[j*4+i])
+            column.append(state[i*4+j])
 
         # apply mixColumn on our virtual column
         mixColumnInv(column)
 
         # transfer the new values back into the state table
         for j in range(4):
-            state[j*4+i] = column[j]
+            state[i*4+j] = column[j]
 
 # aesRound applies each of the four transformations in order
 def aesRound(state, roundKey):
-    #print "aesRound - before subBytes:", state
     subBytes(state)
-    #print "aesRound - before shiftRows:", state
     shiftRows(state)
-    #print "aesRound - before mixColumns:", state
     mixColumns(state)
-    #print "aesRound - before addRoundKey:", state
     addRoundKey(state, roundKey)
-    #print "aesRound - after addRoundKey:", state
 
 # aesRoundInv applies each of the four inverse transformations
 def aesRoundInv(state, roundKey):
@@ -281,13 +276,15 @@ def aesMain(state, expandedKey, numRounds=10):
     roundKey = createRoundKey(expandedKey, 0)
     addRoundKey(state, roundKey)
 
-    print(int_array_to_hex(state));
     for i in range(1, numRounds):
+        #roundKey is all good
         roundKey = createRoundKey(expandedKey, i)
         aesRound(state, roundKey)
-        print(int_array_to_hex(state));
+        #print('state at round', i)
+        #print(int_array_to_hex(state));
     # final round - leave out the mixColumns transformation
     roundKey = createRoundKey(expandedKey, numRounds)
+
     subBytes(state)
     shiftRows(state)
     addRoundKey(state, roundKey)
@@ -328,23 +325,6 @@ def aesDecrypt(ciphertext, key):
 
 
 p1 = '6bc1bee22e409f96e93d7e117393172a'
-print(p1, len(p1))
 key = '2b7e151628aed2a6abf7158809cf4f3c'
-print(key)
-print('key in integers')
-print(string_to_byte_array(key));
-
-print('plaintext in integers')
-print(string_to_byte_array(p1));
-
 c1 = int_array_to_hex(aesEncrypt(p1, key));
-
-print(c1, len(c1));
-
-print('key', key)
-
-print(p1 == int_array_to_hex(aesDecrypt(c1, key)))
 print(c1)
-
-p2 = 'ae2d8a571e03ac9c9eb76fac45af8e51'
-print(int_array_to_hex(aesEncrypt(p2, key)))
