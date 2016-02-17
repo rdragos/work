@@ -1,0 +1,41 @@
+% This is LLNCS.DEM the demonstration file of
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.4 for LaTeX2e as of 16. April 2010
+%
+\documentclass{llncs}
+%
+\usepackage{makeidx}  % allows for indexgeneration
+%
+\begin{document}
+%
+\frontmatter          % for the preliminaries
+%
+\pagestyle{headings}  % switches on printing of running heads
+
+%
+\title{Simplex Algorithm}
+%
+\titlerunning{Simplex Algorithm}  % abbreviated title (for running head)
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+\maketitle              % typeset the title of the contribution
+
+
+
+\section{Example problems}
+% Food matching
+\section{Duality theorem}
+\section{Simplex Method}
+\section{Pivoting methods}
+\section{Solve general problems using Simplex Method}
+\section{Different approaches to solving LP problems}
+
+% ---- Bibliography ----
+%
+
+\clearpage
+\bibliographystyle{splncs}
+\bibliography{llncs}
+\end{document}
