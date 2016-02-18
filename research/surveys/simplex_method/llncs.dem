@@ -6,6 +6,8 @@
 \documentclass{llncs}
 %
 \usepackage{makeidx}  % allows for indexgeneration
+\usepackage{amsmath}
+
 %
 \begin{document}
 %
@@ -24,9 +26,22 @@
 
 
 
-\section{Example problems}
+\section{Diet problem}
+
+The diet problem is a classical application for describing a standard minimum problem in linear programming.
+
+There are $m$ types of food $F_1, \dots, F_m$ and $n$ types of nutrients $N_1, \dots, N_n$. Let $b_i$ be the price of food $F_i$ per unit and $c_j$ the minimal requirement for nutrient $N_j$. We are also given a matrix $a_{ij}$ which maps the quantity of nutrient $N_j$ in food type $F_i$.
+
+Our goal is to find $y_1,\dots,y_m$ such that $\sum\limits_{i=1}^m y_ib_i$ subject to $y \geq 0$ and $\sum\limits_{i=1}^m{y_i a_{ji}} \geq c_j$ for every $j \in {1,\dots,n}$.
+
+
 % Food matching
+\section{Formalizing the problem}
+
+$ A = \begin{bmatrix} a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mn} \end{bmatrix} $
+
 \section{Duality theorem}
+
 \section{Simplex Method}
 \section{Pivoting methods}
 \section{Solve general problems using Simplex Method}
