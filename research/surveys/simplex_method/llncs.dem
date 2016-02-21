@@ -6,7 +6,15 @@
 \documentclass{llncs}
 %
 \usepackage{makeidx}  % allows for indexgeneration
+\usepackage{amsfonts}
 \usepackage{amsmath}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
 
 %
 \begin{document}
@@ -36,15 +44,88 @@ Our goal is to find $y_1,\dots,y_m$ such that $\sum\limits_{i=1}^m y_ib_i$ subje
 
 
 % Food matching
-\section{Formalizing the problem}
+\section{Formalised versions of LP problems}
 
-$ A = \begin{bmatrix} a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mn} \end{bmatrix} $
+\subsection{Standard maximum problem}
+
+Given a matrix $A \in \mathbb{R}^{m \times n}$, a vector $b \in \mathbb{R}^m$ and a vector $c \in \mathbb{R}^n$. Find a vector $x \in \mathbb{R}^n$ such that $c^Tx$ is maximum subject to: $Ax \geq b$, $x \geq 0$.
+
+%$ A = \begin{bmatrix} a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mn} \end{bmatrix}- $
+\subsection{Standard minimum problem}
+
+Given a matrix $A \in \mathbb{R}^{m \times n}$, a vector $b \in \mathbb{R}^m$ and a vector $c \in \mathbb{R}^n$. Find a vector $y \in \mathbb{R}^m$ such that $y^Tb$ is minimum subject to: $y^TA \geq c^T$, $y \geq 0$.
 
 \section{Duality theorem}
 
-\section{Simplex Method}
-\section{Pivoting methods}
+The two problems from above are dual to each other and they are connected through the following result:
+
+\begin{theorem}
+	If a standard LP program has a boundfed feasible solution then it's optimal feasible solution is equal to the optimal feasible solution of it's dual LP.
+\end{theorem}
+
+Pretty neat. We can use this theorem (among other things) to check our candidate solution for a standard problem is optimal by testing it through the dual. This is due to the following result:
+
+\begin{theorem}
+	Let $x^*$ be a feasible solution for the standard maximum LP problem and $y^*$ be a feasible solution for it's dual.
+	$x^*$ and $y^*$ are optimal feasible iff:
+
+	\begin{itemize}
+		\item $x_j^* = 0$ for all $j$ which $\sum\limits_{i=1}^m a_{ij}y_i^* > c_j$
+		\item $y_i^* = 0$ for all $i$ which $\sum\limits_{j=1}^n a_{ij}x_j^* < b_i$
+	\end{itemize}
+\end{theorem}
+
+
+\begin{proof}
+
+Let's prove the only if part:
+
+Following from the first and the the second equation we rewrite $\sum\limits_{i=1}^m y_i^*b_i$ as $\sum\limits_{i=1}^m y_i^*$
+$ \sum\limits_{j=1}^n a_{ij}x_j^* =  \sum\limits_{i=1}^m \sum\limits_{j=1}^m a_{ij}y_i^*x_j^* = \sum\limits_{j=1}^n c_jx_j^*$.
+
+\end{proof}
+
+\section{Solving the maximum standard problem with the simplex tableau}
+
+
+First we introduce a slack variable $u = b - Ax$.
+
+
+The original problem now becomes:
+
+\begin{align*}
+\text{max}(c^Tx) \text{  subject to} \\
+u \geq 0 \text{ and } x \geq 0
+\end{align*}
+
+
+Now we write the corresponding simplex tableau:
+
+\begin{equation}
+\begin{array}{c}
+\\
+-u_1 \\
+-u_2 \\
+-u_3 \\
+c
+
+\end{array}
+\begin{bmatrix}
+\begin{array}{ccccc|cc}
+  x_1 & x_2 & x_3 & x_4 & x_5 & b \\ \hline
+  0 & 0 & 1.6 & 2.2 & 0 & b_1 \\
+  1 & 1 & 0.4 & -0.2 & 0 & b_2  \\
+  0 & 1 & -0.2 & 0.6 & 0 & b_m \\ \hline
+  -c_1 & -c_2 & -c_3 & -c_4 & -c_n & 0 \\
+\end{array}
+\end{bmatrix}
+\end{equation}
+
+
+
+This method is very similar to the gaussian elimination procedure.
 \section{Solve general problems using Simplex Method}
+
 \section{Different approaches to solving LP problems}
 
 % ---- Bibliography ----

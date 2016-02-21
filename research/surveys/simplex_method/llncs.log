@@ -1,19 +1,22 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2016.1.8)  15 FEB 2016 12:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.1)  18 FEB 2016 13:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **llncs.dem
 (./llncs.dem
-LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, lo
-aded.
+LaTeX2e <2015/10/01> patch level 2
+Babel <3.9n> and hyphenation patterns for 79 languages loaded.
 (./llncs.cls
 Document Class: llncs 2014/03/31 v2.19 
  LaTeX document class for Lecture Notes in Computer Science
-(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -27,8 +30,9 @@ File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
-Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/tools/multicol.sty
+Package: multicol 2015/08/19 v1.8n multicolumn formatting (FMi)
 \c@tracingmulticols=\count87
 \mult@box=\box26
 \multicol@leftmargin=\dimen103
@@ -45,6 +49,7 @@ Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
 \multicolbaselineskip=\skip44
 \partial@page=\box27
 \last@line=\box28
+\maxbalancingoverflow=\dimen108
 \mult@rightbox=\box29
 \mult@grightbox=\box30
 \mult@gfirstbox=\box31
@@ -68,16 +73,15 @@ Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
 \@tempa=\box49
 \c@columnbadness=\count93
 \c@finalcolumnbadness=\count94
-\last@try=\dimen108
-\multicolovershoot=\dimen109
-\multicolundershoot=\dimen110
+\last@try=\dimen109
+\multicolovershoot=\dimen110
+\multicolundershoot=\dimen111
 \mult@nat@firstbox=\box50
 \colbreak@box=\box51
-\multicol@sort@counter=\count95
+\mc@col@check@num=\count95
 ) (./aliascnt.sty
 Package: aliascnt 2009/09/08 v1.3 Alias counter (HO)
-
-(./remreset.sty))
+ (./remreset.sty))
 \c@chapter=\count96
 LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 362.
 LaTeX Font Info:    Redeclaring math symbol \Delta on input line 363.
@@ -90,22 +94,22 @@ LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 369.
 LaTeX Font Info:    Redeclaring math symbol \Phi on input line 370.
 LaTeX Font Info:    Redeclaring math symbol \Psi on input line 371.
 LaTeX Font Info:    Redeclaring math symbol \Omega on input line 372.
-\tocchpnum=\dimen111
-\tocsecnum=\dimen112
-\tocsectotal=\dimen113
-\tocsubsecnum=\dimen114
-\tocsubsectotal=\dimen115
-\tocsubsubsecnum=\dimen116
-\tocsubsubsectotal=\dimen117
-\tocparanum=\dimen118
-\tocparatotal=\dimen119
-\tocsubparanum=\dimen120
+\tocchpnum=\dimen112
+\tocsecnum=\dimen113
+\tocsectotal=\dimen114
+\tocsubsecnum=\dimen115
+\tocsubsectotal=\dimen116
+\tocsubsubsecnum=\dimen117
+\tocsubsubsectotal=\dimen118
+\tocparanum=\dimen119
+\tocparatotal=\dimen120
+\tocsubparanum=\dimen121
 \@tempcntc=\count97
-\fnindent=\dimen121
+\fnindent=\dimen122
 \c@@inst=\count98
 \c@@auth=\count99
 \c@auco=\count100
-\instindent=\dimen122
+\instindent=\dimen123
 \authrun=\box52
 \authorrunning=\toks14
 \tocauthor=\toks15
@@ -127,50 +131,158 @@ LaTeX Font Info:    Redeclaring math symbol \Omega on input line 372.
 \c@question=\count113
 \c@solution=\count114
 \c@remark=\count115
-\headlineindent=\dimen123
-) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty
-Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+\headlineindent=\dimen124
 )
-(./llncs.aux)
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/base/makeidx.sty
+Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
+)
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks18
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/amsmath/amsmath.sty
+Package: amsmath 2013/01/14 v2.14 AMS math features
+\@mathmargin=\skip45
+
+For additional information on amsmath, use the `?' option.
+
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks19
+\ex@=\dimen125
+))
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen126
+)
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count116
+LaTeX Info: Redefining \frac on input line 210.
+\uproot@=\count117
+\leftroot@=\count118
+LaTeX Info: Redefining \overline on input line 306.
+\classnum@=\count119
+\DOTSCASE@=\count120
+LaTeX Info: Redefining \ldots on input line 378.
+LaTeX Info: Redefining \dots on input line 381.
+LaTeX Info: Redefining \cdots on input line 466.
+\Mathstrutbox@=\box54
+\strutbox@=\box55
+\big@size=\dimen127
+LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+
+
+Package amsmath Warning: Unable to redefine math accent \vec.
+
+\macc@depth=\count121
+\c@MaxMatrixCols=\count122
+\dotsspace@=\muskip10
+\c@parentequation=\count123
+\dspbrk@lvl=\count124
+\tag@help=\toks20
+\row@=\count125
+\column@=\count126
+\maxfields@=\count127
+\andhelp@=\toks21
+\eqnshift@=\dimen128
+\alignsep@=\dimen129
+\tagshift@=\dimen130
+\tagwidth@=\dimen131
+\totwidth@=\dimen132
+\lineht@=\dimen133
+\@envbody=\toks22
+\multlinegap=\skip46
+\multlinetaggap=\skip47
+\mathdisplay@stack=\toks23
+LaTeX Info: Redefining \[ on input line 2665.
+LaTeX Info: Redefining \] on input line 2666.
+) (./llncs.aux)
 \openout1 = `llncs.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 23.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 23.
- [1
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Try loading font information for U+msa on input line 33.
+
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 33.
+
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Overfull \hbox (1.98726pt too wide) in paragraph at lines 43--44
+[]\OT1/cmr/m/n/10 Our goal is to find $\OML/cmm/m/it/10 y[]; [] ; y[]$ \OT1/cmr
+/m/n/10 such that $[] \OML/cmm/m/it/10 y[]b[]$ \OT1/cmr/m/n/10 sub-ject to $\OM
+L/cmm/m/it/10 y \OMS/cmsy/m/n/10 ^^U \OT1/cmr/m/n/10 0$ and $[] [] \OMS/cmsy/m/
+n/10 ^^U
+ []
+
+[1
 
 
-{/usr/share/texlive/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-No file llncs.bbl.
-(./llncs.aux) ) 
+{/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-var/fonts/m
+ap/pdftex/updmap/pdftex.map}] [2] (./llncs.bbl) (./llncs.aux) ) 
 Here is how much of TeX's memory you used:
- 624 strings out of 495063
- 6938 string characters out of 3182202
- 57980 words of memory out of 3000000
- 3872 multiletter control sequences out of 15000+200000
- 4544 words of font info for 17 fonts, out of 3000000 for 9000
- 14 hyphenation exceptions out of 8191
- 29i,4n,21p,257b,138s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-bx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb>
-Output written on llncs.pdf (1 page, 32118 bytes).
+ 1330 strings out of 493054
+ 16330 string characters out of 6118265
+ 81601 words of memory out of 5000000
+ 4881 multiletter control sequences out of 15000+600000
+ 7502 words of font info for 29 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 29i,12n,24p,301b,234s stack positions out of 5000i,500n,10000p,200000b,80000s
+</home/pgrads/dr
+15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmbx10.pfb></home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/20
+15/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></home/pgrads/dr15326/l
+inux/.local-tex/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmex10.pfb></home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/pgrads/dr15326/linux/.l
+ocal-tex/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7
+.pfb></home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr10.pfb></home/pgrads/dr15326/linux/.local-tex/
+usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></hom
+e/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr9.pfb></home/pgrads/dr15326/linux/.local-tex/usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/pgrads/
+dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy7.pfb></home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2
+015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></home/pgrads/dr15326/
+linux/.local-tex/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/
+symbols/msbm10.pfb>
+Output written on llncs.pdf (2 pages, 125782 bytes).
 PDF statistics:
- 20 PDF objects out of 1000 (max. 8388607)
- 13 compressed objects within 1 object stream
+ 59 PDF objects out of 1000 (max. 8388607)
+ 42 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
