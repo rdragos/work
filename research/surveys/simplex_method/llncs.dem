@@ -8,6 +8,7 @@
 \usepackage{makeidx}  % allows for indexgeneration
 \usepackage{amsfonts}
 \usepackage{amsmath}
+\usepackage{mathtools}
 
 \makeatletter
 \renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
@@ -22,9 +23,10 @@
 \frontmatter          % for the preliminaries
 %
 \pagestyle{headings}  % switches on printing of running heads
-
+\author{Drago\c{s} Alin Rotaru}
+\institute{University of Bristol}
 %
-\title{Simplex Algorithm}
+\title{Solving LP problems}
 %
 \titlerunning{Simplex Algorithm}  % abbreviated title (for running head)
 %                                     also used for the TOC unless
@@ -60,7 +62,7 @@ Given a matrix $A \in \mathbb{R}^{m \times n}$, a vector $b \in \mathbb{R}^m$ an
 The two problems from above are dual to each other and they are connected through the following result:
 
 \begin{theorem}
-	If a standard LP program has a boundfed feasible solution then it's optimal feasible solution is equal to the optimal feasible solution of it's dual LP.
+	If a standard LP program has a bounded feasible solution then it's optimal feasible solution is equal to the optimal feasible solution of it's dual LP.
 \end{theorem}
 
 Pretty neat. We can use this theorem (among other things) to check our candidate solution for a standard problem is optimal by testing it through the dual. This is due to the following result:
@@ -84,6 +86,48 @@ Following from the first and the the second equation we rewrite $\sum\limits_{i=
 $ \sum\limits_{j=1}^n a_{ij}x_j^* =  \sum\limits_{i=1}^m \sum\limits_{j=1}^m a_{ij}y_i^*x_j^* = \sum\limits_{j=1}^n c_jx_j^*$.
 
 \end{proof}
+
+
+\section{How to pivot?}
+Assume we have a system of equations:
+
+\[  % no need to use "align*" env.
+\setlength\arraycolsep{1.5pt} % default value: 5pt
+\left\{
+\begin{array}{ccc ccc ccc c @{\extracolsep{2.5pt}}c@{\extracolsep{2.5pt}}c}
+a_{1,1}x_{1} & + & \cdots & + & a_{1,j}x_{j} & + & \cdots & + & a_{1,n}x_{n} & = & y_{1} \\
+
+\vdots & & \vdots & & \ddots & &  \vdots & &  \vdots \\
+a_{i,1}x_{1} & + & \cdots & + & a_{i,j}x_{j} & + & \cdots & + & a_{i,n}x_{n} & = & y_{i} \\
+\vdots & & \vdots & & \ddots & &  \vdots & &  \vdots \\
+a_{m,1}x_{1} & + & \cdots & + & a_{m,j}x_{j} & + & \cdots & + & a_{m,n}x_{n} & = & y_{m} \\
+\end{array}
+\right.
+\]
+
+Sometimes it's useful to express the system in terms of different variables, say expressing $x_{j}$ in terms of $y_{i}$. The $i$'th equation becomes:
+\begin{equation}
+   -\frac{a_{i,1}}{a_{i,j}}x_1 - \cdots -\frac{a_{i,j-1}}{a_{ij}} x_{j-1} + \frac{1}{a_{ij}}y_i -\frac{a_{i,j+1}}{a_{ij}}x_{j+1} - \cdots -\frac{a_{i,n}}{a_{i,j}}x_n = x_j
+\end{equation}
+
+The other equations become:
+
+\begin{equation}
+  (a_{k,1} - \frac{a_{i,1}}{a_{i,j}}) x_1 + \cdots + (a_{k,j-1} - \frac{a_{i,j-1}}{a_{i,j}})x_{j-1} + \frac{a_{k,j}}{a_{i,j}}y_i + \cdots + (a_{k,n} - \frac{a_{i,n}}{a_{i,j}})x_n = y_k 
+\end{equation}
+
+After pivoting the coefficients matrix change and we can incorporate this into the following rule:
+\begin{align}
+\begin{bmatrix}
+  p & q \\
+  r & s \\
+\end{bmatrix}
+& \rightarrow
+\begin{bmatrix}
+  \frac{1}{p} & & -\frac{q}{p} \\
+  \frac{r}{p} & & s-\frac{q}{p} \\
+\end{bmatrix}
+\end{align}
 
 \section{Solving the maximum standard problem with the simplex tableau}
 
