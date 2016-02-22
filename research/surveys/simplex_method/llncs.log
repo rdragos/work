@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.1)  18 FEB 2016 13:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=latex 2016.2.1)  22 FEB 2016 19:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -213,34 +213,101 @@ Package amsmath Warning: Unable to redefine math accent \vec.
 \mathdisplay@stack=\toks23
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
+)
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/mathtools/mathtools.sty
+Package: mathtools 2015/11/12 v1.18 mathematical typesetting tools
+
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks24
+)
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/tools/calc.sty
+Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count128
+\calc@Bcount=\count129
+\calc@Adimen=\dimen134
+\calc@Bdimen=\dimen135
+\calc@Askip=\skip48
+\calc@Bskip=\skip49
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count130
+\calc@Cskip=\skip50
+)
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/mathtools/mhsetup.sty
+Package: mhsetup 2010/01/21 v1.2a programming setup (MH)
+)
+LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
+\g_MT_multlinerow_int=\count131
+\l_MT_multwidth_dim=\dimen136
+\origjot=\skip51
+\l_MT_shortvdotswithinadjustabove_dim=\dimen137
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen138
+\l_MT_above_intertext_sep=\dimen139
+\l_MT_below_intertext_sep=\dimen140
+\l_MT_above_shortintertext_sep=\dimen141
+\l_MT_below_shortintertext_sep=\dimen142
 ) (./llncs.aux)
 \openout1 = `llncs.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Try loading font information for U+msa on input line 33.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/graphics/graphics.sty
+Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
+
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: dvips.def on input line 94.
+
+(/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
+tex/graphics/dvips.def
+File: dvips.def 2014/10/14 v3.0j Driver-dependent file (DPC,SPQR)
+))
+\Gin@req@height=\dimen143
+\Gin@req@width=\dimen144
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 36.
 
 (/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
 tex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 33.
+LaTeX Font Info:    Try loading font information for U+msb on input line 36.
 
 (/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/tex/la
 tex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (1.98726pt too wide) in paragraph at lines 43--44
+Overfull \hbox (1.98726pt too wide) in paragraph at lines 46--47
 []\OT1/cmr/m/n/10 Our goal is to find $\OML/cmm/m/it/10 y[]; [] ; y[]$ \OT1/cmr
 /m/n/10 such that $[] \OML/cmm/m/it/10 y[]b[]$ \OT1/cmr/m/n/10 sub-ject to $\OM
 L/cmm/m/it/10 y \OMS/cmsy/m/n/10 ^^U \OT1/cmr/m/n/10 0$ and $[] [] \OMS/cmsy/m/
@@ -250,39 +317,24 @@ n/10 ^^U
 [1
 
 
-{/home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-var/fonts/m
-ap/pdftex/updmap/pdftex.map}] [2] (./llncs.bbl) (./llncs.aux) ) 
+]
+Overfull \hbox (33.70705pt too wide) detected at line 118
+\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 a[] \OMS/cmsy/m/n/10 ^^@ []\OT1/cmr/m/n/10 )\
+OML/cmm/m/it/10 x[] \OT1/cmr/m/n/10 + [] + (\OML/cmm/m/it/10 a[] \OMS/cmsy/m/n/
+10 ^^@ []\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 x[] \OMS/cmsy/m/n/10 ^^@ []\OML/cmm/
+m/it/10 y[] \OT1/cmr/m/n/10 + [] + (\OML/cmm/m/it/10 a[] \OMS/cmsy/m/n/10 ^^@ [
+]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 x[] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@\O
+ML/cmm/m/it/10 y[]
+ []
+
+[2] [3] [4] (./llncs.bbl) (./llncs.aux) ) 
 Here is how much of TeX's memory you used:
- 1330 strings out of 493054
- 16330 string characters out of 6118265
- 81601 words of memory out of 5000000
- 4881 multiletter control sequences out of 15000+600000
+ 2177 strings out of 493055
+ 30563 string characters out of 6118291
+ 105165 words of memory out of 5000000
+ 5701 multiletter control sequences out of 15000+600000
  7502 words of font info for 29 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,12n,24p,301b,234s stack positions out of 5000i,500n,10000p,200000b,80000s
-</home/pgrads/dr
-15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmbx10.pfb></home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/20
-15/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></home/pgrads/dr15326/l
-inux/.local-tex/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmex10.pfb></home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/pgrads/dr15326/linux/.l
-ocal-tex/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7
-.pfb></home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr10.pfb></home/pgrads/dr15326/linux/.local-tex/
-usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></hom
-e/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmr9.pfb></home/pgrads/dr15326/linux/.local-tex/usr/local/t
-exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/pgrads/
-dr15326/linux/.local-tex/usr/local/texlive/2015/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmsy7.pfb></home/pgrads/dr15326/linux/.local-tex/usr/local/texlive/2
-015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></home/pgrads/dr15326/
-linux/.local-tex/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/
-symbols/msbm10.pfb>
-Output written on llncs.pdf (2 pages, 125782 bytes).
-PDF statistics:
- 59 PDF objects out of 1000 (max. 8388607)
- 42 compressed objects within 1 object stream
- 0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 29i,14n,24p,301b,234s stack positions out of 5000i,500n,10000p,200000b,80000s
 
+Output written on llncs.dvi (4 pages, 13608 bytes).

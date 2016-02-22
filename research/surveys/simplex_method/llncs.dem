@@ -19,6 +19,7 @@
 
 %
 \begin{document}
+\pagenumbering{arabic}
 %
 \frontmatter          % for the preliminaries
 %
@@ -50,7 +51,7 @@ Our goal is to find $y_1,\dots,y_m$ such that $\sum\limits_{i=1}^m y_ib_i$ subje
 
 \subsection{Standard maximum problem}
 
-Given a matrix $A \in \mathbb{R}^{m \times n}$, a vector $b \in \mathbb{R}^m$ and a vector $c \in \mathbb{R}^n$. Find a vector $x \in \mathbb{R}^n$ such that $c^Tx$ is maximum subject to: $Ax \geq b$, $x \geq 0$.
+Given a matrix $A \in \mathbb{R}^{m \times n}$, a vector $b \in \mathbb{R}^m$ and a vector $c \in \mathbb{R}^n$. Find a vector $x \in \mathbb{R}^n$ such that $c^.Tx$ is maximum subject to: $Ax \geq b$, $x \geq 0$.
 
 %$ A = \begin{bmatrix} a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mn} \end{bmatrix}- $
 \subsection{Standard minimum problem}
@@ -95,25 +96,25 @@ Assume we have a system of equations:
 \setlength\arraycolsep{1.5pt} % default value: 5pt
 \left\{
 \begin{array}{ccc ccc ccc c @{\extracolsep{2.5pt}}c@{\extracolsep{2.5pt}}c}
-a_{1,1}x_{1} & + & \cdots & + & a_{1,j}x_{j} & + & \cdots & + & a_{1,n}x_{n} & = & y_{1} \\
+a_{1,1}x_{1} & + & \cdots & + & a_{1,j}x_{j} & + & \cdots & + & a_{1,n}x_{n} & = & -y_{1} \\
 
 \vdots & & \vdots & & \ddots & &  \vdots & &  \vdots \\
-a_{i,1}x_{1} & + & \cdots & + & a_{i,j}x_{j} & + & \cdots & + & a_{i,n}x_{n} & = & y_{i} \\
+a_{i,1}x_{1} & + & \cdots & + & a_{i,j}x_{j} & + & \cdots & + & a_{i,n}x_{n} & = & -y_{i} \\
 \vdots & & \vdots & & \ddots & &  \vdots & &  \vdots \\
-a_{m,1}x_{1} & + & \cdots & + & a_{m,j}x_{j} & + & \cdots & + & a_{m,n}x_{n} & = & y_{m} \\
+a_{m,1}x_{1} & + & \cdots & + & a_{m,j}x_{j} & + & \cdots & + & a_{m,n}x_{n} & = & -y_{m} \\
 \end{array}
 \right.
 \]
 
-Sometimes it's useful to express the system in terms of different variables, say expressing $x_{j}$ in terms of $y_{i}$. The $i$'th equation becomes:
+Sometimes it's useful to express the system in terms of different variables, say expressing $-x_{j}$ in terms of $y_{i}$. The $i$'th equation becomes:
 \begin{equation}
-   -\frac{a_{i,1}}{a_{i,j}}x_1 - \cdots -\frac{a_{i,j-1}}{a_{ij}} x_{j-1} + \frac{1}{a_{ij}}y_i -\frac{a_{i,j+1}}{a_{ij}}x_{j+1} - \cdots -\frac{a_{i,n}}{a_{i,j}}x_n = x_j
+   \frac{a_{i,1}}{a_{i,j}}x_1 + \cdots +\frac{a_{i,j-1}}{a_{ij}} x_{j-1} + \frac{1}{a_{ij}}y_i +\frac{a_{i,j+1}}{a_{ij}}x_{j+1} + \cdots +\frac{a_{i,n}}{a_{i,j}}x_n = -x_j
 \end{equation}
 
 The other equations become:
 
 \begin{equation}
-  (a_{k,1} - \frac{a_{i,1}}{a_{i,j}}) x_1 + \cdots + (a_{k,j-1} - \frac{a_{i,j-1}}{a_{i,j}})x_{j-1} + \frac{a_{k,j}}{a_{i,j}}y_i + \cdots + (a_{k,n} - \frac{a_{i,n}}{a_{i,j}})x_n = y_k 
+  (a_{k,1} - \frac{a_{i,1}a_{k,j}}{a_{i,j}}) x_1 + \cdots + (a_{k,j-1} - \frac{a_{i,j-1}a_{k,j}}{a_{i,j}})x_{j-1} - \frac{a_{k,j}}{a_{i,j}}y_i + \cdots + (a_{k,n} - \frac{a_{i,n}a_{k,j}}{a_{i,j}})x_n = -y_k 
 \end{equation}
 
 After pivoting the coefficients matrix change and we can incorporate this into the following rule:
@@ -124,16 +125,32 @@ After pivoting the coefficients matrix change and we can incorporate this into t
 \end{bmatrix}
 & \rightarrow
 \begin{bmatrix}
-  \frac{1}{p} & & -\frac{q}{p} \\
-  \frac{r}{p} & & s-\frac{q}{p} \\
+  \frac{1}{p} & & \frac{q}{p} \\
+  -\frac{r}{p} & & s-\frac{qr}{p} \\
 \end{bmatrix}
 \end{align}
+
+We notice that this rule is similar to the gaussian elimination - but not the same!
+
+\begin{align}
+\begin{bmatrix}
+  p & q \\
+  r & s \\
+\end{bmatrix}
+& \rightarrow
+\begin{bmatrix}
+  \frac{1}{p} & & \frac{q}{p} \\
+  0 & & s-\frac{qr}{p} \\
+\end{bmatrix}
+\end{align}
+
 
 \section{Solving the maximum standard problem with the simplex tableau}
 
 
-First we introduce a slack variable $u = b - Ax$.
+\subsection{Simplex tableau}
 
+One may wonder why did we choose to put the $y_i$ variables with a minus sign. The answer is that if we add a slack variable $u = b - Ax$ this renders $-u = Ax - b$.
 
 The original problem now becomes:
 
@@ -143,31 +160,54 @@ u \geq 0 \text{ and } x \geq 0
 \end{align*}
 
 
-Now we write the corresponding simplex tableau:
+
+This can be written in a more canonical form - also called the simplex tableau.
 
 \begin{equation}
-\begin{array}{c}
-\\
--u_1 \\
--u_2 \\
--u_3 \\
-c
-
+\begin{array}{c|cccc|cc}
+  {} & x_1 & x_2 & \cdots & x_n & b \\ \hline
+  -u_1 & a_{1,1} & a_{1,2} & \cdots & a_{1,n} & b_1 \\
+  -u_2 & a_{2,1} & a_{2,2} & \cdots & a_{2,n} & b_2  \\
+  \vdots  &  \vdots  & \vdots & \vdots & \vdots & \vdots \\
+  -u_m & a_{m,1} & a_{m,2} & \cdots & a_{m,n} & b_m \\ \hline
+  c & -c_1    & -c_2    & \cdots & -c_n    &  0 \\
 \end{array}
-\begin{bmatrix}
-\begin{array}{ccccc|cc}
-  x_1 & x_2 & x_3 & x_4 & x_5 & b \\ \hline
-  0 & 0 & 1.6 & 2.2 & 0 & b_1 \\
-  1 & 1 & 0.4 & -0.2 & 0 & b_2  \\
-  0 & 1 & -0.2 & 0.6 & 0 & b_m \\ \hline
-  -c_1 & -c_2 & -c_3 & -c_4 & -c_n & 0 \\
-\end{array}
-\end{bmatrix}
 \end{equation}
 
 
+When $b \geq 0$ and $-c \geq 0$ then we have an obvious solution $x = 0$. Computing $c^Tx$ when $-c \geq 0$ reaches it's maximum value when $x = 0$.
+Though in some cases we might not be that lucky, so we have to pivot.
 
-This method is very similar to the gaussian elimination procedure.
+We claim that the bottom right value is actually the value of the objective function.
+
+Choose a value $a_{i,j} \neq 0$ and pivot around it. For example, if $a_{1,2} \neq 0$. The simplex tableau becomes:
+
+
+
+\begin{equation}
+\begin{array}{c|cccc|cc}
+  {} & x_1 & u_1 & \cdots & x_n & b \\ \hline
+  -x_2 & \tilde{a}_{1,1} & \tilde{a}_{1,2} & \cdots & \tilde{a}_{1,n} & \tilde{b}_1 \\
+  -u_2 & \tilde{a}_{2,1} & \tilde{a}_{2,2} & \cdots & \tilde{a}_{2,n} & \tilde{b}_2  \\
+  \vdots  &  \vdots  & \vdots & \vdots & \vdots & \vdots \\
+  -u_m & \tilde{a}_{m,1} & \tilde{a}_{m,2} & \cdots & \tilde{a}_{m,n} & \tilde{b}_m \\ \hline
+  c & -\tilde{c}_1    & -\tilde{c}_2    & \cdots & -\tilde{c}_n    &  \tilde{v} \\
+\end{array}
+\end{equation}
+
+The objective function $c^Tx$ is:
+\begin{multline}
+  \sum\limits_{j=1}^n c_jx_j = c_1 x_1 + c_2\frac{1}{a_{1,2}} \Big(- x_1 a_{1,1} - u_1 - \cdots - x_n a_{1,n} + b_1\Big) + c_3x_3 + \cdots + c_nx_n = \\
+  x_1\Big(c_1 - \frac{a_{1,1}c_2}{a_{1,2}}\Big) + u_1 \Big( -\frac{c_2}{a_{1,2}} \Big) + \cdots + x_n\Big(c_n - \frac{a_{1,n}c_2}{a_{1,2}}\Big) + \frac{b_1c_2}{a_{1,2}}
+\end{multline}
+
+
+Which is exactly what we want! In the simplex tableau we have $-\tilde{c}_i$ such that when multiplying $-\tilde{c}_1 x_1 - \tilde{c}_2 u_1 - \dots \tilde{c}_n x_n$ returns the value of the objective function.
+
+This says that the pivoting rules can be applied on the entire table, except to the leftmost column.
+
+\subsection{How to choose pivots?}
+
 \section{Solve general problems using Simplex Method}
 
 \section{Different approaches to solving LP problems}
