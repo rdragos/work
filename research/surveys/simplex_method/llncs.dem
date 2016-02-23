@@ -9,8 +9,14 @@
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{mathtools}
+\usepackage{tikz}
 
 \makeatletter
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
 \renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
   \hskip -\arraycolsep
   \let\@ifnextchar\new@ifnextchar
@@ -19,7 +25,7 @@
 
 %
 \begin{document}
-\pagenumbering{arabic}
+\pagestyle{plain}
 %
 \frontmatter          % for the preliminaries
 %
@@ -113,9 +119,11 @@ Sometimes it's useful to express the system in terms of different variables, say
 
 The other equations become:
 
-\begin{equation}
-  (a_{k,1} - \frac{a_{i,1}a_{k,j}}{a_{i,j}}) x_1 + \cdots + (a_{k,j-1} - \frac{a_{i,j-1}a_{k,j}}{a_{i,j}})x_{j-1} - \frac{a_{k,j}}{a_{i,j}}y_i + \cdots + (a_{k,n} - \frac{a_{i,n}a_{k,j}}{a_{i,j}})x_n = -y_k 
-\end{equation}
+\begin{align*}
+  (a_{k,1} - \frac{a_{i,1}a_{k,j}}{a_{i,j}}) x_1 + \cdots + (a_{k,j-1} - \frac{a_{i,j-1}a_{k,j}}{a_{i,j}})x_{j-1} - \frac{a_{k,j}}{a_{i,j}}y_i + \cdots \\
+  + (a_{k,n} - \frac{a_{i,n}a_{k,j}}{a_{i,j}})x_n = 
+  -y_k 
+\end{align*}
 
 After pivoting the coefficients matrix change and we can incorporate this into the following rule:
 \begin{align}
@@ -202,20 +210,124 @@ The objective function $c^Tx$ is:
 \end{multline}
 
 
-Which is exactly what we want! In the simplex tableau we have $-\tilde{c}_i$ such that when multiplying $-\tilde{c}_1 x_1 - \tilde{c}_2 u_1 - \dots \tilde{c}_n x_n$ returns the value of the objective function.
+Which is exactly what we want! In the simplex tableau we have $-\tilde{c}_i$ such that when summing $-\tilde{c}_1 x_1 - \tilde{c}_2 u_1 - \dots \tilde{c}_n x_n$ this yields the value of the objective function.
 
-This says that the pivoting rules can be applied on the entire table, except to the leftmost column.
+This says that the pivoting rules can be applied on the entire table, except to the leftmost column and the top one.
 
 \subsection{How to choose pivots?}
+\label{subsec:pivoting}
+
+The purpose is to make the bottom row and the rightmost column (without the corners) containing only positive numbers. If that's the case the solution is built by setting the $x_j$'s on top to $0$ and the $x_i$'s on the left eqaul to $b_i$'s on the right.
+
+
+\subsubsection{Case 1. $\tilde{b} \geq 0$}
+\label{subsub:case-1}
+
+  Some $-c_j < 0$. Pick one $j0$ such that $-\tilde{c_{j0}} < 0$. From all positive $a_{i,j0} > 0$ pivot around $a_{i0,j0}$ such that $b_i/a_{i0,j0}$ is minimum. If there aren't any positive $a_{i0,j0}$ then the solution is unbounded feasible - every solution work.
+
+  If there aren't any $-\tilde{c_j} \geq 0$ then we are done - beginning of \ref{subsec:pivoting}.
+
+\subsubsection{Case 2. Some $\tilde{b_i} < 0$}
+  Choose any $i0$ such that $\tilde{b_i0} < 0$. From all negative values $a_{i0, j} < 0$ pivot around $a_{i0, j0}$ such that $b_{i0}/a_{i0, j0}$ is minimum. If there aren't any negative $a_{i0, j0}$ then the solution is infeasible.
+
+  If there aren't any $-\tilde{b_i0} < 0$ then we go to the previous case.
+
+
+\subsubsection{Proofs}
+Pivoting this way works because at each step the value of the bottom row or rightmost column increases with some non-negative quantity. TODO
+
+Let's take a problem left as an exercise from \cite{ferguson2000linear}
+
+\begin{example}
+  Maximize $3x_1 + 4x_2 + 5x_3$ subject to $x_j \geq 0$ for all $j$ and
+\begin{equation}
+\begin{array}{cccccc}
+   x_1 & + & 2x_2 + & 2x_3 & \leq & 1 \\
+  -3x_1 & + & {} & x_3 & \leq & -1 \\
+  -2x_1 & - & x_2 & {} & \leq & -1 \\
+\end{array} 
+\end{equation}
+
+As a first step we write the simplex tableau of this expression.
+
+\begin{equation}
+\begin{array}{c|ccc|cc}
+  {} & x_1    & x_2 & x_3 & b \\ \hline
+  -u_1 & 1    & 2 & 2 & 1 \\
+  -u_2 & \circled{-3}   & 0 & 1 & -1  \\
+  -u_3 & -2   & -1 & 0 & -1 \\ \hline
+  c    & -3 & -4 & -5    &  0 \\
+\end{array}
+\end{equation}
+
+Choose the $-1$ on the second row. Pivot around $a_{2,1}$ because the quotient $b_2 / a_{2, i}$ is minimum.
+
+The simplex tableau now becomes:
+
+\begin{equation}
+\begin{array}{c|ccc|cc}
+  {} & u_2   & x_2 & x_3 & b \\ \hline
+  -u_1 & 1/3 & 2 & 7/3 & 2/3 \\
+  -x_1 & -1/3 & 0 & -1/3 & 1/3  \\
+  -u_3 & -2/3 & \circled{-1} & -2/3 & -1/3 \\ \hline
+  c    & -1/1 & -4 & -6 & 1 \\
+\end{array}
+\end{equation}
+
+There is a negative cell in the last column and apply again the case $2$ rule by fixing the pivot in $a_{3,2}$.
+
+\begin{equation}
+\begin{array}{c|ccc|cc}
+  {} & u_2    & u_3 & x_3 & b \\ \hline
+  -u_1 & -1 & \circled{2} & 1 & 0  \\
+  -x_1 & -1/3 & 0 & -1/3 & 1/3 \\
+  -x_2 & 2/3 & -1 & 2/3 & 1/3 \\ \hline
+  c    & 5/3 & -4 & -10/3 & 7/3 \\
+\end{array}
+\end{equation}
+
+Pivot around $a_{1,2}$
+
+\begin{equation}
+\begin{array}{c|ccc|cc}
+  {} & u_2    & u_1 & x_3 & b \\ \hline
+  -u_3 & -1/2 & 1/2 & 1/2 & 0   \\
+  -x_1 & -1/3 & 0 & -1/3 & 1/3  \\
+  -x_2 & \circled{1/6} & 1/2 & 7/6 & 1/3 \\ \hline
+  c    & -1/3 & 2 & -4/3 & 7/3 \\
+\end{array}
+\end{equation}
+
+
+After pivoting at $a_{3,1}$, the simplex tableau becomes:
+
+\begin{equation}
+\begin{array}{c|ccc|cc}
+  {} & x_2    & u_1 & x_3 & b \\ \hline
+  -u_2 &  3 & 2 & 4 & 1   \\
+  -x_1 & 2 & 1 & 2 & 1  \\
+  -u_2 & 6 & 3 & 7 & 2 \\ \hline
+  c    & 2 & 3 & 1 & 3 \\
+\end{array}
+\end{equation}
+
+In the bottom right corner we find the value of the objective function is $3$. The optimal feasible solution is $x_1 = 1, x_2 = 0, x_3 = 0$.
+
+\end{example}
+
 
 \section{Solve general problems using Simplex Method}
 
+Simplex tableau method can also be used to solve more general systems - unconstrained variables and additional given equalities. The solution is to add more variables such that the new system looks like a classical one and pivot on their coefficients first.
+
 \section{Different approaches to solving LP problems}
+
+Cris Cross algorithm which has polynomial time but performs worse on the average case compared with the simplex. Didn't managed to study this.
 
 % ---- Bibliography ----
 %
 
 \clearpage
-\bibliographystyle{splncs}
+\bibliographystyle{splncs03}
 \bibliography{llncs}
 \end{document}

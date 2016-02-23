@@ -1,0 +1,9 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+
+\bibitem{ferguson2000linear}
+Ferguson, T.S.: Linear programming: A concise introduction. UCLA [online]
+  http://www. math. ucla. edu/\~{} tom/LP. pdf  (2000)
+
+\end{thebibliography}
