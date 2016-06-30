@@ -19,8 +19,8 @@
 using namespace std;
 
 int main() {
-    ifstream cin("test.in");
-    ofstream cout("test.out");
-    cout << "LALAL";
-    return 0;
+  ifstream cin("test.in");
+  ofstream cout("test.out");
+
+  return 0;
 }
