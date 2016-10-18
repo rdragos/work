@@ -249,20 +249,19 @@ Use the substitution method to verify your answer.
 Assume that
 \begin{equation}
 \label{eq-first}
-T(n/2) \leq c(n / 2)^{log 3} - c(n/2)
+T(k) \leq ck^{\log{3}} -ck, \forall 1 \leq k < n
 \end{equation}
 
-This implies:
-
+We obtain:
 \begin{equation}
 \begin{split}
-T(n) & \leq 3c(n/2)^{log 3} - c(n/2) + n \\
-	 & \leq cn^{log 3} - cn / 2 + n \\
-	 & \leq cn^{log 3}
+T(n) & \leq 3c(n/2)^{\log 3} - c(n/2) + n \\
+	 & \leq cn^{\log 3} - cn / 2 + n \\
+	 & \leq cn^{\log 3}
 \end{split}
 \end{equation}
 
-The last one holds as long as:
+The last inequality holds as long as:
 \begin{align*}
 	-cn/2 + n & \leq 0 \\
 	c & \geq 2
@@ -277,7 +276,7 @@ In order for the induction (Eq.\ref{eq-first}) to hold pick $c = 5$ and $n \geq 
 Assume that
 \begin{equation}
 \label{eq-second}
-T(n) \leq cn^2
+T(k) \leq ck^2, \forall 1 \leq k < n
 \end{equation}
 
 \begin{equation}
@@ -297,15 +296,15 @@ Eq.\ref{eq-v1} is true as long as $c \geq 1/3$. Choose $c=1$; Base case $T(1) = 
 Assume that
 \begin{equation}
 \label{eq-third}
-T(n) \geq c \cdot n \log{n}
+T(k) \geq c \cdot k \log{k}
 \end{equation}
 
 \begin{equation}
 \label{eq-v2}
 \begin{split}
 	T(n)&= 2 (cn/2) \log{n/2} + n \\
-		&= cn log{n} - cn\log{2} + n \\
-		& \geq cnlog{n}
+		&= cn\log{n} - cn\log{2} + n \\
+		& \geq cn\log{n}
 \end{split}
 \end{equation}
 
