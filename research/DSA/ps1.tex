@@ -1,0 +1,329 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage{bbding}
+%\fussy
+\usepackage{framed, xcolor}
+%\usepackage{tocvsec2}
+%\usepackage{datetime}
+%\usepackage{pifont}
+%\usepackage{tikz}  
+%\usepackage{pdflscape}
+%\usepackage{subfigure}          % for subfigures in ACM
+%\usepackage{colortbl}
+%\usepackage{booktabs}
+%\usepackage{pdfsync}
+%\usepackage[pagebackref=true,citecolor=newblue,colorlinks=true,linkcolor=ocre,bookmarks=false]{hyperref}
+%
+%\usepackage[font=scriptsize,bf]{caption}
+%\usepackage{tikz,subfigure}
+%\usepackage[active]{srcltx}
+%
+%\usepackage[margin=1in]{geometry}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage{datetime}
+\usepackage{epsfig,amssymb,amsfonts,amsmath,amsthm}
+%\usepackage{multirow}
+%\usepackage[numbers,sort&compress,sectionbib]{natbib}
+%\bibliographystyle{alpha}
+%\newcommand{\tsum}{\textstyle\sum}
+%\newcommand{\tprod}{\textstyle\prod}
+%\usepackage{amsfonts}
+%
+%\usepackage{xspace}
+%\usepackage{tabularx}
+%\usepackage{pstricks}
+%\usepackage{setspace}
+%%\ifx\bibfont\undefined\newcommand\bibfont\small\else\renewcommand\bibfont\small\fi
+%\usepackage{xcolor}
+%\newcommand{\minitab}[2][l]{\begin{tabular}{#1}#2\end{tabular}}
+%\usepackage{rotating}
+%\usepackage{minitoc}
+%%\usepackage{newcent}\usepackage{tikz}
+%\usepackage{enumerate}
+%\definecolor{ocre}{rgb}{0.72,0,0} % Define the color BrickRed
+%\definecolor{newblue}{rgb}{0.2,0.2,0.6} % Define the color BrickRed
+
+
+
+
+%\usepackage[normalem]{ulem}
+%\usepackage{fancybox}
+%
+% 
+%\newenvironment{fminipage}%
+%  {\begin{Sbox}\begin{minipage}}%
+%  {\end{minipage}\end{Sbox}\fbox{\TheSbox}}
+%  
+%\newenvironment{algbox}[0]{\vskip 0.2in
+%\noindent 
+%\begin{fminipage}{6.3in}
+%}{
+%\end{fminipage}
+%\vskip 0.2in
+%}
+
+
+\newcommand{\remove}[1]{}
+%\newcommand{\ts}{}
+\renewcommand{\textstyle}{}
+\renewcommand{\d}{{\ensuremath{ \mathbf{d}}}}
+\newcommand{\Geo}{\mathsf{Geo}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\rot}{\intercal}
+\newcommand{\ce}{\mathrm{e}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\gen}{\mathcal{G}}
+\newcommand{\calR}{\mathcal{R}}
+\newcommand{\ext}{\mathsf{Ext}}
+\newcommand{\cond}{\mathsf{Con}}
+\newcommand{\calp}{\mathcal{P}}
+\newcommand{\supp}{\mathrm{supp}}
+\newcommand{\Oh}{O}
+\newcommand{\n}{1}
+\newcommand{\Ref}{\textcolor{red}{[ref]}}
+\newcommand{\taucont}{\tau_{\cont}}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\polylog}{\operatorname{polylog}}
+\renewcommand{\deg}{\mathrm{deg}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\Odd}{\mathsf{Odd}}
+\newcommand{\APT}{\mathsf{APT}}
+\newcommand{\eps}{\epsilon}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\hatc}{\hat{c}}
+\newcommand{\hatx}{\hat{x}}
+\newcommand{\core}{\mathsf{CORE}}
+
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\sign}{\mathsf{sign}}
+\newcommand{\de}{\operatorname{de}}
+\newcommand{\even}{\mathsf{even}}
+\newcommand{\odd}{\mathsf{odd}}
+\newcommand{\COST}{\mathsf{COST}}
+\newcommand{\OPT}{\mathsf{OPT}}
+\newcommand{\ALG}{\textsf{ABC}}
+
+
+\newcommand{\showproof}[1]{#1}
+ 
+
+
+\newcommand{\argmin}{\operatorname{argmin}}
+\newcommand{\argmax}{\operatorname{argmax}}
+\newcommand{\mix}{\operatorname{mix}}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\dmn}{dim}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\le}{\leqslant}
+\renewcommand{\ge}{\geqslant}
+\newcommand{\algref}[1]{Algorithm~\ref{alg:#1}}
+\newcommand{\thmref}[1]{Theorem~\ref{thm:#1}}
+\newcommand{\thmmref}[1]{Thm.~\ref{thm:#1}}
+\newcommand{\thmrefs}[2]{Theorems~\ref{thm:#1} and~\ref{thm:#2}}
+\newcommand{\proref}[1]{Proposition~\ref{pro:#1}}
+\newcommand{\lemref}[1]{Lemma~\ref{lem:#1}}
+\newcommand{\lemrefs}[2]{Lemmas~\ref{lem:#1} and~\ref{lem:#2}}
+\newcommand{\lemrefss}[3]{Lemmas~\ref{lem:#1},~\ref{lem:#2}, and~\ref{lem:#3}}
+\newcommand{\corref}[1]{Corollary~\ref{cor:#1}}
+\newcommand{\obsref}[1]{Observation~\ref{obs:#1}}
+\newcommand{\defref}[1]{Definition~\ref{def:#1}}
+\newcommand{\defrefs}[2]{Definitions~\ref{def:#1} and~\ref{def:#2}}
+\newcommand{\assref}[1]{Assumption~\eqref{ass:#1}}
+\newcommand{\conref}[1]{Conjecture~\ref{con:#1}}
+\newcommand{\figref}[1]{Figure~\ref{fig:#1}}
+\newcommand{\figrefs}[2]{Figures~\ref{fig:#1} and~\ref{fig:#2}}
+\newcommand{\tabref}[1]{Table~\ref{tab:#1}}
+\newcommand{\secref}[1]{Section~\ref{sec:#1}}
+\newcommand{\secrefs}[2]{Sections~\ref{sec:#1} and~\ref{sec:#2}}
+\newcommand{\charef}[1]{Chapter~\ref{cha:#1}}
+\newcommand{\eq}[1]{\eqref{eq:#1}}
+\newcommand{\eqs}[2]{equations~\eqref{eq:#1} and~\eqref{eq:#2}}
+\newcommand{\eqss}[3]{equations~\eqref{eq:#1},~\eqref{eq:#2}, and~\eqref{eq:#3}}
+\newcommand{\Eqs}[2]{Equations~\eqref{eq:#1} and~\eqref{eq:#2}}
+\newcommand{\propref}[1]{P\ref{prop:#1}}
+\newcommand{\COOR}{\mathcal{PR}}
+%\newcommand{\pro}[1]{\mathbf{Pr}[\,#1\,]}
+\newcommand{\pr}[1]{\mathbf{Pr} [\,#1\,]}
+\newcommand{\Pro}[1]{\mathbf{Pr} \left[\,#1\,\right]}
+\newcommand{\Prob}[2]{\mathbf{Pr}_{#1} \left[\,#2\,\right]}
+\newcommand{\PRO}[1]{\widetilde{\mathbf{Pr}} \left[\,#1\,\right]}
+\newcommand{\Proo}[1]{\mathbf{Pr}[\,#1\,]}
+\newcommand{\e}{\mathbf{E}}
+\newcommand{\ex}[1]{\mathbf{E}[\,#1\,]}
+\newcommand{\Ex}[1]{\mathbf{E} \left[\,#1\,\right]}
+\newcommand{\EX}[1]{\widetilde{\mathbf{E}} \left[\,#1\,\right]}
+\newcommand{\EXX}[2]{\mathbf{E}_{#1} \left[\,#2\,\right]}
+\newcommand{\Var}[1]{\mathbf{Var} \left[\,#1\,\right]}
+\newcommand{\Cov}[1]{\mathbf{Cov} \left[\,#1\,\right]}
+%\newcommand{\EX}[1]{\mathbb{E}\Bigl[\,#1\,\Bigr]}
+\newcommand{\degree}{\operatorname{deg}}
+\newcommand{\girth}{\operatorname{girth}}
+\renewcommand{\diam}{\operatorname{diam}}
+\newcommand{\id}{\mathsf{id}}
+\renewcommand{\tilde}{\widetilde}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\opt}{\mathrm{opt}}
+\newcommand{\aseq}{\{A_i\}_{i=1}^k}
+\newcommand{\sseq}{\{S_i\}_{i=1}^k}
+\newcommand{\AlgoMean}{\mathsf{AlgoMean}}
+
+
+\definecolor{ocre}{RGB}{150,22,11} % Define the orange color used for highlighting throughout the book
+\newcommand{\hfamily}{\mathcal{H}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\expn}{\mathrm{e}}
+
+
+
+
+%\newcommand{\FOCS}[2]{#1 Annual IEEE Symposium on Foundations of Computer Science
+%(FOCS'#2)}
+%\newcommand{\STOC}[2]{#1 Annual ACM Symposium on Theory of Computing (STOC'#2)}
+%\newcommand{\SODA}[2]{#1 Annual ACM-SIAM Symposium on Discrete Algorithms (SODA'#2)}
+%\newcommand{\ICALP}[2]{#1 International Colloquium on Automata, Languages, and
+%Programming (ICALP'#2)}
+%\newcommand{\PODC}[2]{#1 Annual ACM-SIGOPT Principles of Distributed Computing
+%(PODS'#2)}
+%\newcommand{\STACS}[2]{#1 International Symposium on Theoretical Aspects of Computer
+%Science (STACS'#2)}
+%\newcommand{\SPAA}[2]{#1 Annual ACM Symposium on Parallel Algorithms and
+%Architectures (SPAA'#2)}
+%\newcommand{\MFCS}[2]{#1 International Symposium on Mathematical Foundations of
+%Computer
+%Science (MFCS'#2)}
+%\newcommand{\ISAAC}[2]{#1 International Symposium on Algorithms and Computation
+%(ISAAS'#2)}
+%\newcommand{\WG}[2]{#1 Workshop of Graph-Theoretic Concepts in Computer Science
+%(WG'#2)}
+%\newcommand{\SIROCCO}[2]{#1 International Colloquium on Structural Information and
+%Communication Complexity (SIROCCO'#2)}
+%\newcommand{\IPDPS}[2]{#1 IEEE International Parallel and Distributed Processing
+%Symposium (IPDPS'#2)}
+%\newcommand{\RANDOM}[2]{#1 International Workshop on Randomization and Computation
+%(RANDOM'#2)}
+%\newcommand{\CCC}[2]{#1 Conference on Computational Complexity
+%(CCC'#2)}
+%\newcommand{\ICML}[2]{#1 International Conference on Machine Learning
+%(ICML'#2)}
+%
+
+\usepackage{setspace}
+\def\argmax{\operatornamewithlimits{argmax}}
+\def\argmin{\operatornamewithlimits{argmin}}
+\def\mod{\operatorname{mod}}
+
+\newcommand{\phiin}{\phi_{\mathsf{in}}}
+\newcommand{\phiout}{\phi_{\mathsf{out}}}
+
+
+\newcommand{\Z}{{\mathbb{Z}}}
+\newcommand{\setmid}{\,|\,}
+\newcommand{\ee}{\varepsilon}
+
+
+%\newcommand{\NOTE}[1]{\marginpar{\setstretch{0.43}\textcolor{red}{\bf\tiny#1}}}{\bf \tiny #1}}}
+
+
+
+\title{Problem sheet 2}
+
+
+\date{}
+
+\begin{document}
+
+
+\maketitle
+
+\section*{Solutions (CLRS)}
+Use the substitution method to verify your answer.
+
+
+\noindent\textbf{4.4-1.} $T(n) = 3T(n / 2) + n$
+
+Assume that
+\begin{equation}
+\label{eq-first}
+T(n/2) \leq c(n / 2)^{log 3} - c(n/2)
+\end{equation}
+
+This implies:
+
+\begin{equation}
+\begin{split}
+T(n) & \leq 3c(n/2)^{log 3} - c(n/2) + n \\
+	 & \leq cn^{log 3} - cn / 2 + n \\
+	 & \leq cn^{log 3}
+\end{split}
+\end{equation}
+
+The last one holds as long as:
+\begin{align*}
+	-cn/2 + n & \leq 0 \\
+	c & \geq 2
+\end{align*}
+\break
+
+In order for the induction (Eq.\ref{eq-first}) to hold pick $c = 5$ and $n \geq 2$; Base case is solved by $T(2) = 5 \leq 5.0$.
+
+
+\noindent\textbf{4.4-2.} $T(n) = T(n / 2) + n^2$
+
+Assume that
+\begin{equation}
+\label{eq-second}
+T(n) \leq cn^2
+\end{equation}
+
+\begin{equation}
+\label{eq-v1}
+\begin{split}
+T(n) & \leq c(n/2)^{2} - (n/2)^2 \\
+	 & \leq n^2(c+1)/4 \\
+	 & \leq cn^2
+\end{split}
+\end{equation}
+
+Eq.\ref{eq-v1} is true as long as $c \geq 1/3$. Choose $c=1$; Base case $T(1) = 1 \leq 1 \cdot 1$.
+
+
+\noindent\textbf{4.3-3.} $T(n) = 2T(n / 2) + n \in O(n \log{n})$. Prove that $T(n) \in \Omega(n \log{n})$.
+
+Assume that
+\begin{equation}
+\label{eq-third}
+T(n) \geq c \cdot n \log{n}
+\end{equation}
+
+\begin{equation}
+\label{eq-v2}
+\begin{split}
+	T(n)&= 2 (cn/2) \log{n/2} + n \\
+		&= cn log{n} - cn\log{2} + n \\
+		& \geq cnlog{n}
+\end{split}
+\end{equation}
+
+Eq. \ref{eq-v2} is true as long as $c \leq 1$. Pick $c = 1$ and see that base case holds.
+
+
+\noindent\textbf{4.5-1.} Use Master method to figure to solve the following:
+
+\begin{description}
+	\item $T(n) = 2T(n/4) + 1$. $a = 2$, $b=4$, $f(n) = 1 \in O(n^0)$.
+
+	\item $T(n) = 2T(n/4) + \sqrt{n}$
+	\item $T(n) = 2T(n/4) + n$
+	\item $T(n) = 2T(n/4) + n^2$
+\end{description}
+
+\[
+\lim_{n\to\infty} \frac{n\log{n}}{n \sqrt{n}} = \lim_{n\to\infty} \frac{\log{n}}{\sqrt{n}} = 0.
+\]
+
+\end{document}
