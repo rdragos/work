@@ -249,17 +249,22 @@ Use the substitution method to verify your answer.
 Assume that
 \begin{equation}
 \label{eq-first}
-T(k) \leq ck^{\log{3}} -ck, \forall 1 \leq k < n
+T(k) \leq ck^{\log_2 3} -ck, \forall k < n
 \end{equation}
 
 We obtain:
-\begin{equation}
+\begin{equation*}
 \begin{split}
-T(n) & \leq 3c(n/2)^{\log 3} - c(n/2) + n \\
-	 & \leq cn^{\log 3} - cn / 2 + n \\
-	 & \leq cn^{\log 3}
+T(n) & = 3c(n/2)^{\log_2 3} - c(n/2) + n \\
+	 & \leq cn^{\log_2 3} - cn / 2 + n \\
 \end{split}
-\end{equation}
+\end{equation*}
+
+Follows from $3/2^{\log_2 3} = 1$.
+
+\begin{equation*}
+	T(n) \leq cn^{\log_2 3}
+\end{equation*}
 
 The last inequality holds as long as:
 \begin{align*}
@@ -268,7 +273,7 @@ The last inequality holds as long as:
 \end{align*}
 \break
 
-In order for the induction (Eq.\ref{eq-first}) to hold pick $c = 5$ and $n \geq 2$; Base case is solved by $T(2) = 5 \leq 5.0$.
+In order for the induction (Eq.\ref{eq-first}) to hold pick $c = 5$ and $n \geq 2$; Base case is solved by $T(2) = 5 \leq 5 \cdot 2^{\log_2 3} - 5\cdot2$.
 
 
 \noindent\textbf{4.4-2.} $T(n) = T(n / 2) + n^2$
@@ -276,7 +281,7 @@ In order for the induction (Eq.\ref{eq-first}) to hold pick $c = 5$ and $n \geq 
 Assume that
 \begin{equation}
 \label{eq-second}
-T(k) \leq ck^2, \forall 1 \leq k < n
+T(k) \leq ck^2, \forall k < n
 \end{equation}
 
 \begin{equation}
@@ -288,7 +293,7 @@ T(n) & \leq c(n/2)^{2} - (n/2)^2 \\
 \end{split}
 \end{equation}
 
-Eq.\ref{eq-v1} is true as long as $c \geq 1/3$. Choose $c=1$; Base case $T(1) = 1 \leq 1 \cdot 1$.
+Eq.\ref{eq-v1} is true as long as $(c+1)/4 \leq c$, namely: $c \geq 1/3$. Choose $c=1$; Base case $T(1) = 1 \leq 1 \cdot 1$.
 
 
 \noindent\textbf{4.3-3.} $T(n) = 2T(n / 2) + n \in O(n \log{n})$. Prove that $T(n) \in \Omega(n \log{n})$.
@@ -308,21 +313,108 @@ T(k) \geq c \cdot k \log{k}
 \end{split}
 \end{equation}
 
-Eq. \ref{eq-v2} is true as long as $c \leq 1$. Pick $c = 1$ and see that base case holds.
+Eq. \ref{eq-v2} is true as long as $-cn \log 2 + n \geq 0$, namely: $c \leq 1$. Pick $c = 1$ and see that base case holds.
 
 
-\noindent\textbf{4.5-1.} Use Master method to figure to solve the following:
+\noindent\textbf{4.5-1.} Use Master method to solve the following:
 
-\begin{description}
-	\item $T(n) = 2T(n/4) + 1$. $a = 2$, $b=4$, $f(n) = 1 \in O(n^0)$.
+\begin{description} \itemsep8pt
+	\item $T(n) = 2T(n/4) + 1$. $a = 2$, $b=4$, $f(n) = 1 \in O(n^{\log_4 2 - 0.5})$. Apply case $1$ to get $T(n) \in \Theta(n^{\log_4{2}}) = \Theta(n^{1/2})$
 
-	\item $T(n) = 2T(n/4) + \sqrt{n}$
-	\item $T(n) = 2T(n/4) + n$
-	\item $T(n) = 2T(n/4) + n^2$
+	\item $T(n) = 2T(n/4) + \sqrt{n}$. $a=2$, $b=4$, $f(n) \in \Theta(n^{1/2})$. Apply case $2$ to get $T(n) \in \Theta(\sqrt{n}\log{n})$
+
+	\item $T(n) = 2T(n/4) + n$. $a = 2$, $b=4$, $f(n) = \Theta(n^{\log_4 2 + 0.5})$. Apply case $3$ after checking that there is a positive $c < 1$ for which $2f(n/4) \leq cf(n)$. This implies that $T(n) \in \Theta(n)$.
+
+	\item $T(n) = 2T(n/4) + n^2$. $a=2$, $b=4$, $f(n) \in \Theta(n^{\log_4 2 + 1.5})$. Apply case $3$ and see that $c=1/9 < 1$. This implies that $T(n) \in \Theta(n^2)$.
+
 \end{description}
 
-\[
-\lim_{n\to\infty} \frac{n\log{n}}{n \sqrt{n}} = \lim_{n\to\infty} \frac{\log{n}}{\sqrt{n}} = 0.
-\]
 
+\section*{Solutions (POA)}
+Solve the following recurrences exactly:
+
+\noindent\textbf{205.} $T(1) = 3$. $T(n) = T(n - 1) + 2n - 3$.
+
+Sum all the levels in the tree. We claim that:
+\begin{equation}
+	T(k) = \sum_{i=2}^{k}(2i - 3) + 3 = k^2 - 2k + 4, \forall 1 \leq k < n
+\end{equation}
+
+Base case holds since $T(1) = 1^2 - 2 \cdot 1 + 4 = 3$.
+
+Now $T(n) = (n-1)^2 + 2n - 3 = n^2 - 2n + 4 \in \Theta(n^2)$.
+
+\noindent\textbf{206.} $T(1) = 1$. $T(n) = 2T(n - 1) + n - 1$.
+
+Notice that if we sum all the levels in the tree we get:
+\begin{equation}
+	T(k)= k-1 + 2(k-2) + 2^2(k-3) + \dots + 2^{k-2} + 2^{k-1}
+\end{equation}
+
+In these situations we guess that $T(n) \in \Theta(2^n)$ and then prove with the substitution method: $T(n) \in O(2^n)$ and $T(n) \in \Omega(2^n)$.
+
+Assume that:
+\begin{equation}
+\label{eq-expo}
+T(k) \leq c2^k - ck, \forall k < n
+\end{equation}
+
+We obtain that:
+\begin{equation}
+\label{eq-expo2}
+\begin{split}
+T(n) & \leq 2c2^{n-1}+n-1 - c(n-1) \\
+	&= c2^{n} + (n-1)(1 - c) \\
+	& \leq c2^{n}
+\end{split}
+\end{equation}
+
+Eq. $\ref{eq-expo2}$ follows if $(n-1)(1-c) \leq 0$. For this choose $c=2$. Base case holds since $T(1) = 1 \leq 2 \cdot 2^{1} - 2\cdot 1=2$.
+
+Assume that:
+\begin{equation}
+\label{eq-expo3}
+T(k) \geq c2^k, \forall k < n
+\end{equation}
+
+We obtain that:
+\begin{equation}
+\begin{split}
+	T(n) \geq 2c2^{n-1}+n-1 \\
+	 & \geq c2^{n} + n-1 \\
+	 & \geq c2^{n}
+\end{split}
+\end{equation}
+
+This is true since $n \geq 1$. Now choose $c = 1$. Base case holds for $T(1) = 1 \geq 1 \cdot 2^{1} = 1$.
+
+\noindent\textbf{212.} $T(1) = 3$. $T(n) = 4T(n/3) + 2n - 1$. $n = 3^p$, $p \geq 0$.
+
+Using the tree method and summing on all levels we get that:
+\begin{equation*}
+	T(n) = \sum_{i = 0}^{\log_3 n - 1}((4/3)^i \cdot 2 n - 1) + 4^{\log_3 n}
+\end{equation*}
+
+
+Observe that the last level has $n^{\log_3 4}$ vertices. This will turn out a valid guess and we can prove using the substitution method that $T(n) \in O(n^{\log_3 4})$ as well as $T(n) \in \Omega(n^{\log_3 4})$ concluding with $T(n) \in \Theta(n^{\log_3 4})$.
+
+
+\noindent\textbf{218.} $T(1) = 1$. $T(n) = 4T(n/3) + n^2$. $n = 3^p$, $p \geq 0$.
+
+\begin{equation}
+\begin{split}
+	\sum_{i = 0}^{\log_3 n}{(\frac{n}{3^i}^2 \cdot 4^i)} &= n^2 \sum_{i = 0}^{\log_3 n}{\frac{4^i}{3^{2i}}} \\
+	&= n^2(1 - (4/9)^{\log_3 n}) / (1 - 4/9) \\
+	&= n^2 (1 - (4/9)^{\log_3 n}) \cdot 5/9 \in \Theta(n^2)
+\end{split}
+\end{equation}
+
+\noindent\textbf{220.} $T(1) = 1$. $T(n) = T(n/4) + \sqrt{n} + 1$. $n = 4^k$, $k \geq 0$.
+
+\begin{equation}
+\begin{split}
+	\sum_{i=0}^{\log_4 n}(\sqrt n/2^i + 1) + \log_4 n= \sqrt n (2^n - 1) / 2^{n+1} + 2 \log_4 n
+\end{split}
+\end{equation}
+As $(2^n - 1) / 2^{n+1} \in (0, 1)$, $T(n) \in \Theta(\sqrt n)$
 \end{document}
