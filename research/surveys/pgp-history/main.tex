@@ -1,0 +1,117 @@
+% This is LLNCS.DEM the demonstration file of
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.4 for LaTeX2e as of 16. April 2010
+%
+\documentclass{llncs}
+%
+\usepackage{makeidx}  % allows for indexgeneration
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{tikz}
+
+\makeatletter
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+%
+\begin{document}
+\pagestyle{plain}
+%
+\frontmatter          % for the preliminaries
+%
+\pagestyle{headings}  % switches on printing of running heads
+\author{Drago\c{s} Alin Rotaru}
+\institute{University of Bristol}
+%
+\title{PGP History}
+%
+\titlerunning{PGP History}  % abbreviated title (for running head)
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+\maketitle              % typeset the title of the contribution
+
+
+\section{About the creator}
+
+Taken from Wiki:
+
+Philip R. "Phil" Zimmermann, Jr. (born February 12, 1954) is the creator of Pretty Good Privacy (PGP), the most widely used email encryption software in the world.
+
+He was born in Camden, New Jersey. His father was a concrete mixer truck driver. Zimmermann received a B.S. degree in computer science from Florida Atlantic University in Boca Raton, Florida in 1978, and thereafter moved to the San Francisco Bay Area. In the 1980s, Zimmermann worked in Boulder, Colorado as a software engineer and was a part of the Nuclear Weapons Freeze Campaign as a military policy analyst.
+
+US Customs service started a criminal investigation for allegedly violating the Arms Export Control Act (from an RSA Security report debating the licensing of RSA algorithm use). It was considered an impermissible United States was placed such that PGP fell on the too-strong-to-export side of the boundary.
+
+\subsection{Silent Circle and Union with Lavabit}
+Zimmermann is co-founder and Chief Scientist of the global encrypted communications firm, Silent Circle.
+
+In October 2013, Zimmermann, along with other key employees from Silent Circle, teamed up with Lavabit founder Ladar Levison to create the Dark Mail Alliance. The goal of the organization is to work on a new protocol to replace PGP that will encrypt metadata, among other things that PGP is not capable of.
+
+
+\subsection{Lavabit}
+Before the Snowden incident, Lavabit had complied with previous search warrants. For example, in June 2013 a search warrant was executed against a Lavabit account for suspected possession of child pornography.
+
+Lavabit founder on Dark Mail Alliance: \textit{I would like to dedicate this project to the National Security Agency. For better or worse, good or evil, what follows would not have been created without you. Because sometimes upholding constitutional  ideas just isn't enough; sometimes you have to uphold the actual Constitution. May god bless these  United States of America. May she once again become the land of the free and home of the brave.}
+
+On January 20, 2017, Lavabit owner Ladar Levison relaunched Lavabit with a new architecture and more security features.
+
+\section{History of PGP}
+
+PGP (Pretty Good Privacy) comes from "Ralph's Pretty Good Grocery", a fictional grocery store. PGP is an encryption program which provides privacy and authentication of data in transit.
+
+First version of PGP had a symmetric algorithm designed by Phil himself called 'BassOmatic' publicly released in 1991. During Crypto 1991 Eli Biham (now dean at Technion Uni, Israel) pointed out some flaws and Phil replaced it with IDEA.
+
+EFF states:
+\textit{Companies and individuals exporting items on the munitions list, including software with encryption capabilities, had to obtain prior State Department approval.}
+
+\subsection{OpenPGP}
+In July 1997, PGP Inc. proposed to the IETF that there be a standard called OpenPGP. They gave the IETF permission to use the name OpenPGP to describe this new standard as well as any program that supported the standard. The IETF accepted the proposal and started the OpenPGP Working Group. Zimmermann serves as consultant to PGP Inc.
+
+
+\subsection{Web of trust}
+Each browser usually comes with a list of certificates authorities to thrust. For example if you go to amazon, Symantec tells you that the website is truly Amazon's, so you trust Amazon.
+
+PGP puts every key (secret or trusted public) into a file which is called a 'keyring'. This is encrypted with a password only you can read.
+
+So, how do I get Bob's key onto my keyring? Here are some ways in which Bob can give me his key in a secure way:
+
+\begin{itemize}
+\item    He can give it to me physically, e.g. on his business card, on a floppy disk/CDROM/. . .
+\item He can read it to me on the phone (assuming I can recognise him)
+\item He can register with Symantec, but this is expensive and inconvenient and rather against the universal spirit of PGP.
+\end{itemize}
+
+http://security.stackexchange.com/questions/86522/pgp-owner-trust-field-signature-trust-field-distinction
+http://security.stackexchange.com/questions/41208/what-is-the-exact-meaning-of-this-gpg-output-regarding-trust
+
+\section{Modern apps for secure messsaging}
+\section{Let's use PGP! - Mailvelope}
+
+OpenPGPjs is a javascript library compliant to OpenPGP standards and it allows developers to do PGP encryption apps for browsers. (ProtonMail, GlobaLeaks, and Mailvelope)
+
+Mailvelope's security goals are as follows. All data must be safe even if:
+\begin{itemize}
+	\item A rogue sender is part of the communication
+	\item The webmail provider has malicious intent
+	\item The webmail provider was attacked or the user has a malicious tab opened
+	\item This attack scenario was thoroughly tested in a penetration test by Cure53, which was also involved in developing the security concepts used by Mailvelope.
+\end{itemize}
+
+
+% ---- Bibliography ----
+%
+
+\clearpage
+\bibliographystyle{splncs03}
+\bibliography{llncs}
+\end{document}
