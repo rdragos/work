@@ -44,6 +44,8 @@ def safe_retrieve(basis, Y):
 
 def decode(Y):
 	# Y is in bit form
+	# print "decoding:"
+	# print(Y)
 	X = [0] * 8
 
 	while len(Y) < 128:
@@ -54,17 +56,16 @@ def decode(Y):
 			s = int(Y[i]) ^ int(Y[j]) ^ BIT
 			if s != int(Y[k]):
 				print "omg ", i, j, k
-	# import pdb; pdb.set_trace()
-	for i in range(7):
-		ei = 2**(6-i)
-		j, k = safe_retrieve(ei, Y)
 
+	for i in range(7):
+		ei = 2**i
+		j, k = safe_retrieve(ei, Y)
 		Yj = int(Y[j])
 		Yk = int(Y[k])
 
-		X[i+1] = Yj ^ Yk
+		X[i] = (Yj ^ Yk)
 
-	X[0] = BIT
+	X[7] = BIT
 	return X
 
 class Solver(object):
@@ -74,10 +75,9 @@ class Solver(object):
 	def extend(self, posbit, curlist, kbin):
 		if posbit == 8:
 			tmp = 0
+			nr = 0
 			for i in range(8):
-				tmp ^= curlist[i] * kbin[i]
-
-			# print curlist, tmp
+				tmp ^= curlist[7-i] * kbin[i]
 			self.result += (2**self.hits)*tmp
 			self.hits += 1
 		else:
@@ -104,24 +104,12 @@ def diff(a, b):
 	while(len(b)) < 128:
 		b += "0"
 
-	# print "len: ",l
 	differ = 0
 	for i in range(128):
 		if a[i] != b[i]:
 			differ += 1
 
 	return differ
-
-
-
-klist = [0] * 8
-klist[1] = 1
-klist[7] = 1
-klist[0] = 1
-
-
-# print "***********"
-# print "klist: ", klist
 
 print "sX: ", sX
 Encoder = Solver()
@@ -148,12 +136,10 @@ for k in range(2**7):
 	bk1 = [int(_) for _ in bk]
 	while len(bk1) < 7:
 		bk1 += [0]
-	bk1 = [BIT] + bk1
-
-	ext1 = Encoder.encode(bk1)
-	assert decode(get_bin(ext1)) == bk1
-
+	bk1 = bk1 + [BIT]
 	ext = Encoder.encode(bk1)
+
+	assert decode(get_bin(ext)) == bk1
 	# print "differences\n"
 	d1 = diff((ext ^ c), bX)
 	d2 = diff((ext ^ c), bY)
@@ -168,6 +154,34 @@ for k in range(2**7):
 
 print md1, key1
 print md2, key2
+
+# actual_key = [1, 1, 0, 1, 1, 0, 1, 1]
+
+# print(key1)
+
+# def pbin(v):
+# 	v2 = get_bin(v)
+# 	while len(v2) < 128:
+# 		v2 += "0"
+# 	return v2
+
+# ext1 = Encoder.encode(key1)
+# print(hex(ext1^c))
+# print(hex(bX))
+
+# a1 = pbin(ext1 ^ c)
+# b1 = pbin(bX)
+
+# print(pbin(ext1 ^ c))
+# print(pbin(bX))
+
+# res = ""
+# for i in range(128):
+# 	if a1[i] != b1[i]:
+# 		res += "1"
+# 	else:
+# 		res += "0"
+# print(res)
 	# print diff( (ext ^ c), bY)
 
 # print(hex(Encoder.encode(k1)))
