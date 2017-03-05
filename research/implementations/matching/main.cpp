@@ -29,6 +29,7 @@ class Solver {
     vector<int> L;
     map <int, int> R;
     vector<int> viz;
+    set<vector<int>> unique_sets;
 
  public:
      Solver(int _N) {
@@ -84,7 +85,20 @@ class Solver {
          return 0;
      }
 
+     void debug_set(const vector<int>& v) {
+         cout << "**********\n";
+         for (int i = 0; i < v.size(); ++i) {
+             to_set(v[i]);
+             cout << "\n";
+         }
+     }
      bool do_matching(const vector<int>&to_check) {
+         //debug_set(to_check);
+         //
+         int ret = prime_condition(to_check);
+         if (ret == 0) {
+             return 0;
+         }
          for (int i = 0; i < N; ++i) {
             edges[i].clear();
             viz[i] = 0;
@@ -92,14 +106,16 @@ class Solver {
             R.clear();
          }
          for (int i = 0; i < N; ++i) {
-             //cout << i + 1<< " -> " ;
              for (int j = 0; j < N; ++j) {
                  if (to_check[j] & (1 << i)) {
                      edges[i].push_back(j);
-             //        to_set(to_check[j]);
                  }
              }
-            // cout << "\n";
+         }
+         for (int i = 0; i < N; ++i) {
+             if (edges[i].size() == 0) {
+                 return 0;
+             }
          }
          int change = 1;
          while(change) {
@@ -113,58 +129,74 @@ class Solver {
                  }
              }
          }
+
          for (int i = 0; i < N; ++i) {
              if (L[i] == -1) {
                  cout << "FAIL ON\n";
-                 int ret = prime_condition(L, to_check);
-                 cerr << "is prime condition? " << ret << "\n";
+                 cout << "is prime condition? " << ret << "\n";
                  write_set(L, to_check);
+
+                 cout << "graph: \n";
+                 for (int k = 0; k < N; ++k) {
+                     cerr << k + 1 << " -> " ;
+                     for (auto vec: edges[k]) {
+                         to_set(to_check[vec]);
+                     }
+                     cerr << "\n";
+                 }
                  return 0;
              }
          }
-         //cerr << "MATCHING DONE?";
+         /*
+         cout << "set: " << count_set << "\n";
+         write_set(L, to_check);
+         */
+         //cerr << "MATCHING DONE?\n";
+         /*
+         vector<int> tmp(to_check);
+         sort(tmp.begin(), tmp.end());
+         unique_sets.insert(tmp);
+         */
          return 1;
      }
 
      void generate_all_sets(int k) {
          if (k == N) {
-             do_matching(current_set);
+             count_set += do_matching(current_set);
          } else {
              for (int mask = 0; mask < (1 << N); ++mask) {
                  bool flag = false;
-                 for (int i = 0; i < k ; ++i) {
+                 for (int i = 0; i < k; ++i) {
                      if (!intersect(mask, current_set[i]) || current_set[i] == mask) {
                          flag = true;
                      }
                  }
-                 if (!flag) {
-                     current_set.push_back(mask);
-                     generate_all_sets(k + 1);
-                     current_set.pop_back();
+                 if (flag) {
+                     continue;
                  }
+                 current_set.push_back(mask);
+                 generate_all_sets(k + 1);
+                 current_set.pop_back();
              }
          }
      }
 
-     bool prime_condition(vector<int>&L, const vector<int>&to_check) {
+     bool prime_condition(const vector<int>&to_check) {
          for (int i = 0; i < N; ++i) {
-             bool flag = true;
-             int ret = -1;
              for (int j = 0; j < N; ++j) {
                  if (i == j) {
                      continue;
                  }
+                 bool can_go = false;
                  for (int k = 0; k < N; ++k) {
                      if (intersect(to_check[k], 1<<i) && !intersect(to_check[k], 1<<j)) {
-                         ret = j;
-                         flag = false;
+                         can_go = true;
                      }
                  }
-             }
-             if (flag) {
-
-                 cout << "fails with pair ( " << i << " " << ret << " )\n";
-                 return 0;
+                 if (!can_go) {
+                     //cerr << "pair: " << i + 1 << " " << j + 1 << "\n";
+                     return 0;
+                 }
              }
          }
          return 1;
@@ -184,72 +216,10 @@ class Solver {
              cout << "\n";
         }
      }
-     void check(vector<int>& to_check) {
-
-         for (int i = 0; i < N; ++i) {
-             for (int j = i + 1; j < N; ++j) {
-                 bool flag = true;
-                 for (int k = 0; k < N; ++k) {
-                     if (intersect(to_check[k], 1<<i)) {
-                         if (!intersect(to_check[k], 1<<j)) {
-                             flag = false;
-                         }
-                     }
-                 }
-                 if (flag) {
-                     cout << "NO\n";
-                     cout << "failed on\n";
-                     for (int i = 0; i < N; ++i) {
-                         cout << i + 1 << " -> ";
-                         to_set(to_check[i]);
-                         cout << "\n";
-                     }
-                     return ;
-                 }
-             }
-         }
-         /*
-         cout << "succeded on";
-         count_set += 1;
-         cout << "set: " << count_set << "\n";
-         for (int i = 0; i < N; ++i) {
-             cout << i + 1 << " -> ";
-             to_set(to_check[i]);
-             cout << "\n";
-         }
-         */
-     }
-
-     void generate_sets(int k) {
-         if (k == N) {
-             check(current_set);
-         } else {
-             for (int mask = 1; mask < (1 << N); ++mask) {
-                 if (!(mask & (1 << k))) {
-                     continue;
-                 }
-                 
-                 bool flag = false;
-                 for (auto s: current_set) {
-                     if (!intersect(mask, s) || s == mask) {
-                         flag = true;
-                     }
-                 }
-                 if (flag) {
-                     continue;
-                 } else {
-                     current_set.push_back(mask);
-                     generate_sets(k + 1);
-                     current_set.pop_back();
-                 }
-             }
-         }
-     }
-     void solve() {
-         generate_sets(0);
-     }
      void checker() {
          generate_all_sets(0);
+         cout << "Found " << count_set << " matchings\n";
+         cout << "Found " << unique_sets.size() << " unique sets\n";
      }
 };
 int main() {
@@ -258,5 +228,6 @@ int main() {
   int N; cin >> N;
   Solver G(N);
   G.checker();
+  //cout << G.prime_condition({7,6,5});
   return 0;
 }
