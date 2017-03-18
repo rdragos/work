@@ -164,11 +164,16 @@ class Solver {
          if (k == N) {
              count_set += do_matching(current_set);
          } else {
-             for (int mask = 0; mask < (1 << N); ++mask) {
+             int start = 0;
+             if (k != 0) {
+                 start = current_set[k - 1];
+             }
+             for (int mask = start + 1; mask < (1 << N); ++mask) {
                  bool flag = false;
                  for (int i = 0; i < k; ++i) {
-                     if (!intersect(mask, current_set[i]) || current_set[i] == mask) {
+                     if (!intersect(mask, current_set[i])) {
                          flag = true;
+                         break;
                      }
                  }
                  if (flag) {
@@ -191,6 +196,7 @@ class Solver {
                  for (int k = 0; k < N; ++k) {
                      if (intersect(to_check[k], 1<<i) && !intersect(to_check[k], 1<<j)) {
                          can_go = true;
+                         break;
                      }
                  }
                  if (!can_go) {
@@ -226,8 +232,12 @@ int main() {
   ifstream cin("test.in");
 
   int N; cin >> N;
+  N = 4;
   Solver G(N);
+
   G.checker();
+  //int res = G.do_matching({127,191,223,239,247,251,253,254,22019,10764,3376,12736,341,405,16808});
+  //cout << res << "\n";
   //cout << G.prime_condition({7,6,5});
   return 0;
 }

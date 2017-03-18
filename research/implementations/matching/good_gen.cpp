@@ -123,6 +123,7 @@ int main() {
   ifstream cin("test.in");
 
   int N; cin >> N;
+  N = 6;
   Solver G(N);
   G.solve();
   return 0;
