@@ -18,7 +18,7 @@
 
 using namespace std;
 
-
+int kLim = 1000000;
 class Solver {
   public:
     
@@ -34,6 +34,7 @@ class Solver {
         for (int mask = 1; mask < (1 << N); ++mask) {
             candidates.insert(mask);
         }
+        cnt = 0;
     }
     void print_bits(int conf) {
         for (int i = 0; i < N; ++i) {
@@ -126,11 +127,31 @@ class Solver {
         }
         return 0;
     }
+
+    set<vector<int>> store;
     void check_matching() {
         // check if Q2
+        //
+        if (store.size() <= kLim) {
+            vector<int> V(N);
+            for (int i = 0; i < N; ++i) {
+                V[i] = edge_mask[i];
+            }
+            sort(V.begin(), V.end());
+            if (store.find(V) != store.end()) {
+                return ;
+            }
+            store.insert(V);
+        }
         for (int i = 0; i < N; ++i) {
             for (int j = i + 1; j < N; ++j) {
                 if (!(edge_mask[i] & edge_mask[j])) {
+                    return ;
+                }
+                if ( (edge_mask[i] & edge_mask[j]) == edge_mask[i]) {
+                    return ;
+                }
+                if ( (edge_mask[i] & edge_mask[j]) == edge_mask[j]) {
                     return ;
                 }
             }
@@ -158,16 +179,12 @@ class Solver {
                 return ;
             }
         }
-
+        cnt += 1;
         //cout << "Matched\n";
         //debug_graph();
         //debug_matching();
     }
     void back(int k, int conf) {
-        if (ret[k][conf]) {
-            return ;
-        }
-       ret[k][conf] = 1;
         if (k == N) {
             check_matching();
         } else {
@@ -184,7 +201,7 @@ class Solver {
                 for (int bit = 0; bit < N; ++bit) {
                     if (mask & (1 << bit)) {
                         edges_v[bit].push_back(k);
-                        edge_mask[k] ^= (1 << bit);
+                        edge_mask[bit] ^= (1 << k);
                     }
                 }
                 back(k + 1, mask);
@@ -192,7 +209,7 @@ class Solver {
                 for (int bit = 0; bit < N; ++bit) {
                     if (mask & (1 << bit)) {
                         edges_v[bit].pop_back();
-                        edge_mask[k] ^= (1 << bit);
+                        edge_mask[bit] ^= (1 << k);
                     }
                 }
                 for (auto val: erased_vals) {
@@ -205,6 +222,7 @@ class Solver {
         gen_canceling_sets();
         cerr << "started to generate sets...";
         back(0, 0);
+        cerr << "sets: " << cnt << "\n";
     }
   private:
     vector<set<int>> edge_c;
@@ -214,6 +232,7 @@ class Solver {
     vector<int> viz, L, R;
     vector<int> edge_mask;
     int N;
+    int cnt;
 };
 int main() {
     ifstream cin("test.in");
