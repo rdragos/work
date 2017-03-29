@@ -30,7 +30,24 @@ class Graph {
 
         edges.assign(N, vector<int>());
     }
+    Graph(const Graph &other): L(other.L), R(other.R){
+        N = other.N;
+        viz.assign(N, 0);
+        L.assign(N, -1);
+        R.assign(N, -1);
 
+        edges.assign(N, vector<int>());
+        for (int i = 0; i < N; ++i) {
+            L[i] = other.L[i];
+            R[i] = other.R[i];
+            edges[i].assign(other.edges[i].size(), 0);
+            std::copy(other.edges[i].begin(), other.edges[i].end(), edges[i].begin());
+        }
+    }
+    Graph operator=( Graph rhs ) {
+        Graph G(rhs);
+        return G;
+    }
     void addEdge(int x, int y) {
         edges[x].push_back(y);
     }
@@ -65,17 +82,17 @@ class Graph {
         int change = 1;
         while(change) {
             change = 0;
-            #pragma omp parallel for
             for (int i = 0; i <= last_node; ++i) {
                 viz[i] = 0;
             }
-            change |= pairup(L[last_node]);
+            change |= pairup(last_node);
         }
-        return L[last_node]!=-1;
+        return L[last_node] != -1;
     }
 
     void write() {
         for (int i = 0; i < N; ++i) {
+            cout << i << "-> ";
             for (auto vertex: edges[i]) {
                 cout << vertex + 1 << " " ;
             }
@@ -113,35 +130,39 @@ class Solver{
      }
 
      int check_sets_intersect(const vector<int>& edges, Graph& G) {
-         /*
          for (int i = 0; i < N; ++i) {
              for (int j = i + 1; j < N; ++j) {
                  if ( (edges[i] & edges[j]) == 0) {
                      return 0;
                  }
              }
-         }*/
+         }
          vector<int> tmp(edges);
          sort(tmp.begin(), tmp.end());
-         unique_matchings.insert(tmp);
-         //G.write();
+         if (unique_matchings.find(tmp) == unique_matchings.end()) {
+             unique_matchings.insert(tmp);
+             G.write();
+             cerr << "\n";
+         }
          return 1;
      }
-     void back(int k, Graph& G, set<int> select) {
+     void back(int k, Graph G, set<int> select) {
+         G.write();
+         cout << "#########\n";
          if (k == N) {
              // do i really care about this?
-             //SOL += check_sets_intersect(edge_mask, G);
+             SOL += check_sets_intersect(edge_mask, G);
          } else {
-             set<int> cl_select(select);
-             for (auto conf: cl_select) {
-
+             vector <int> vec_select(select.begin(), select.end());
+                #pragma omp parallel for private(select) firstprivate(G)
+             for (int i = 0; i < vec_select.size(); ++i) {
+                 int conf = vec_select[i];
                  for (int bit = 0; bit < N; ++bit) {
                      if (conf & (1 << bit)) {
                          edge_mask[bit] |= (1 << k);
                          G.addEdge(k, bit);
                      }
                  }
-
                  if (!G.maxMatch(k)) {
                      cout << "NO MAX MATCH\n";
                      G.write();
@@ -173,12 +194,15 @@ class Solver{
              }
          }
      }
-
      void solve() {
          gen_canceling_sets();
-         Graph G(N);
          cout << "finished pre_processing\n";
+
+         Graph G(N);
+         //G.addEdge(1, 2);
          back(0, G, candidates);
+         //Graph B(G);
+         //B.write();
          cout << "found " << unique_matchings.size() << " matchings\n";
      }
      vector<set<int>> edge_c;
