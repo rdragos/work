@@ -73,16 +73,7 @@ class Graph {
     }
 
     int maxMatch(int last_node) {
-        int change = 1;
-        while(change) {
-            change = 0;
-            for (int i = 0; i <= last_node; ++i) {
-                viz[i] = 0;
-            }
-            if (L[last_node] == -1) {
-                change |= pairup(last_node);
-            }
-        }
+        pairup(last_node);
         if (L[last_node] != -1) {
             return 1;
         } else {
@@ -111,7 +102,7 @@ class Graph {
                 assign[vertex].push_back(i);
             }
         }
-
+        sort(assign.begin(), assign.end());
         for (int i = 0; i < N; ++i) {
             cout << "set " << i << ": ";
             cout << "{ ";
@@ -167,25 +158,29 @@ class Solver{
          }
          vector<int> tmp(G.edge_mask);
          sort(tmp.begin(), tmp.end());
-         if (unique_matchings.find(tmp) == unique_matchings.end()) {
-             unique_matchings.insert(tmp);
-                #pragma omp critical
-             {
-                 G.write();
-                 cerr << "\n";
+
+        #pragma omp critical
+         {
+             if (unique_matchings.find(tmp) == unique_matchings.end()) {
+                 unique_matchings.insert(tmp);
+         //        G.write();
+         //        cerr << "\n";
              }
          }
          return 1;
      }
-     void back(int k, Graph G, set<int> select) {
+     void back(int k, Graph& Gb, set<int>& selectb) {
          if (k == N) {
              // do i really care about this?
-         //   SOL += check_sets_intersect(G);
+            //SOL += check_sets_intersect(Gb);
             //SOL += 1;
          } else {
-             vector <int> vec_select(select.begin(), select.end());
-            #pragma omp parallel for firstprivate(select, G)
+             vector <int> vec_select(selectb.begin(), selectb.end());
+            #pragma omp parallel for
              for (int i = 0; i < vec_select.size(); ++i) {
+                 Graph G(Gb);
+                 set<int> select(selectb);
+
                  int conf = vec_select[i];
                  for (int bit = 0; bit < N; ++bit) {
                      if (conf & (1 << bit)) {
@@ -198,27 +193,22 @@ class Solver{
                      cout << "NO MAX MATCH\n";
                      G.write();
                  }
-                 vector<int> to_erase;
-
-                 for (const auto& temp: edge_c[conf]) {
-                     auto tmpconf = temp;
-                     set<int>::iterator it = select.find(tmpconf);
-                     if (it != select.end()) {
-                         to_erase.push_back(tmpconf);
-                         select.erase(it);
+                 if (matching_result == 1) {
+                     for (const auto& temp: edge_c[conf]) {
+                         auto tmpconf = temp;
+                         set<int>::iterator it = select.find(tmpconf);
+                         if (it != select.end()) {
+                             select.erase(it);
+                         }
                      }
-                 }
-                 back(k + 1, G, select);
-
-                 for (auto tmpconf: to_erase) {
-                     select.insert(tmpconf);
-                 }
-
-                 for (int bit = 0; bit < N; ++bit) {
-                     if (conf & (1 << bit)) {
-                         G.pop_vertex(k);
-                     }
-                 }
+                     back(k + 1, G, select);
+                }
+                if (k == 0) {
+                    #pragma omp critical
+                    {
+                        cout << "finished with root " << vec_select[i] << "\n";
+                    }
+                }
              }
          }
      }
