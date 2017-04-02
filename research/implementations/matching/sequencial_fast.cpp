@@ -18,8 +18,7 @@
 #define ll long long
 
 using namespace std;
-
-
+const int kThresh = 100000000;
 class Graph {
  public:
     Graph(int _N) {
@@ -95,6 +94,12 @@ class Graph {
         }
     }
 
+    vector<int> pack() {
+        vector<int> res(edge_mask);
+        sort(res.begin(), res.end());
+        return res;
+    }
+
     void write() {
         vector<vector<int>> assign(N, vector<int>());
         for (int i = 0; i < N; ++i) {
@@ -158,26 +163,34 @@ class Solver{
          }
          vector<int> tmp(G.edge_mask);
          sort(tmp.begin(), tmp.end());
-
         #pragma omp critical
          {
              if (unique_matchings.find(tmp) == unique_matchings.end()) {
                  unique_matchings.insert(tmp);
-         //        G.write();
-         //        cerr << "\n";
+             //    G.write();
+              //   cerr << "\n";
              }
          }
          return 1;
      }
      void back(int k, Graph& Gb, set<int>& selectb) {
+         if (MEM.find(Gb.pack()) != MEM.end()) {
+             return ;
+         }
+        #pragma omp critical
+         {
+             MEM.insert(Gb.pack());
+         }
          if (k == N) {
              // do i really care about this?
             //SOL += check_sets_intersect(Gb);
             //SOL += 1;
          } else {
              vector <int> vec_select(selectb.begin(), selectb.end());
+             //random_shuffle(vec_select.begin(), vec_select.end());
+             int many = min(kThresh, (int)vec_select.size());
             #pragma omp parallel for
-             for (int i = 0; i < vec_select.size(); ++i) {
+             for (int i = 0; i < many; ++i) {
                  Graph G(Gb);
                  set<int> select(selectb);
 
@@ -221,7 +234,9 @@ class Solver{
          //Graph B(G);
          //B.write();
          cout << "found " << unique_matchings.size() << " matchings\n";
+         cout << "SOL is " << SOL << "\n";
      }
+     set<vector<int>> MEM;
      vector<set<int>> edge_c;
      vector<int> edge_mask;
      vector<int> mark;
@@ -234,7 +249,7 @@ class Solver{
 int main() {
   ifstream cin("test.in");
   ofstream cout("test.out");
-
+  srand(time(NULL));
   int N; cin >> N;
   Solver S(N);
   S.solve();
