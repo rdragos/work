@@ -8,6 +8,7 @@
 #include <cstring>
 #include <string>
 #include <set>
+#include <omp.h>
 #include <stack>
 #define pb push_back
 
@@ -20,137 +21,132 @@ using namespace std;
 
 
 
+class Graph {
+ public:
+    Graph(int _N) {
+        N = _N;
+        viz.assign(N, 0);
+        L.assign(N, -1);
+        R.assign(N, -1);
+        edges.assign(N, vector<int>());
+        edge_mask.assign(N, 0);
+    }
+    void addEdge(int x, int y) {
+        edges[x].push_back(y);
+        edge_mask[y] |= (1 << x);
+    }
+
+    bool pairup(int node) {
+        if (viz[node]) {
+             return 0;
+        }
+        viz[node] = 1;
+        for (auto vec: edges[node]) {
+            if (R[vec] == -1) {
+                L[node] = vec;
+                R[vec] = node;
+                return 1;
+            }
+        }
+        for (auto vec: edges[node]) {
+            if (pairup(R[vec])) {
+                L[node] = vec;
+                R[vec] = node;
+                return 1;
+            }
+        }
+        return 0;
+    }
+    bool maxMatch() {
+        int change = 1;
+        while(change) {
+            change = 0;
+            for (int i = 0; i < N; ++i) {
+                viz[i] = 0;
+            }
+            for (int i = 0; i < N; ++i) {
+                if (L[i] == -1) {
+                    change |= pairup(i);
+                }
+            }
+        }
+        for (int i = 0; i < N; ++i) {
+            if (L[i] == -1) {
+                return 0;
+            }
+        }
+        return 1;
+    }
+    void write() {
+        for (int i = 0; i < N; ++i) {
+            vector<int> row;
+            for (int j = 0; j < N; ++j) {
+                if ( edge_mask[i] & (1 << j) ) {
+                    row.push_back(j);
+                }
+            }
+            if (R[i] != -1) {
+                cerr << R[i] << " -> ";
+            } else {
+                cerr << "?" <<  " -> ";
+            }
+            cerr << "{";
+            for (int j = 0; j < row.size() - 1; ++j) {
+                cerr << row[j] << ",";
+            }
+            cerr << *row.rbegin() << "}\n";
+        }
+    }
+    int N;
+    vector<int> viz, L, R, edge_mask;
+    vector<vector<int>> edges;
+};
+
 class Solver {
 
     vector <int> current_set;
     int N, count_set;
-
-    vector<vector<int>> edges;
-    vector<int> L;
-    map <int, int> R;
-    vector<int> viz;
     set<vector<int>> unique_sets;
 
  public:
      Solver(int _N) {
-         //
          N = _N;
          count_set = 0;
-         edges.assign(N, vector<int>());
-         L.assign(N,0);
-         viz.assign(N, 0);
      }
 
      bool intersect(int mask1, int mask2) {
          return (mask1 & mask2);
      }
 
-     void to_set(int mask) {
-         cout << "{";
-         vector<int> Ans;
-         for (int i = 0; i < N; ++i) {
-             if (mask & (1 << i)) {
-                 Ans.push_back(i + 1);
-             }
-         }
-         for (int i = 0; i < Ans.size() - 1; ++i) {
-             cout << Ans[i] << ",";
-         }
-         if (Ans.size() > 0) {
-             cout << Ans[Ans.size() - 1];
-         }
-         cout << "}";
-     }
-
-
-     bool pairup(int node) {
-         if (viz[node]) {
-             return 0;
-         }
-         viz[node] = 1;
-         for (auto vec: edges[node]) {
-             if (R.find(vec) == R.end()) {
-                 L[node] = vec;
-                 R[vec] = node;
-                 return 1;
-             }
-         }
-         for (auto vec: edges[node]) {
-             if (pairup(R[vec])) {
-                 L[node] = vec;
-                 R[vec] = node;
-                 return 1;
-             }
-         }
-         return 0;
-     }
-
-     void debug_set(const vector<int>& v) {
-         cout << "**********\n";
-         for (int i = 0; i < v.size(); ++i) {
-             to_set(v[i]);
-             cout << "\n";
-         }
-     }
-     bool do_matching(const vector<int>&to_check) {
+     bool do_matching(const vector<int>& to_check) {
          //debug_set(to_check);
          //
          int ret = prime_condition(to_check);
          if (ret == 0) {
              return 0;
          }
-         for (int i = 0; i < N; ++i) {
-            edges[i].clear();
-            viz[i] = 0;
-            L[i] = -1;
-            R.clear();
-         }
+         Graph G(N);
+         // prob cache misses?
          for (int i = 0; i < N; ++i) {
              for (int j = 0; j < N; ++j) {
                  if (to_check[j] & (1 << i)) {
-                     edges[i].push_back(j);
+                     G.addEdge(i, j);
                  }
              }
          }
          for (int i = 0; i < N; ++i) {
-             if (edges[i].size() == 0) {
+             if (G.edges[i].size() == 0) {
                  return 0;
              }
          }
-         int change = 1;
-         while(change) {
-             change = 0;
-             for (int i = 0; i < N; ++i) {
-                 viz[i] = 0;
-             }
-             for (int i = 0; i < N; ++i) {
-                 if (L[i] == -1) {
-                     change |= pairup(i);
-                 }
-             }
-         }
 
-         for (int i = 0; i < N; ++i) {
-             if (L[i] == -1) {
+         if (!G.maxMatch()) {
                  cout << "FAIL ON\n";
                  cout << "is prime condition? " << ret << "\n";
-                 write_set(L, to_check);
-
-                 cout << "graph: \n";
-                 for (int k = 0; k < N; ++k) {
-                     cerr << k + 1 << " -> " ;
-                     for (auto vec: edges[k]) {
-                         to_set(to_check[vec]);
-                     }
-                     cerr << "\n";
-                 }
+                 G.write();
                  return 0;
-             }
          }
-         /*
-         cout << "set: " << count_set << "\n";
-         write_set(L, to_check);
-         */
+         //cout << "set: " << count_set << "\n";
          //cerr << "MATCHING DONE?\n";
          /*
          vector<int> tmp(to_check);
@@ -160,14 +156,15 @@ class Solver {
          return 1;
      }
 
-     void generate_all_sets(int k) {
+     void generate_all_sets(int k, vector<int>& current_set) {
          if (k == N) {
-             count_set += do_matching(current_set);
+             count += do_matching(current_set);
          } else {
              int start = 0;
              if (k != 0) {
                  start = current_set[k - 1];
              }
+             #pragma omp parallel for
              for (int mask = start + 1; mask < (1 << N); ++mask) {
                  bool flag = false;
                  for (int i = 0; i < k; ++i) {
@@ -176,12 +173,11 @@ class Solver {
                          break;
                      }
                  }
-                 if (flag) {
-                     continue;
+                 if (!flag) {
+                     vector<int> next_set(current_set);
+                     next_set.push_back(mask);
+                     generate_all_sets(k + 1, next_set);
                  }
-                 current_set.push_back(mask);
-                 generate_all_sets(k + 1);
-                 current_set.pop_back();
              }
          }
      }
@@ -196,48 +192,48 @@ class Solver {
                  for (int k = 0; k < N; ++k) {
                      if (intersect(to_check[k], 1<<i) && !intersect(to_check[k], 1<<j)) {
                          can_go = true;
+//                         cerr << "fails with " << i << " " << j << "\n";
                          break;
                      }
                  }
                  if (!can_go) {
-                     //cerr << "pair: " << i + 1 << " " << j + 1 << "\n";
+//                     cerr << "pair: " << i + 1 << " " << j + 1 << "\n";
                      return 0;
                  }
              }
          }
          return 1;
      }
-
-     void write_set(vector<int>& L, const vector<int>&v) {
-         for (int i = 0; i < N; ++i) {
-             if (L[i] == -1) {
-                 cout << "?";
-             } else {
-                 cout << i + 1;
-             }
-             cout << " -> ";
-             if (L[i] != -1) {
-                 to_set(v[L[i]]);
-             }
-             cout << "\n";
+    void debug_(vector<int>& edges) {
+        for (int i = 0; i < edges.size(); ++i) {
+            for (int j = 0; j < N; ++j) {
+                if (edges[i] & (1 << j)) {
+                    cout << j + 1 << " " ;
+                }
+            }
+            cout << "\n";
         }
-     }
+        cout << "\n";
+    }
      void checker() {
-         generate_all_sets(0);
+         vector<int> empty_vector;
+         generate_all_sets(0, empty_vector);
          cout << "Found " << count_set << " matchings\n";
          cout << "Found " << unique_sets.size() << " unique sets\n";
+         /*
+         for (auto edges: unique_sets) {
+             debug_(edges);
+         }
+         */
      }
 };
 int main() {
   ifstream cin("test.in");
 
   int N; cin >> N;
-  N = 4;
   Solver G(N);
-
   G.checker();
-  //int res = G.do_matching({127,191,223,239,247,251,253,254,22019,10764,3376,12736,341,405,16808});
-  //cout << res << "\n";
-  //cout << G.prime_condition({7,6,5});
+//  int res = G.do_matching({35,77,161,53,19,13,102,122});
+ // cout << res << "\n";
   return 0;
 }
