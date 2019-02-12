@@ -31,10 +31,32 @@ class LowGear(object):
         self.input_cost = dict()
         self.triple_cost = dict()
         # 2 parties
+        # \log{p} = 128, sec = 64
+        # 540056 inputs per second
         add_comm_cost(self.input_cost, 2, 128, 64, 2.048)
-        add_time_cost(self.input_cost, 2, 128, 64, 0.0029)
+        add_time_cost(self.input_cost, 2, 128, 64, 0.0018)
+
         add_comm_cost(self.triple_cost, 2, 128, 64, 30.146)
         add_time_cost(self.triple_cost, 2, 128, 64, 0.033)
+
+        # for -s 128 -f 128 numbers are computed using ESAT computers
+        # \log{p} = 128, sec = 128
+        add_comm_cost(self.input_cost, 2, 128, 128, 2.304)
+        # 364238 inputs per second
+        add_time_cost(self.input_cost, 2, 128, 128, 0.0028)
+
+        add_comm_cost(self.triple_cost, 2, 128, 128, 33.38)
+        add_time_cost(self.triple_cost, 2, 128, 128, 0.027)
+
+        # \log{p} = 64, sec = 40
+        # 705859 inputs per second
+        add_comm_cost(self.input_cost, 2, 64, 40, 1.15209)
+        add_time_cost(self.input_cost, 2, 64, 40, 0.0014)
+
+        add_comm_cost(self.triple_cost, 2, 64, 40, 18.00)
+        add_time_cost(self.triple_cost, 2, 64, 40, 0.0169)
+
+        # from now on only communication costs
         # 3 parties
         add_comm_cost(self.input_cost, 3, 128, 64, 5.888)
         add_comm_cost(self.triple_cost, 3, 128, 64, 89.67)
@@ -187,7 +209,7 @@ def main():
                 allcosts.append((dabit.get_comm(), (c, b) ))
 
     allcosts.sort()
-    for item in allcosts[:10]:
+    for item in allcosts[:2]:
         c = item[1][0]
         b = item[1][1]
 
