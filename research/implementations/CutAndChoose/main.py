@@ -31,6 +31,15 @@ class LowGear(object):
         self.input_cost = dict()
         self.triple_cost = dict()
         # 2 parties
+        # time: 36361
+        # comm: 13.1711kb
+        # \log{p} = 128, sec = 40
+        add_comm_cost(self.triple_cost, 2, 128, 40, 26.3422)
+        add_time_cost(self.triple_cost, 2, 128, 40, 0.0275019)
+
+        add_comm_cost(self.input_cost, 2, 128, 64, 1.792)
+        add_time_cost(self.input_cost, 2, 128, 40, 0.0018)
+
         # \log{p} = 128, sec = 64
         # 540056 inputs per second
         add_comm_cost(self.input_cost, 2, 128, 64, 2.048)
@@ -87,9 +96,15 @@ class MASCOT(object):
     def add_known_costs(self):
         self.input_cost = dict()
         self.triple_cost = dict()
+
         # 2 parties
+        add_comm_cost(self.input_cost, 2, 128, 40, 0.384)
+        add_comm_cost(self.triple_cost, 2, 128, 40, 360.44)
+
         add_comm_cost(self.input_cost, 2, 128, 64, 0.384)
         add_comm_cost(self.triple_cost, 2, 128, 64, 360.44)
+
+        add_time_cost(self.triple_cost, 2, 128, 65, 0.2065)
         # 3 parties
         add_comm_cost(self.input_cost, 3, 128, 64, 1.024)
         add_comm_cost(self.triple_cost, 3, 128, 64, 1081.32)
