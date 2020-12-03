@@ -30,12 +30,13 @@ int main() {
   vector<int> X{1, 1, 1, 1, 2};
   vector<int> Y{1, 3, 5, 7, 1};
   vector<int> Dx, Dy;
-  Dx.resize(X.size(), 0);
-  Dy.resize(Y.size(), 0);
 
-  vector<int> answers;
-  answers.resize(X.size(), 0);
-  int K = Dx.size();
+  int K = X.size();
+  Dx.resize(K, 0);
+  Dy.resize(K, 0);
+
+  vector<int> answers(K, 0);
+
   int N = mat.size();
   int M = mat[0].size();
 
@@ -49,7 +50,7 @@ int main() {
       }
   }
   long long sol = 1;
-  for (int k = 0; k < answers.size(); k++)
+  for (size_t k = 0; k < answers.size(); k++)
       sol *= answers[k];
   cout << sol << endl;
 
