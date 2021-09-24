@@ -31,8 +31,7 @@ def to_str(x):
 def bit_adder(a, b):
 #    print("Adding ", str(a), " ", str(b))
     a_bin = bin(a)[2:][::-1]
-    b_bin = bin(b)[2:][::-1]
-
+    b_bin = bin(b)[2:][::-1] 
     a_bin = [int(_) for _ in a_bin]
     b_bin = [int(_) for _ in b_bin]
 
@@ -57,19 +56,10 @@ def bit_adder(a, b):
         P1 = getint(P) << (2 ** i)
         P1 = P1 + (2**(2**i) - 1)
 
-#        print("G1 =")
-#        print(to_str(get64(G1)))
-        print("P1 = ")
-        print(to_str(get64(P1)))
-
-#        P1 = P1 ^ keep_masks[i]
-#        print("Mask: ", to_str(get64(keep_masks[i])))
-
         G = bit_xor(G, bit_and(P, get64(G1)))
         P = bit_and(P, get64(P1))
 
-#    C = getint(G) << 1
-    C = getint(G)
+    C = getint(G) << 1
 #    print("Carry: ", C, to_str(get64(C)))
 #    print("Carry bit: ", get64(C)[-1])
     P = bit_xor(a_bin, b_bin)
